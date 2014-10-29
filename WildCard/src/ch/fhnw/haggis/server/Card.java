@@ -9,6 +9,7 @@ public class Card {
 	private int value;
 	private int points;
 	private String suit;
+	public List deck;
 
 	public String getName() { //getter & setter methods
 		return name;
@@ -64,7 +65,7 @@ public class Card {
 		
 	}
 
-	public static void main(String[] args) {
+	public void createDeck () {
 		
 		ArrayList<Card> deck = new ArrayList<Card>();
 	
@@ -130,7 +131,12 @@ public class Card {
 			deck.add(new Card ("joker_king1",5,13,"joker"));
 			deck.add(new Card ("joker_king2",5,13,"joker"));
 			deck.add(new Card ("joker_king3",5,13,"joker"));
-			
-			
+						
 	} 	
+	
+	public static void main(String[] args) {
+		System.out.println("Hallo");
+		
+		
+	}
 }
