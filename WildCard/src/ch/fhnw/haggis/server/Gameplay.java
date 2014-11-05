@@ -22,6 +22,8 @@ public class Gameplay extends Card{
 	
 	public static void main(String[] args) {
 		
+		
+		
 	}
 
 }
