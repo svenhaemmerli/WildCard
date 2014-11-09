@@ -30,8 +30,8 @@ public class GuiPlaytable extends JFrame implements  ActionListener,MouseListene
 	public GuiPlaytable(){
 	setTitle("Haggis Playtable - Wildcard");
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
-	playdesk.setLayout(new BorderLayout());
-	getContentPane().add(playdesk, BorderLayout.CENTER);
+//	playdesk.setLayout(new BorderLayout());
+	getContentPane().add(playdesk, BorderLayout.SOUTH);
 	setSize(1280, 847);
 	setLocationRelativeTo(null); //place it in the center of the screen
 	setResizable(false);
@@ -39,6 +39,7 @@ public class GuiPlaytable extends JFrame implements  ActionListener,MouseListene
 	JPanel left = new JPanel();
 	left.setOpaque(false);
 	playdesk.add(left,BorderLayout.WEST);
+	
 	//set Background Image
 	/*
 	getContentPane().setLayout(new BorderLayout());
@@ -53,7 +54,7 @@ public class GuiPlaytable extends JFrame implements  ActionListener,MouseListene
 	//cards for the player
 	playercards = new JPanel(new GridLayout(1,14)); //one line with 14 cards
 	playercards.setOpaque(false);
-	playercards.setPreferredSize(new Dimension(300,200));
+	playercards.setPreferredSize(new Dimension(900,200));
 	playercards.setBorder(new LineBorder(Color.cyan, 4));
 	playdesk.add(playercards, BorderLayout.SOUTH);
 	
