@@ -41,22 +41,23 @@ public class GuiPlaytable extends JFrame implements  ActionListener,MouseListene
 	playdesk.add(left,BorderLayout.WEST);
 	
 	//set Background Image
-	/*
+	
+	
 	getContentPane().setLayout(new BorderLayout());
 	((JPanel)getContentPane()).setOpaque(false);
 	ImageIcon background = new ImageIcon(getClass().getResource("img/playtable.jpg"));
 	lblBackground = new JLabel(background);
 	getLayeredPane().add(lblBackground, new Integer(Integer.MIN_VALUE));
 	lblBackground.setBounds(0, 0, background.getIconWidth(), background.getIconHeight());
-	*/
+	
 	
 	
 	//cards for the player
 	playercards = new JPanel(new GridLayout(1,14)); //one line with 14 cards
 	playercards.setOpaque(false);
 	playercards.setPreferredSize(new Dimension(900,200));
-	playercards.setBorder(new LineBorder(Color.cyan, 4));
-	playdesk.add(playercards, BorderLayout.SOUTH);
+	//playercards.setBorder(new LineBorder(Color.cyan, 2));
+	getContentPane().add(playercards, BorderLayout.SOUTH);
 	
 	
 	GridBagConstraints gbcPlayercards = new GridBagConstraints();//Use GridBagConstraints to place the components
