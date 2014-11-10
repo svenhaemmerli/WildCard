@@ -9,6 +9,7 @@ package ch.fhnw.haggis.gui;
 import java.awt.*;
 
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,6 +19,7 @@ public class GuiLoginScreen extends JFrame implements ActionListener{
 	
 	JLabel username = new JLabel();
 	JTextArea eingabe = new JTextArea();
+	JLabel lblBackground;
 
 	public GuiLoginScreen (){
 		setTitle("Haggis - WILDCARD");
@@ -26,12 +28,20 @@ public class GuiLoginScreen extends JFrame implements ActionListener{
 		setResizable(true); 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
+		getContentPane().setLayout(new BorderLayout());
+		((JPanel)getContentPane()).setOpaque(false);
+		ImageIcon background = new ImageIcon(getClass().getResource("img/0101_wildcard_logo.png"));
+		lblBackground = new JLabel(background);
+		getLayeredPane().add(lblBackground, new Integer(Integer.MIN_VALUE));
+		lblBackground.setBounds(25, 30, background.getIconWidth(), background.getIconHeight());
+		
+		
 		username.setOpaque(false);
 		username.setForeground(Color.black);
 		username.setText("Username");
 		username.setBackground(Color.white);
 		username.setHorizontalAlignment(SwingConstants.CENTER);
-		this.add(username, BorderLayout.CENTER);
+		getContentPane().add(username, BorderLayout.CENTER);
 		
 		/*
 		eingabe.setOpaque(false);
