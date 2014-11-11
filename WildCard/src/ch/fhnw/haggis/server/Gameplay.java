@@ -2,11 +2,11 @@ package ch.fhnw.haggis.server;
 
 import java.util.*;
 
-public class Gameplay extends Card{
+public class Gameplay{
 
 	public int points;
 	public int actualPlayer;
-	
+	public ArrayList<Card> deck;
 	
 	public String shuffleCards (){
 	
@@ -23,7 +23,11 @@ public class Gameplay extends Card{
 	public static void main(String[] args) {
 		
 		
+		System.out.println("Hallo");
+		
+		
 		
 	}
+
 
 }
