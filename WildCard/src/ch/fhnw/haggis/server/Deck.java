@@ -5,11 +5,11 @@ import java.util.*;
 
 public class Deck {
 
-
-	public void createDeck () {
-		
-		ArrayList<Card> deck = new ArrayList<Card>();
+	public ArrayList<Card> deck = new ArrayList<Card>();
 	
+	public Deck () {
+		
+
 		deck.add(new Card ("red_2",0,2,"red"));
 		deck.add(new Card ("red_3",1,3,"red"));
 		deck.add(new Card ("red_4",0,4,"red"));
@@ -68,7 +68,6 @@ public class Deck {
 		deck.add(new Card ("joker_queen1",3,12,"joker"));
 		deck.add(new Card ("joker_queen2",3,12,"joker"));
 		deck.add(new Card ("joker_queen3",3,12,"joker"));
-		
 		deck.add(new Card ("joker_king1",5,13,"joker"));
 		deck.add(new Card ("joker_king2",5,13,"joker"));
 		deck.add(new Card ("joker_king3",5,13,"joker"));
@@ -78,16 +77,8 @@ public class Deck {
 		while (i.hasNext()){
 			System.out.println("Listenelement: "+i.next().getName());
 		}
+		
 					
 } 	
 	
-	public static void main(String[] args) {
-		
-		
-		Deck d = new Deck();
-		d.createDeck();
-		
-		
-		
-	}
 }

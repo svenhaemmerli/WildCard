@@ -2,17 +2,14 @@ package ch.fhnw.haggis.server;
 
 import java.util.*;
 
-public class Hand extends Card{
 
-	ArrayList<Card> hand = new ArrayList<Card>(); //given cards
+public class Hand{
+
+	public ArrayList<Card> hand = new ArrayList<Card>(); //given cards
 	
-	ArrayList<Card> win = new ArrayList<Card>(); //won cards
+	public ArrayList<Card> win = new ArrayList<Card>(); //won cards
 	
 	
-	public void receiveCards (Card c){ //receive a card
-	
-		hand.add(c);	
-	}
 	
 	public void playCard (Card c){ //play a card
 		
