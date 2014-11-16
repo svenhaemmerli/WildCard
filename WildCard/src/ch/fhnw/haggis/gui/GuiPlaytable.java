@@ -22,7 +22,7 @@ import java.awt.event.MouseListener;
 @SuppressWarnings("serial")
 public class GuiPlaytable extends JFrame implements  ActionListener,MouseListener {
 	
-	public JPanel playdesk = new JPanel();
+	public JPanel playdesk;
 	public JLabel lblBackground;
 	public JPanel glassPane;
 	private JPanel playercards;
@@ -31,6 +31,7 @@ public class GuiPlaytable extends JFrame implements  ActionListener,MouseListene
 	setTitle("Haggis Playtable - Wildcard");
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
 //	playdesk.setLayout(new BorderLayout());
+	playdesk = new JPanel();
 	getContentPane().add(playdesk, BorderLayout.SOUTH);
 	setSize(1280, 847);
 	setLocationRelativeTo(null); //place it in the center of the screen
@@ -64,6 +65,15 @@ public class GuiPlaytable extends JFrame implements  ActionListener,MouseListene
 	gbcPlayercards.insets = new Insets(0,0,0,0);//top, left, bottom, right
 
 	
+	//es gibt die Knöpfe aus, aber unter welchem Namen? kann es 14mal den button btn geben?
+	for(int i = 1;i<=14;i++){
+		JButton btn = new JButton("");
+		gbcPlayercards.gridx = i-1;
+		gbcPlayercards.gridy = 0;
+		playercards.add(btn,gbcPlayercards);
+	}
+	
+	/*
 	JButton test1 = new JButton("");
 	
 	gbcPlayercards.gridx = 0;
@@ -148,7 +158,7 @@ public class GuiPlaytable extends JFrame implements  ActionListener,MouseListene
 	gbcPlayercards.gridy = 0;
 	
 	playercards.add(test14,gbcPlayercards);
-	
+	*/
 	
 	setVisible(true);
 	
