@@ -5,15 +5,20 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -23,47 +28,61 @@ import java.awt.event.MouseListener;
 public class GuiPlaytable extends JFrame implements  ActionListener,MouseListener {
 	
 	public JPanel playdesk;
-	public JLabel lblBackground;
 	public JPanel glassPane;
 	private JPanel playercards;
+	private JPanel playercardsJoker;
+	private JLabel username1;
+	private JLabel username2;
+	private JLabel username3;
+	private JPanel table;
+	private JLabel playerOne;
+	private JLabel playerTwo;
+	private JLabel playerThree;
+	private JPanel scoreboard;
+	
+	private JLabel copyright;
+	
 
 	public GuiPlaytable(){
+	//JFrame frame = new JFrame(); create a frame object
 	setTitle("Haggis Playtable - Wildcard");
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
-//	playdesk.setLayout(new BorderLayout());
-	playdesk = new JPanel();
-	getContentPane().add(playdesk, BorderLayout.SOUTH);
-	setSize(1280, 847);
+
+	getContentPane().setLayout(new BorderLayout());
+	//set the playable desk into the center of the content pane
+	int w = Toolkit.getDefaultToolkit().getScreenSize().width;
+	int h = Toolkit.getDefaultToolkit().getScreenSize().height-50; //-50 otherwise the taskbar cannot be seen
+	setSize(w,h);
 	setLocationRelativeTo(null); //place it in the center of the screen
 	setResizable(false);
-	
-	JPanel left = new JPanel();
-	left.setOpaque(false);
-	playdesk.add(left,BorderLayout.WEST);
-	
-	//set Background Image
+	playdesk = new JPanel();
+	playdesk.setLayout(new BorderLayout());
+	getContentPane().add(playdesk, BorderLayout.CENTER);
 	
 	
-	getContentPane().setLayout(new BorderLayout());
-	((JPanel)getContentPane()).setOpaque(false);
-	ImageIcon background = new ImageIcon(getClass().getResource("img/playtable.jpg"));
-	lblBackground = new JLabel(background);
-	getLayeredPane().add(lblBackground, new Integer(Integer.MIN_VALUE));
-	lblBackground.setBounds(0, 0, background.getIconWidth(), background.getIconHeight());
+	table = new JPanel();
+	table.setBackground(Color.ORANGE);
+	table.setLayout(new BorderLayout());
+	playdesk.add(table, BorderLayout.CENTER);
+
 	
-	
+	//copyright information
+	copyright = new JLabel("\u00a9 WILDCARD - 19.12.2014"); //setLabel text
+	copyright.setHorizontalAlignment(SwingConstants.RIGHT); //set Horizontal Alignment to right
+	copyright.setFont(new Font("Arial", Font.BOLD,18)); //set the labels new font, bold, int size
+	getContentPane().add(copyright, BorderLayout.SOUTH);
 	
 	//cards for the player
 	playercards = new JPanel(new GridLayout(1,14)); //one line with 14 cards
 	playercards.setOpaque(false);
 	playercards.setPreferredSize(new Dimension(900,200));
 	//playercards.setBorder(new LineBorder(Color.cyan, 2));
-	getContentPane().add(playercards, BorderLayout.SOUTH);
+	playdesk.add(playercards, BorderLayout.SOUTH);
 	
 	
 	GridBagConstraints gbcPlayercards = new GridBagConstraints();//Use GridBagConstraints to place the components
-	gbcPlayercards.insets = new Insets(0,0,0,0);//top, left, bottom, right
-
+	gbcPlayercards.insets = new Insets(0,0,0,0);//top, left, bottom, right representation of the borders of a container. It specifies the space that a container must leave at each of its edges
+	
 	
 	//es gibt die Knöpfe aus, aber unter welchem Namen? kann es 14mal den button btn geben?
 	for(int i = 1;i<=14;i++){
@@ -72,105 +91,15 @@ public class GuiPlaytable extends JFrame implements  ActionListener,MouseListene
 		gbcPlayercards.gridy = 0;
 		playercards.add(btn,gbcPlayercards);
 	}
+
 	
-	/*
-	JButton test1 = new JButton("");
 	
-	gbcPlayercards.gridx = 0;
-	gbcPlayercards.gridy = 0;
-	
-	playercards.add(test1,gbcPlayercards);
-	
-	JButton test2 = new JButton("");
-	gbcPlayercards.gridx = 1;
-	gbcPlayercards.gridy = 0;
-	
-	playercards.add(test2,gbcPlayercards);
-	
-	JButton test3 = new JButton("");
-	gbcPlayercards.gridx = 2;
-	gbcPlayercards.gridy = 0;
-	
-	playercards.add(test3,gbcPlayercards);
-	
-	JButton test4 = new JButton("");
-	gbcPlayercards.gridx = 3;
-	gbcPlayercards.gridy = 0;
-	
-	playercards.add(test4,gbcPlayercards);
-	
-	JButton test5 = new JButton("");
-	gbcPlayercards.gridx = 4;
-	gbcPlayercards.gridy = 0;
-	
-	playercards.add(test5,gbcPlayercards);
-	
-	JButton test6 = new JButton("");
-	gbcPlayercards.gridx = 5;
-	gbcPlayercards.gridy = 0;
-	
-	playercards.add(test6,gbcPlayercards);
-	
-	JButton test7 = new JButton("");
-	gbcPlayercards.gridx = 6;
-	gbcPlayercards.gridy = 0;
-	
-	playercards.add(test7,gbcPlayercards);
-	
-	JButton test8 = new JButton("");
-	gbcPlayercards.gridx = 7;
-	gbcPlayercards.gridy = 0;
-	
-	playercards.add(test8,gbcPlayercards);
-	
-	JButton test9 = new JButton("");
-	gbcPlayercards.gridx = 8;
-	gbcPlayercards.gridy = 0;
-	
-	playercards.add(test9,gbcPlayercards);
-	
-	JButton test10 = new JButton("");
-	gbcPlayercards.gridx = 9;
-	gbcPlayercards.gridy = 0;
-	
-	playercards.add(test10,gbcPlayercards);
-	
-	JButton test11 = new JButton("");
-	gbcPlayercards.gridx = 10;
-	gbcPlayercards.gridy = 0;
-	
-	playercards.add(test11,gbcPlayercards);
-	
-	JButton test12 = new JButton("");
-	gbcPlayercards.gridx = 11;
-	gbcPlayercards.gridy = 0;
-	
-	playercards.add(test12,gbcPlayercards);
-	
-	JButton test13 = new JButton("");
-	gbcPlayercards.gridx = 12;
-	gbcPlayercards.gridy = 0;
-	
-	playercards.add(test13,gbcPlayercards);
-	
-	JButton test14 = new JButton("");
-	gbcPlayercards.gridx = 13;
-	gbcPlayercards.gridy = 0;
-	
-	playercards.add(test14,gbcPlayercards);
-	*/
-	
+		
+		
 	setVisible(true);
 	
 	
-	
-	
-	
 	}
-	
-	
-	
-	
 	
 	public static void main(String[] args) {
 		GuiPlaytable gui = new GuiPlaytable();
@@ -183,19 +112,11 @@ public class GuiPlaytable extends JFrame implements  ActionListener,MouseListene
 		
 	}
 
-
-
-
-
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-
-
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -203,28 +124,17 @@ public class GuiPlaytable extends JFrame implements  ActionListener,MouseListene
 		
 	}
 
-
-
-
-
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
-
-
-
-
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-
 
 
 	@Override

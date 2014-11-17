@@ -23,9 +23,11 @@ public class GuiLoginScreen extends JFrame implements ActionListener{
 	JLabel lblBackground;
 	
 	private JPanel panelSouth;
+	private JPanel panelSouthNorth;
 	private JPanel panelSouthCenter;
-	private JPanel panelSouthSouth;
+	private JPanel panelSouthEast;
 	private JButton btnLogin;
+	private JLabel copyright;
 
 	public GuiLoginScreen (){
 		setTitle("Haggis - WILDCARD");
@@ -48,23 +50,32 @@ public class GuiLoginScreen extends JFrame implements ActionListener{
 		panelSouth.setSize(new Dimension(300,500));
 		getContentPane().add(panelSouth, BorderLayout.SOUTH); //put panel south into the south of the content pane
 		
-		panelSouthCenter = new JPanel(); //create panel southCenter
-		panelSouth.add(panelSouthCenter, BorderLayout.CENTER); //add the panelSouthCenter to the center of panelSouth
+		panelSouthNorth = new JPanel(); //create panel southCenter
+		panelSouth.add(panelSouthNorth, BorderLayout.NORTH); //add the panelSouthCenter to the center of panelSouth
 		
 		//create a JTextfield
 		username = new JTextField("Username",10); //set title and size of the jtextfield possibly a test afterwards with Username max. 16 characters
 		username.setOpaque(false);
 		username.setForeground(Color.black);
 		username.setHorizontalAlignment(SwingConstants.CENTER);
-		panelSouthCenter.add(username);
+		panelSouthNorth.add(username);
 		
 		
-		panelSouthSouth = new JPanel();
-		panelSouth.add(panelSouthSouth, BorderLayout.SOUTH);
+		panelSouthCenter = new JPanel();
+		panelSouth.add(panelSouthCenter, BorderLayout.CENTER);
 		
 		btnLogin = new JButton("login");
 		btnLogin.addActionListener(this);
-		panelSouthSouth.add(btnLogin);
+		panelSouthCenter.add(btnLogin);
+		
+		//copyright information
+		panelSouthEast = new JPanel();
+		panelSouth.add(panelSouthEast, BorderLayout.EAST);
+		copyright = new JLabel("\u00a9 WILDCARD - 19.12.2014"); //setLabel text
+		copyright.setHorizontalAlignment(SwingConstants.RIGHT); //set Horizontal Alignment to right
+		copyright.setFont(new Font("Arial", Font.PLAIN,10)); //set the labels new font, bold, int size
+		panelSouth.add(copyright, BorderLayout.SOUTH);
+		
 		//make window visible
 		setVisible(true);
 	}
