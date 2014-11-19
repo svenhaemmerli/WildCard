@@ -36,11 +36,15 @@ public class GuiPlaytable extends JFrame implements  ActionListener,MouseListene
 	private JLabel username3;
 	private JPanel table;
 	private JLabel playerOne;
+	private JLabel playerOneScore;
 	private JLabel playerTwo;
+	private JLabel playerTwoScore;
 	private JLabel playerThree;
+	private JLabel playerThreeScore;
 	private JPanel scoreboard;
-	
 	private JLabel copyright;
+	private JButton legen;
+	private JButton passen;
 	
 
 	public GuiPlaytable(){
@@ -59,13 +63,40 @@ public class GuiPlaytable extends JFrame implements  ActionListener,MouseListene
 	playdesk.setLayout(new BorderLayout());
 	getContentPane().add(playdesk, BorderLayout.CENTER);
 	
+
+
+	scoreboard = new JPanel();
+	scoreboard.setPreferredSize(new Dimension(200,50));
+	scoreboard.setLayout(new GridLayout(2,3));
 	
+	//Beschriftungen fürs Scoreboard einfügen
+	playerOne = new JLabel("Player One");
+	playerOneScore = new JLabel("Score Player 1");
+	playerTwo = new JLabel("Player Two");
+	playerTwoScore = new JLabel("Score Player 2");
+	playerThree = new JLabel("Player Three");
+	playerThreeScore = new JLabel("Score Player 3");
+	scoreboard.add(playerOne);
+	scoreboard.add(playerTwo);
+	scoreboard.add(playerThree);
+	scoreboard.add(playerOneScore);
+	scoreboard.add(playerTwoScore);
+	scoreboard.add(playerThreeScore);
+	playdesk.add(scoreboard, BorderLayout.NORTH);
+	
+	//Cards for other players - load image then display at each side
+	ImageIcon icon = new ImageIcon("hand_otherplayer.png");
+	JLabel cardsEast = new JLabel(icon);
+	getContentPane().add(cardsEast, BorderLayout.EAST);
+	JLabel cardsWest = new JLabel(icon);
+	playdesk.add(cardsWest, BorderLayout.WEST);
+	
+	/*
 	table = new JPanel();
 	table.setBackground(Color.ORANGE);
 	table.setLayout(new BorderLayout());
 	playdesk.add(table, BorderLayout.CENTER);
-
-	
+	*/
 	//copyright information
 	copyright = new JLabel("\u00a9 WILDCARD - 19.12.2014"); //setLabel text
 	copyright.setHorizontalAlignment(SwingConstants.RIGHT); //set Horizontal Alignment to right
@@ -91,11 +122,16 @@ public class GuiPlaytable extends JFrame implements  ActionListener,MouseListene
 		gbcPlayercards.gridy = 0;
 		playercards.add(btn,gbcPlayercards);
 	}
+	
+	legen = new JButton("legen");
+	legen.setPreferredSize(new Dimension(20,30));
+	passen = new JButton("passen");
+	passen.setPreferredSize(new Dimension(100,300));
+	
+	playdesk.add(legen,BorderLayout.EAST);
+	playdesk.add(passen, BorderLayout.EAST);
 
-	
-	
-		
-		
+	//pack(); //packt alles zusammen und bereinigt die nicht gebrauchten elemente
 	setVisible(true);
 	
 	
