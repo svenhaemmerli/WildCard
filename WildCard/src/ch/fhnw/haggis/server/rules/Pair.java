@@ -17,8 +17,8 @@ public class Pair implements IRule {
 		Card c2 = cards.get(1);
 
 		return cards.size() == 2
-				&& (c1.getValue() == c2.getValue() || CardHelper.isJoker(c1)
-						&& !CardHelper.isJoker(c2) || !CardHelper.isJoker(c1)
-						&& CardHelper.isJoker(c2));
+				&& (c1.getValue() == c2.getValue() 
+				|| CardHelper.isJoker(c1) && !CardHelper.isJoker(c2)
+				|| !CardHelper.isJoker(c1) && CardHelper.isJoker(c2));
 	}
 }
