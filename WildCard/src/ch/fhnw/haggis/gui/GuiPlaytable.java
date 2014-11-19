@@ -91,12 +91,12 @@ public class GuiPlaytable extends JFrame implements  ActionListener,MouseListene
 	JLabel cardsWest = new JLabel(icon);
 	playdesk.add(cardsWest, BorderLayout.WEST);
 	
-	/*
+	
 	table = new JPanel();
 	table.setBackground(Color.ORANGE);
 	table.setLayout(new BorderLayout());
 	playdesk.add(table, BorderLayout.CENTER);
-	*/
+	
 	//copyright information
 	copyright = new JLabel("\u00a9 WILDCARD - 19.12.2014"); //setLabel text
 	copyright.setHorizontalAlignment(SwingConstants.RIGHT); //set Horizontal Alignment to right
