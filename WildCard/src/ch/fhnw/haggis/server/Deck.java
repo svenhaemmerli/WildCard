@@ -5,11 +5,11 @@ import java.util.*;
 
 public class Deck {
 
-	public ArrayList<Card> deck = new ArrayList<Card>();
+	ArrayList<Card> deck = new ArrayList<Card>(); 
 	
 	public Deck () {
 		
-
+	
 		deck.add(new Card ("red_2",0,2,"red"));
 		deck.add(new Card ("red_3",1,3,"red"));
 		deck.add(new Card ("red_4",0,4,"red"));
@@ -59,26 +59,22 @@ public class Deck {
 		deck.add(new Card ("yellow_8",0,8,"yellow"));
 		deck.add(new Card ("yellow_9",1,9,"yellow"));
 		deck.add(new Card ("yellow_10",0,10,"yellow"));
-
-
-		deck.add(new Card ("joker_jack1",2,11,"joker"));
-		deck.add(new Card ("joker_jack2",2,11,"joker"));
-		deck.add(new Card ("joker_jack3",2,11,"joker"));
-		
-		deck.add(new Card ("joker_queen1",3,12,"joker"));
-		deck.add(new Card ("joker_queen2",3,12,"joker"));
-		deck.add(new Card ("joker_queen3",3,12,"joker"));
-		deck.add(new Card ("joker_king1",5,13,"joker"));
-		deck.add(new Card ("joker_king2",5,13,"joker"));
-		deck.add(new Card ("joker_king3",5,13,"joker"));
 		
 
 		Iterator<Card> i = deck.iterator();
 		while (i.hasNext()){
 			System.out.println("Listenelement: "+i.next().getName());
-		}
 		
+		}
+		System.out.println("gefüllt");
 					
 } 	
 	
+	public static void main(String[] args) {
+		
+	
+		
+		
+		
+	}
 }
