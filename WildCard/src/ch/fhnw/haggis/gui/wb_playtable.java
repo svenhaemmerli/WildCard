@@ -2,6 +2,7 @@ package ch.fhnw.haggis.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 
@@ -20,6 +21,7 @@ import java.awt.Color;
 import javax.swing.JButton;
 
 import java.awt.GridLayout;
+import java.awt.GridBagLayout;
 
 @SuppressWarnings("serial")
 public class wb_playtable extends JFrame {
@@ -31,13 +33,6 @@ public class wb_playtable extends JFrame {
 	private JPanel panelCardsEast;
 	private JLabel lblCardsPlayer3;
 	private JLabel lblImgCards3;
-	private JPanel panelScoreboard;
-	private JLabel lblNameUser1;
-	private JLabel lblNameUser2;
-	private JLabel lblNameUser3;
-	private JLabel lblScoreUser1;
-	private JLabel lblScoreUser2;
-	private JLabel lblScoreUser3;
 	private JPanel panelPlayDesk;
 	private JLabel lblImgPlaydesk;
 	private JPanel panelCardsSouth;
@@ -46,13 +41,35 @@ public class wb_playtable extends JFrame {
 	private JButton btnLegen;
 	private JButton btnPassen;
 	private JPanel panelPlayerCard;
-	
 	private ImageIcon playdesk = new ImageIcon(getClass().getResource("img/playtable.png"));
 	private ImageIcon icon = new ImageIcon(getClass().getResource("img/hand_otherplayer_s.png"));
 	private JPanel panelJokerCards;
 	private JButton btnJack;
 	private JButton btnQueen;
 	private JButton btnKing;
+	private JPanel panelUserInfo2;
+	private JLabel lblUser2;
+	private JLabel lblScoreUser2Static;
+	private JPanel panelUserInfo3;
+	private JLabel lblUser3;
+	private JLabel lblScoreUser3Static;
+	private JLabel lblUser2Score;
+	private JLabel lblUser2Name;
+	private JLabel lblAmtCardsUser2;
+	private JLabel lblUser3Name;
+	private JLabel lblAmtCardsUser3;
+	private JLabel lblUser3Score;
+	private JLabel lblIsgeber2;
+	private JLabel lblIsGeber3;
+	private JPanel panelInfoUser1;
+	private JPanel panelInfo;
+	private JLabel lblUsername;
+	private JLabel lblUserName1;
+	private JLabel lblScore;
+	private JLabel lblScoreUser1;
+	private JLabel lblIsGeber1;
+	private JLabel lblTitle;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -84,76 +101,126 @@ public class wb_playtable extends JFrame {
 		contentPane.add(panelCardsWest, BorderLayout.WEST);
 		panelCardsWest.setLayout(new BorderLayout());
 		
-		//place the number of cards onto the panelWestCards
-		lblCardsPlayer2 = new JLabel("Anzahl Karten");
-		//horizontal and vertical alignment
-		lblCardsPlayer2.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblCardsPlayer2.setHorizontalAlignment(SwingConstants.CENTER);
-		//set the font to arial, size 13
-		lblCardsPlayer2.setFont(new Font("Arial", Font.PLAIN, 13));
-		panelCardsWest.add(lblCardsPlayer2, BorderLayout.SOUTH);
-		
 		//put the image of the otherplayers cards onto the label
 		/**
 		 * @params Image icon is loaded previously and now put onto the JLabel
 		 */
 		lblImgCards2 = new JLabel(icon);
-		lblImgCards2.setPreferredSize(new Dimension(170, 100)); //set the size of the Label
 		panelCardsWest.add(lblImgCards2, BorderLayout.CENTER);
+		lblImgCards2.setPreferredSize(new Dimension(250, 100));
+		
+		panelUserInfo2 = new JPanel();
+		panelCardsWest.add(panelUserInfo2, BorderLayout.SOUTH);
+		panelUserInfo2.setLayout(new GridLayout(4, 2, 0, 0));
+		
+		lblUser2 = new JLabel("Username:");
+		lblUser2.setHorizontalAlignment(SwingConstants.RIGHT);
+		panelUserInfo2.add(lblUser2);
+		
+		lblUser2Name = new JLabel("Name User2");
+		lblUser2Name.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUser2Name.setFont(new Font("Arial", Font.PLAIN,13));
+		panelUserInfo2.add(lblUser2Name);
+		
+		//place the number of cards onto the panelWestCards
+		lblCardsPlayer2 = new JLabel("Anzahl Karten:");
+		panelUserInfo2.add(lblCardsPlayer2);
+		//horizontal and vertical alignment
+		lblCardsPlayer2.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblCardsPlayer2.setHorizontalAlignment(SwingConstants.RIGHT);
+		//set the font to arial, size 13
+		
+		
+		lblAmtCardsUser2 = new JLabel("Anz. Karten");
+		lblAmtCardsUser2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAmtCardsUser2.setFont(new Font("Arial", Font.PLAIN,13));
+		panelUserInfo2.add(lblAmtCardsUser2);
+		
+		lblScoreUser2Static = new JLabel("Score:");
+		lblScoreUser2Static.setHorizontalAlignment(SwingConstants.RIGHT);
+		panelUserInfo2.add(lblScoreUser2Static);
+		
+		lblUser2Score = new JLabel("Score User2");
+		lblUser2Score.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUser2Score.setFont(new Font("Arial", Font.PLAIN,13));
+		panelUserInfo2.add(lblUser2Score);
+		
+		lblIsgeber2 = new JLabel("isGeber()");
+		lblIsgeber2.setHorizontalAlignment(SwingConstants.RIGHT);
+		panelUserInfo2.add(lblIsgeber2);
 		
 		panelCardsEast = new JPanel();
 		contentPane.add(panelCardsEast, BorderLayout.EAST);
 		panelCardsEast.setLayout(new BorderLayout());
 		
-		lblCardsPlayer3 = new JLabel("Anzahl Karten");
-		lblCardsPlayer3.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblCardsPlayer3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCardsPlayer3.setFont(new Font("Arial", Font.PLAIN, 13));
-		panelCardsEast.add(lblCardsPlayer3, BorderLayout.SOUTH);
-		
 		lblImgCards3 = new JLabel(icon);
-		lblImgCards3.setPreferredSize(new Dimension(170, 100));
+		lblImgCards3.setPreferredSize(new Dimension(250, 100));
 		panelCardsEast.add(lblImgCards3, BorderLayout.CENTER);
 		
-		panelScoreboard = new JPanel();
-		contentPane.add(panelScoreboard, BorderLayout.NORTH);
-		panelScoreboard.setLayout(new GridLayout(2, 3));
+		panelUserInfo3 = new JPanel();
+		panelCardsEast.add(panelUserInfo3, BorderLayout.SOUTH);
+		panelUserInfo3.setLayout(new GridLayout(4, 2, 0, 0));
 		
-		//Add the name of the player and his score onto the scoreboard
-		lblNameUser1 = new JLabel("User1");
-		lblNameUser1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUser3 = new JLabel("Username:");
+		lblUser3.setHorizontalAlignment(SwingConstants.RIGHT);
+		panelUserInfo3.add(lblUser3);
 		
-		panelScoreboard.add(lblNameUser1);
+		lblUser3Name = new JLabel("Name User3");
+		lblUser3Name.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUser3Name.setFont(new Font("Arial", Font.PLAIN,13));
+		panelUserInfo3.add(lblUser3Name);
 		
-		lblNameUser2 = new JLabel("User2");
-		lblNameUser2.setHorizontalAlignment(SwingConstants.CENTER);
-		panelScoreboard.add(lblNameUser2);
+		lblCardsPlayer3 = new JLabel("Anzahl Karten:");
+		panelUserInfo3.add(lblCardsPlayer3);
+		lblCardsPlayer3.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblCardsPlayer3.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		lblNameUser3 = new JLabel("User3");
-		lblNameUser3.setHorizontalAlignment(SwingConstants.CENTER);
-		panelScoreboard.add(lblNameUser3);
 		
-		lblScoreUser1 = new JLabel("Score User1");
-		lblScoreUser1.setHorizontalAlignment(SwingConstants.CENTER);
-		panelScoreboard.add(lblScoreUser1);
+		lblAmtCardsUser3 = new JLabel("anz. Karten");
+		lblAmtCardsUser3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAmtCardsUser3.setFont(new Font("Arial", Font.PLAIN,13));
+		panelUserInfo3.add(lblAmtCardsUser3);
 		
-		lblScoreUser2 = new JLabel("Score User2");
-		lblScoreUser2.setHorizontalAlignment(SwingConstants.CENTER);
-		panelScoreboard.add(lblScoreUser2);
+		lblScoreUser3Static = new JLabel("Score:");
+		lblScoreUser3Static.setHorizontalAlignment(SwingConstants.RIGHT);
+		panelUserInfo3.add(lblScoreUser3Static);
 		
-		lblScoreUser3 = new JLabel("Score User3");
-		lblScoreUser3.setHorizontalAlignment(SwingConstants.CENTER);
-		panelScoreboard.add(lblScoreUser3);
+		lblUser3Score = new JLabel("Score User3");
+		lblUser3Score.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUser3Score.setFont(new Font("Arial", Font.PLAIN,13));
+		panelUserInfo3.add(lblUser3Score);
+		
+		lblIsGeber3 = new JLabel("isGeber()");
+		lblIsGeber3.setHorizontalAlignment(SwingConstants.RIGHT);
+		panelUserInfo3.add(lblIsGeber3);
 		
 		panelPlayDesk = new JPanel();
-		panelPlayDesk.setBackground(Color.GREEN);
+		panelPlayDesk.setBackground(new Color(0, 100, 0));
 		contentPane.add(panelPlayDesk, BorderLayout.CENTER);
-		panelPlayDesk.setLayout(new BorderLayout());
+		GridBagLayout gblPanelPlayDesk = new GridBagLayout();
+		panelPlayDesk.setLayout(gblPanelPlayDesk);
+			
 		
+		
+		GridBagConstraints gbcPlayedCards = new GridBagConstraints();//Use GridBagConstraints to place the components
+		gbcPlayedCards.insets = new Insets(0,0,0,0);//top, left, bottom, right representation of the borders of a container. It specifies the space that a container must leave at each of its edges
+		
+		//es gibt die Knöpfe aus, aber unter welchem Namen? kann es 14mal den button btn geben?
+		for(int i = 1;i<=8;i++){
+			JButton btnPlayedCard = new JButton("");
+			btnPlayedCard.setPreferredSize(new Dimension(100,220));
+			gbcPlayedCards.gridx = i-1;
+			gbcPlayedCards.gridy = 0;
+			panelPlayDesk.add(btnPlayedCard,gbcPlayedCards);
+		}
+		
+		
+		
+		/*
 		lblImgPlaydesk = new JLabel(playdesk);
 		lblImgPlaydesk.setPreferredSize(new Dimension(500, 500));
 		panelPlayDesk.add(lblImgPlaydesk, BorderLayout.CENTER);
-		
+		*/
 		panelCardsSouth = new JPanel();
 		contentPane.add(panelCardsSouth, BorderLayout.SOUTH);
 		panelCardsSouth.setLayout(new BorderLayout());
@@ -163,19 +230,10 @@ public class wb_playtable extends JFrame {
 		lblCopyright.setFont(new Font("Arial", Font.BOLD, 13));
 		lblCopyright.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		panelAction = new JPanel(); //the panel to place the buttons
-		panelCardsSouth.add(panelAction, BorderLayout.EAST);
-		
 		/**
 		 * @btnLegen the button to place your selected cards
 		 * @btnPassen if you cannot play, go to the next player
 		 */
-		
-		btnLegen = new JButton("legen");
-		panelAction.add(btnLegen);
-		
-		btnPassen = new JButton("passen");
-		panelAction.add(btnPassen);
 		
 		//The panel for the user to display his cards
 		panelPlayerCard = new JPanel();
@@ -185,17 +243,71 @@ public class wb_playtable extends JFrame {
 		panelJokerCards = new JPanel();
 		panelCardsSouth.add(panelJokerCards, BorderLayout.NORTH);
 		
-		btnJack = new JButton("Jack");
-		btnJack.setPreferredSize(new Dimension(100,220));
-		panelJokerCards.add(btnJack);
+				btnJack = new JButton("");
+				ImageIcon bube = new ImageIcon(getClass().getResource("img/Bube.jpg"));
+				bube.setImage(bube.getImage().getScaledInstance(150,220,Image.SCALE_DEFAULT)); 
+				btnJack.setIcon(bube);
+				btnJack.setPreferredSize(new Dimension(150,220));
+				panelJokerCards.add(btnJack);
+				
+				btnQueen = new JButton("");
+				ImageIcon queen = new ImageIcon(getClass().getResource("img/Dame.jpg"));
+				queen.setImage(queen.getImage().getScaledInstance(150,220,Image.SCALE_DEFAULT)); 
+				btnQueen.setIcon(queen);
+				btnQueen.setPreferredSize(new Dimension(150,220));
+				panelJokerCards.add(btnQueen);
+				
+				btnKing = new JButton("");
+				ImageIcon king = new ImageIcon(getClass().getResource("img/König.jpg"));
+				king.setImage(king.getImage().getScaledInstance(150,220,Image.SCALE_DEFAULT)); 
+				btnKing.setIcon(king);
+				btnKing.setPreferredSize(new Dimension(150,220));
+				panelJokerCards.add(btnKing);
 		
-		btnQueen = new JButton("Queen");
-		btnQueen.setPreferredSize(new Dimension(100,220));
-		panelJokerCards.add(btnQueen);
+		panelInfoUser1 = new JPanel();
+		panelCardsSouth.add(panelInfoUser1, BorderLayout.EAST);
+		panelInfoUser1.setLayout(new BorderLayout(0, 0));
 		
-		btnKing = new JButton("King");
-		btnKing.setPreferredSize(new Dimension(100,220));
-		panelJokerCards.add(btnKing);
+		panelAction = new JPanel();
+		panelInfoUser1.add(panelAction, BorderLayout.SOUTH);
+		
+				btnLegen = new JButton("legen");
+				panelAction.add(btnLegen);
+				
+				btnPassen = new JButton("passen");
+				panelAction.add(btnPassen);
+		
+		panelInfo = new JPanel();
+		panelInfoUser1.add(panelInfo, BorderLayout.NORTH);
+		panelInfo.setLayout(new GridLayout(4, 2, 0, 0));
+		
+		lblUsername = new JLabel("Username:");
+		lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
+		panelInfo.add(lblUsername);
+		
+		lblUserName1 = new JLabel("your name");
+		lblUserName1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserName1.setFont(new Font("Arial", Font.PLAIN, 13));
+		panelInfo.add(lblUserName1);
+		
+		lblScore = new JLabel("Score:");
+		lblScore.setHorizontalAlignment(SwingConstants.RIGHT);
+		panelInfo.add(lblScore);
+		
+		lblScoreUser1 = new JLabel("your Score");
+		lblScoreUser1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblScoreUser1.setFont(new Font("Arial", Font.PLAIN, 13));
+		panelInfo.add(lblScoreUser1);
+		
+		lblIsGeber1 = new JLabel("isGeber()");
+		lblIsGeber1.setHorizontalAlignment(SwingConstants.RIGHT);
+		panelInfo.add(lblIsGeber1);
+		
+		lblTitle = new JLabel("Haggis - Spieltisch");
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle.setFont(new Font("Arial", Font.BOLD, 30));
+		lblTitle.setPreferredSize(new Dimension(200,85));
+		contentPane.add(lblTitle, BorderLayout.NORTH);
 		
 		
 		GridBagConstraints gbcPlayercards = new GridBagConstraints();//Use GridBagConstraints to place the components
