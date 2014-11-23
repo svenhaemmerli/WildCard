@@ -41,8 +41,6 @@ public class wb_playtable extends JFrame {
 	private JButton btnLegen;
 	private JButton btnPassen;
 	private JPanel panelPlayerCard;
-	private ImageIcon playdesk = new ImageIcon(getClass().getResource("img/playtable.png"));
-	private ImageIcon icon = new ImageIcon(getClass().getResource("img/hand_otherplayer_s.png"));
 	private JPanel panelJokerCards;
 	private JButton btnJack;
 	private JButton btnQueen;
@@ -70,19 +68,9 @@ public class wb_playtable extends JFrame {
 	private JLabel lblIsGeber1;
 	private JLabel lblTitle;
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-	wb_playtable frame = new wb_playtable();
-					
-					frame.setVisible(true);
-				
-	}
+	private ImageIcon playdesk = new ImageIcon(getClass().getResource("img/playtable.png"));
+	private ImageIcon icon = new ImageIcon(getClass().getResource("img/hand_otherplayer_s.png"));
 
-	/**
-	 * Create the frame.
-	 */
 	public wb_playtable() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Haggis - WILDCARD");
@@ -113,41 +101,41 @@ public class wb_playtable extends JFrame {
 		panelCardsWest.add(panelUserInfo2, BorderLayout.SOUTH);
 		panelUserInfo2.setLayout(new GridLayout(4, 2, 0, 0));
 		
-		lblUser2 = new JLabel("Username:");
-		lblUser2.setHorizontalAlignment(SwingConstants.RIGHT);
-		panelUserInfo2.add(lblUser2);
-		
-		lblUser2Name = new JLabel("Name User2");
-		lblUser2Name.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUser2Name.setFont(new Font("Arial", Font.PLAIN,13));
-		panelUserInfo2.add(lblUser2Name);
-		
-		//place the number of cards onto the panelWestCards
-		lblCardsPlayer2 = new JLabel("Anzahl Karten:");
-		panelUserInfo2.add(lblCardsPlayer2);
-		//horizontal and vertical alignment
-		lblCardsPlayer2.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblCardsPlayer2.setHorizontalAlignment(SwingConstants.RIGHT);
-		//set the font to arial, size 13
-		
-		
-		lblAmtCardsUser2 = new JLabel("Anz. Karten");
-		lblAmtCardsUser2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAmtCardsUser2.setFont(new Font("Arial", Font.PLAIN,13));
-		panelUserInfo2.add(lblAmtCardsUser2);
-		
-		lblScoreUser2Static = new JLabel("Score:");
-		lblScoreUser2Static.setHorizontalAlignment(SwingConstants.RIGHT);
-		panelUserInfo2.add(lblScoreUser2Static);
-		
-		lblUser2Score = new JLabel("Score User2");
-		lblUser2Score.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUser2Score.setFont(new Font("Arial", Font.PLAIN,13));
-		panelUserInfo2.add(lblUser2Score);
-		
-		lblIsgeber2 = new JLabel("isGeber()");
-		lblIsgeber2.setHorizontalAlignment(SwingConstants.RIGHT);
-		panelUserInfo2.add(lblIsgeber2);
+				lblUser2 = new JLabel("Username:");
+				lblUser2.setHorizontalAlignment(SwingConstants.RIGHT);
+				panelUserInfo2.add(lblUser2);
+				
+				lblUser2Name = new JLabel("Name User2");
+				lblUser2Name.setHorizontalAlignment(SwingConstants.CENTER);
+				lblUser2Name.setFont(new Font("Arial", Font.PLAIN,13));
+				panelUserInfo2.add(lblUser2Name);
+				
+				//place the number of cards onto the panelWestCards
+				lblCardsPlayer2 = new JLabel("Anzahl Karten:");
+				panelUserInfo2.add(lblCardsPlayer2);
+				//horizontal and vertical alignment
+				lblCardsPlayer2.setVerticalAlignment(SwingConstants.BOTTOM);
+				lblCardsPlayer2.setHorizontalAlignment(SwingConstants.RIGHT);
+				//set the font to arial, size 13
+				
+				
+				lblAmtCardsUser2 = new JLabel("Anz. Karten");
+				lblAmtCardsUser2.setHorizontalAlignment(SwingConstants.CENTER);
+				lblAmtCardsUser2.setFont(new Font("Arial", Font.PLAIN,13));
+				panelUserInfo2.add(lblAmtCardsUser2);
+				
+				lblScoreUser2Static = new JLabel("Score:");
+				lblScoreUser2Static.setHorizontalAlignment(SwingConstants.RIGHT);
+				panelUserInfo2.add(lblScoreUser2Static);
+				
+				lblUser2Score = new JLabel("Score User2");
+				lblUser2Score.setHorizontalAlignment(SwingConstants.CENTER);
+				lblUser2Score.setFont(new Font("Arial", Font.PLAIN,13));
+				panelUserInfo2.add(lblUser2Score);
+				
+				lblIsgeber2 = new JLabel("isGeber()");
+				lblIsgeber2.setHorizontalAlignment(SwingConstants.RIGHT);
+				panelUserInfo2.add(lblIsgeber2);
 		
 		panelCardsEast = new JPanel();
 		contentPane.add(panelCardsEast, BorderLayout.EAST);
@@ -161,46 +149,46 @@ public class wb_playtable extends JFrame {
 		panelCardsEast.add(panelUserInfo3, BorderLayout.SOUTH);
 		panelUserInfo3.setLayout(new GridLayout(4, 2, 0, 0));
 		
-		lblUser3 = new JLabel("Username:");
-		lblUser3.setHorizontalAlignment(SwingConstants.RIGHT);
-		panelUserInfo3.add(lblUser3);
+				lblUser3 = new JLabel("Username:");
+				lblUser3.setHorizontalAlignment(SwingConstants.RIGHT);
+				panelUserInfo3.add(lblUser3);
+				
+				lblUser3Name = new JLabel("Name User3");
+				lblUser3Name.setHorizontalAlignment(SwingConstants.CENTER);
+				lblUser3Name.setFont(new Font("Arial", Font.PLAIN,13));
+				panelUserInfo3.add(lblUser3Name);
+				
+				lblCardsPlayer3 = new JLabel("Anzahl Karten:");
+				panelUserInfo3.add(lblCardsPlayer3);
+				lblCardsPlayer3.setVerticalAlignment(SwingConstants.BOTTOM);
+				lblCardsPlayer3.setHorizontalAlignment(SwingConstants.RIGHT);
+				
+				
+				lblAmtCardsUser3 = new JLabel("anz. Karten");
+				lblAmtCardsUser3.setHorizontalAlignment(SwingConstants.CENTER);
+				lblAmtCardsUser3.setFont(new Font("Arial", Font.PLAIN,13));
+				panelUserInfo3.add(lblAmtCardsUser3);
+				
+				lblScoreUser3Static = new JLabel("Score:");
+				lblScoreUser3Static.setHorizontalAlignment(SwingConstants.RIGHT);
+				panelUserInfo3.add(lblScoreUser3Static);
+				
+				lblUser3Score = new JLabel("Score User3");
+				lblUser3Score.setHorizontalAlignment(SwingConstants.CENTER);
+				lblUser3Score.setFont(new Font("Arial", Font.PLAIN,13));
+				panelUserInfo3.add(lblUser3Score);
+				
+				lblIsGeber3 = new JLabel("isGeber()");
+				lblIsGeber3.setHorizontalAlignment(SwingConstants.RIGHT);
+				panelUserInfo3.add(lblIsGeber3);
 		
-		lblUser3Name = new JLabel("Name User3");
-		lblUser3Name.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUser3Name.setFont(new Font("Arial", Font.PLAIN,13));
-		panelUserInfo3.add(lblUser3Name);
-		
-		lblCardsPlayer3 = new JLabel("Anzahl Karten:");
-		panelUserInfo3.add(lblCardsPlayer3);
-		lblCardsPlayer3.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblCardsPlayer3.setHorizontalAlignment(SwingConstants.RIGHT);
-		
-		
-		lblAmtCardsUser3 = new JLabel("anz. Karten");
-		lblAmtCardsUser3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAmtCardsUser3.setFont(new Font("Arial", Font.PLAIN,13));
-		panelUserInfo3.add(lblAmtCardsUser3);
-		
-		lblScoreUser3Static = new JLabel("Score:");
-		lblScoreUser3Static.setHorizontalAlignment(SwingConstants.RIGHT);
-		panelUserInfo3.add(lblScoreUser3Static);
-		
-		lblUser3Score = new JLabel("Score User3");
-		lblUser3Score.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUser3Score.setFont(new Font("Arial", Font.PLAIN,13));
-		panelUserInfo3.add(lblUser3Score);
-		
-		lblIsGeber3 = new JLabel("isGeber()");
-		lblIsGeber3.setHorizontalAlignment(SwingConstants.RIGHT);
-		panelUserInfo3.add(lblIsGeber3);
-		
+		//Spieltisch in der Mitte, mit den gespielten Karten darauf
 		panelPlayDesk = new JPanel();
 		panelPlayDesk.setBackground(new Color(0, 100, 0));
 		contentPane.add(panelPlayDesk, BorderLayout.CENTER);
 		GridBagLayout gblPanelPlayDesk = new GridBagLayout();
 		panelPlayDesk.setLayout(gblPanelPlayDesk);
 			
-		
 		
 		GridBagConstraints gbcPlayedCards = new GridBagConstraints();//Use GridBagConstraints to place the components
 		gbcPlayedCards.insets = new Insets(0,0,0,0);//top, left, bottom, right representation of the borders of a container. It specifies the space that a container must leave at each of its edges
@@ -214,13 +202,6 @@ public class wb_playtable extends JFrame {
 			panelPlayDesk.add(btnPlayedCard,gbcPlayedCards);
 		}
 		
-		
-		
-		/*
-		lblImgPlaydesk = new JLabel(playdesk);
-		lblImgPlaydesk.setPreferredSize(new Dimension(500, 500));
-		panelPlayDesk.add(lblImgPlaydesk, BorderLayout.CENTER);
-		*/
 		panelCardsSouth = new JPanel();
 		contentPane.add(panelCardsSouth, BorderLayout.SOUTH);
 		panelCardsSouth.setLayout(new BorderLayout());
@@ -266,7 +247,7 @@ public class wb_playtable extends JFrame {
 		
 		panelInfoUser1 = new JPanel();
 		panelCardsSouth.add(panelInfoUser1, BorderLayout.EAST);
-		panelInfoUser1.setLayout(new BorderLayout(0, 0));
+		panelInfoUser1.setLayout(new BorderLayout());
 		
 		panelAction = new JPanel();
 		panelInfoUser1.add(panelAction, BorderLayout.SOUTH);
@@ -281,27 +262,27 @@ public class wb_playtable extends JFrame {
 		panelInfoUser1.add(panelInfo, BorderLayout.NORTH);
 		panelInfo.setLayout(new GridLayout(4, 2, 0, 0));
 		
-		lblUsername = new JLabel("Username:");
-		lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
-		panelInfo.add(lblUsername);
-		
-		lblUserName1 = new JLabel("your name");
-		lblUserName1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserName1.setFont(new Font("Arial", Font.PLAIN, 13));
-		panelInfo.add(lblUserName1);
-		
-		lblScore = new JLabel("Score:");
-		lblScore.setHorizontalAlignment(SwingConstants.RIGHT);
-		panelInfo.add(lblScore);
-		
-		lblScoreUser1 = new JLabel("your Score");
-		lblScoreUser1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblScoreUser1.setFont(new Font("Arial", Font.PLAIN, 13));
-		panelInfo.add(lblScoreUser1);
-		
-		lblIsGeber1 = new JLabel("isGeber()");
-		lblIsGeber1.setHorizontalAlignment(SwingConstants.RIGHT);
-		panelInfo.add(lblIsGeber1);
+				lblUsername = new JLabel("Username:");
+				lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
+				panelInfo.add(lblUsername);
+				
+				lblUserName1 = new JLabel("your name");
+				lblUserName1.setHorizontalAlignment(SwingConstants.CENTER);
+				lblUserName1.setFont(new Font("Arial", Font.PLAIN, 13));
+				panelInfo.add(lblUserName1);
+				
+				lblScore = new JLabel("Score:");
+				lblScore.setHorizontalAlignment(SwingConstants.RIGHT);
+				panelInfo.add(lblScore);
+				
+				lblScoreUser1 = new JLabel("your Score");
+				lblScoreUser1.setHorizontalAlignment(SwingConstants.CENTER);
+				lblScoreUser1.setFont(new Font("Arial", Font.PLAIN, 13));
+				panelInfo.add(lblScoreUser1);
+				
+				lblIsGeber1 = new JLabel("isGeber()");
+				lblIsGeber1.setHorizontalAlignment(SwingConstants.RIGHT);
+				panelInfo.add(lblIsGeber1);
 		
 		lblTitle = new JLabel("Haggis - Spieltisch");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -322,7 +303,11 @@ public class wb_playtable extends JFrame {
 			panelPlayerCard.add(btn,gbcPlayercards);
 		}
 		
-		contentPane.setVisible(true);
+		setVisible(true);
 	}
-
+	
+	//Zum testen
+	public static void main(String[] args) {
+	wb_playtable frame = new wb_playtable();	
+	}
 }
