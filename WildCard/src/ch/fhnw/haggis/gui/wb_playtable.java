@@ -20,6 +20,7 @@ import java.awt.Color;
 
 import javax.swing.JButton;
 
+
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 
@@ -67,6 +68,8 @@ public class wb_playtable extends JFrame {
 	private JLabel lblScoreUser1;
 	private JLabel lblIsGeber1;
 	private JLabel lblTitle;
+	private JButton[] Cards;
+	private JButton[] playedCards;
 	
 	private ImageIcon playdesk = new ImageIcon(getClass().getResource("img/playtable.png"));
 	private ImageIcon icon = new ImageIcon(getClass().getResource("img/hand_otherplayer_s.png"));
@@ -193,6 +196,13 @@ public class wb_playtable extends JFrame {
 		GridBagConstraints gbcPlayedCards = new GridBagConstraints();//Use GridBagConstraints to place the components
 		gbcPlayedCards.insets = new Insets(0,0,0,0);//top, left, bottom, right representation of the borders of a container. It specifies the space that a container must leave at each of its edges
 		
+		playedCards = createCardButtons(playedCards, 8);
+		for(int i = 0; i < playedCards.length; i++){
+			//playedCards[i].setPreferredSize(new Dimension(100,200));
+			panelPlayDesk.add(playedCards[i], gbcPlayedCards);
+		}
+		
+		/*
 		//es gibt die Knöpfe aus, aber unter welchem Namen? kann es 14mal den button btn geben?
 		for(int i = 1;i<=8;i++){
 			JButton btnPlayedCard = new JButton("");
@@ -201,6 +211,7 @@ public class wb_playtable extends JFrame {
 			gbcPlayedCards.gridy = 0;
 			panelPlayDesk.add(btnPlayedCard,gbcPlayedCards);
 		}
+		*/
 		
 		panelCardsSouth = new JPanel();
 		contentPane.add(panelCardsSouth, BorderLayout.SOUTH);
@@ -294,6 +305,13 @@ public class wb_playtable extends JFrame {
 		GridBagConstraints gbcPlayercards = new GridBagConstraints();//Use GridBagConstraints to place the components
 		gbcPlayercards.insets = new Insets(0,0,0,0);//top, left, bottom, right representation of the borders of a container. It specifies the space that a container must leave at each of its edges
 		
+		Cards = createCardButtons(Cards,14);
+		for(int i = 0; i < Cards.length; i++){
+			//Cards[i].setPreferredSize(new Dimension(100,200));
+			panelPlayerCard.add(Cards[i], gbcPlayercards);
+		}
+		
+		/*
 		//es gibt die Knöpfe aus, aber unter welchem Namen? kann es 14mal den button btn geben?
 		for(int i = 1;i<=14;i++){
 			JButton btn = new JButton("");
@@ -302,9 +320,21 @@ public class wb_playtable extends JFrame {
 			gbcPlayercards.gridy = 0;
 			panelPlayerCard.add(btn,gbcPlayercards);
 		}
-		
+		*/
 		setVisible(true);
 	}
+	//Method generates a JButton-Array it needs an array to fill and an int with the number of buttons
+	private JButton[] createCardButtons(JButton[] karten, int anzahl ){
+		karten = new JButton[anzahl];
+		for(int i = 0; i < anzahl; i++){
+			karten[i] = new JButton();
+			karten[i].setPreferredSize(new Dimension(100,200));
+			
+		}
+		return karten;
+	}
+	
+
 	
 	//Zum testen
 	public static void main(String[] args) {
