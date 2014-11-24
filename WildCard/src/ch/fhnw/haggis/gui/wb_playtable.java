@@ -334,10 +334,11 @@ public class wb_playtable extends JFrame {
 		return karten;
 	}
 	
-
+	/*
 	
 	//Zum testen
 	public static void main(String[] args) {
 	wb_playtable frame = new wb_playtable();	
+	*/
 	}
-}
+//}
