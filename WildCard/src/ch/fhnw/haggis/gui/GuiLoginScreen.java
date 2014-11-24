@@ -97,10 +97,10 @@ public class GuiLoginScreen extends JFrame implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		String text = username.getText();
-		System.out.println(text);
+		String user = username.getText();
+		System.out.println(user);
 		dispose();
-		wb_playtable deskview = new wb_playtable();
+		wb_playtable deskview = new wb_playtable(user);
 	}
 
 	

@@ -74,7 +74,7 @@ public class wb_playtable extends JFrame {
 	private ImageIcon playdesk = new ImageIcon(getClass().getResource("img/playtable.png"));
 	private ImageIcon icon = new ImageIcon(getClass().getResource("img/hand_otherplayer_s.png"));
 
-	public wb_playtable() {
+	public wb_playtable(String username) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Haggis - WILDCARD");
 		setResizable(false);
@@ -277,7 +277,8 @@ public class wb_playtable extends JFrame {
 				lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
 				panelInfo.add(lblUsername);
 				
-				lblUserName1 = new JLabel("your name");
+				lblUserName1 = new JLabel("");
+				lblUserName1.setText(username);
 				lblUserName1.setHorizontalAlignment(SwingConstants.CENTER);
 				lblUserName1.setFont(new Font("Arial", Font.PLAIN, 13));
 				panelInfo.add(lblUserName1);
