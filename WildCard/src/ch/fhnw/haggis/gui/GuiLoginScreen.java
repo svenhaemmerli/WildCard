@@ -28,6 +28,7 @@ public class GuiLoginScreen extends JFrame implements ActionListener{
 	private JPanel panelSouthEast;
 	private JButton btnLogin;
 	private JLabel copyright;
+	private String checkname;
 
 	public GuiLoginScreen (){
 		setTitle("Haggis - WILDCARD");
@@ -98,11 +99,27 @@ public class GuiLoginScreen extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		String user = username.getText();
+		//testInput(user);
 		System.out.println(user);
+		//User myUser = new User(user);
+		//System.out.println(myUser.getName());
 		dispose();
 		wb_playtable deskview = new wb_playtable(user);
 	}
 
-	
-	
+	/*möglicher Test ob eingegebner Name max. 15 Zeichen ist */
+	/*
+	public void testInput(String name){
+		
+		this.checkname = name;
+		if(checkname.length() > 15){
+			System.out.println("Geben Sie einen Usernamen mit max. 15 Zeichen ein");
+		}
+		else{
+			String user = username.getText();
+			dispose();
+			wb_playtable deskview = new wb_playtable(user);
+		}
+	}
+	*/
 }
