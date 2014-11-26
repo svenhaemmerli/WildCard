@@ -5,7 +5,7 @@ import java.util.*;
 public class Gameplay{
 
 	public int points;
-	public int actualPlayer;
+	
 
 	
 	public String shuffleCards (Deck d){ //Deck mischen
@@ -57,6 +57,11 @@ public Hand distributeJoker (JokerDeck a, Hand h){
 		return h; 
 		
 	}
+
+public Hand playCards(Hand h){
+	
+	return h;
+}
 	
 	public static void main(String[] args) {
 		
