@@ -2,6 +2,7 @@ package ch.fhnw.haggis.client;
 
 //Client
 import java.io.*;
+import ch.fhnw.haggis.server.*;
 import java.net.*;
 
 
@@ -12,7 +13,7 @@ public class Client {
 	public ObjectInputStream input;
 	public ObjectOutputStream output;
 	public String address;
-	public Object rob;
+	public int [] rob = {5};
 	
 
 	// Make connection to server
@@ -25,36 +26,35 @@ public class Client {
 			cSocket = new Socket("localhost", 5000);
 			System.out.println("Client gestartet");
 			
+			Gameplay g1 = new Gameplay();
+			
+				
+			
 			//Instanciate Object input and output stream
 			
-			input = new ObjectInputStream(cSocket.getInputStream());
-					
+								
 			output = new ObjectOutputStream(cSocket.getOutputStream());
-		} 
-		catch (IOException e) {
-			e.printStackTrace();
-		}
 		
-		try {
-			rob = input.readObject();
-			if (rob!= null){
-							
-			System.out.println("Listenelement: "+ rob);
-		}
-		
+			output.writeObject(g1);
+			output.flush();
 			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Objekt versendet");
+			
+			output.close();
+			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
+	
+	
 		
 		public static void main(String args[]) {
-		
+			
+
 			Client c = new Client ();
 			c.startClient();
 			

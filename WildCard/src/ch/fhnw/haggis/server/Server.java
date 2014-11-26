@@ -1,11 +1,14 @@
 package ch.fhnw.haggis.server;
 
+
 import java.net.*;
+
 import java.io.*;
 
-import ch.fhnw.haggis.client.Client;
+import ch.fhnw.haggis.gui.*;
 
-public class Server {
+
+public class Server implements Runnable{
 
 	private Player players[];
 	private ServerSocket sSocket;
@@ -13,42 +16,60 @@ public class Server {
 	public Socket cSocket;
 	public ObjectInputStream input;
 	public ObjectOutputStream output;
+	public Thread t;
+	Gameplay[] Game;
+	//public Object c;
 	
 	
-	
-	public Server() {
+	public void run() {
 
 		players = new Player[3];
+		Object object;
 
 		// ServerSocket
 		try {
 			sSocket = new ServerSocket(5000);
 			System.out.println("Server gestartet");
 			
+			while (true){
 			cSocket = sSocket.accept();
 			
 			//Instanciate Object input and output stream
 			
 			input = new ObjectInputStream(cSocket.getInputStream());
-					
-			output = new ObjectOutputStream(cSocket.getOutputStream());
 			
-			Card ob = new Card ("joker_queen1",3,12,"joker");
-			output.writeObject(ob);
-			output.flush();
-			System.out.println("Objekt gesendet");
+			object =  input.readObject();
 			
+			Object GuiLoginScreen;
+			if (object instanceof Gameplay[]){
+				System.out.println("du bist ein GameplayObjekt");
+				GuiLoginScreen gui = new GuiLoginScreen();
+			}				
+		
+			input.close();
+			}
+		
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
 
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
 
 	public static void main(String args[]) {
-		Server game = new Server();
+		
+		Server s = new Server();
+	
+		Thread t = new Thread(s);
+		t.start();
+
+		
+		
 	
 	}
 }
