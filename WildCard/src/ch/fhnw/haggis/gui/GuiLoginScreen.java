@@ -100,7 +100,7 @@ public class GuiLoginScreen extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent ae) {
 		String user = username.getText();
 		//testInput(user);
-		System.out.println(user);
+		//System.out.println(user);
 		//User myUser = new User(user);
 		//System.out.println(myUser.getName());
 		dispose();

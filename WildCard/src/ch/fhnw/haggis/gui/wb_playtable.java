@@ -278,7 +278,7 @@ public class wb_playtable extends JFrame {
 				panelInfo.add(lblUsername);
 				
 				lblUserName1 = new JLabel("");
-				lblUserName1.setText(username);
+				lblUserName1.setText(username); //um den Text zu setzen
 				lblUserName1.setHorizontalAlignment(SwingConstants.CENTER);
 				lblUserName1.setFont(new Font("Arial", Font.PLAIN, 13));
 				panelInfo.add(lblUserName1);

@@ -14,6 +14,7 @@ class Player extends Thread {
 	private int number;
 	private char mark;
 	protected boolean threadSuspended = true;
+	private String username;
 
 	public Player(Socket s, WildCardServer t, int num) {
 		mark = (num == 0 ? 'X' : 'O');
