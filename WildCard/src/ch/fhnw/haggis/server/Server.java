@@ -5,6 +5,8 @@ import java.net.*;
 
 import java.io.*;
 
+import ch.fhnw.haggis.gui.*;
+
 
 public class Server implements Runnable{
 
@@ -15,12 +17,14 @@ public class Server implements Runnable{
 	public ObjectInputStream input;
 	public ObjectOutputStream output;
 	public Thread t;
-	public int [] c;
+	Gameplay[] Game;
+	//public Object c;
 	
 	
 	public void run() {
 
 		players = new Player[3];
+		Object object;
 
 		// ServerSocket
 		try {
@@ -34,9 +38,13 @@ public class Server implements Runnable{
 			
 			input = new ObjectInputStream(cSocket.getInputStream());
 			
-			c = (int[]) input.readObject();	
-			System.out.println("Listenelement: "+ c[0]);
-									
+			object =  input.readObject();
+			
+			Object GuiLoginScreen;
+			if (object instanceof Gameplay[]){
+				System.out.println("du bist ein GameplayObjekt");
+				GuiLoginScreen gui = new GuiLoginScreen();
+			}				
 		
 			input.close();
 			}

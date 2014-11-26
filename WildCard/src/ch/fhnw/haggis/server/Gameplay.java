@@ -5,8 +5,7 @@ import java.util.*;
 public class Gameplay{
 
 	public int points;
-	
-
+		
 	
 	public String shuffleCards (Deck d){ //Deck mischen
 	
@@ -58,6 +57,7 @@ public Hand distributeJoker (JokerDeck a, Hand h){
 		
 	}
 
+
 public Hand playCards(Hand h){
 	
 	return h;
@@ -88,18 +88,17 @@ public Hand playCards(Hand h){
 		h2 = g.distributeJoker(a,h2);
 		h3 = g.distributeJoker(a,h3);
 		
+		//Player instanzieren
+		
+		playerWildcard p2 = new playerWildcard(1, 1, true, h1);
+		System.out.println(p2.getID());
+		
 		Iterator<Card> c = d.deck.iterator(); //Restkarten im Deck
 		while (c.hasNext()){
 			System.out.println("Listenelement: "+c.next().getName());
 		}
-		
-		
-		
-		
-		
-		
-		
+				
 	}
-
+	
 
 }

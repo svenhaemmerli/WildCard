@@ -2,6 +2,7 @@ package ch.fhnw.haggis.client;
 
 //Client
 import java.io.*;
+import ch.fhnw.haggis.server.*;
 import java.net.*;
 
 
@@ -25,12 +26,16 @@ public class Client {
 			cSocket = new Socket("localhost", 5000);
 			System.out.println("Client gestartet");
 			
+			Gameplay g1 = new Gameplay();
+			
+				
+			
 			//Instanciate Object input and output stream
 			
 								
 			output = new ObjectOutputStream(cSocket.getOutputStream());
 		
-			output.writeObject(rob);
+			output.writeObject(g1);
 			output.flush();
 			
 			System.out.println("Objekt versendet");
@@ -44,6 +49,8 @@ public class Client {
 		}
 		
 	}
+	
+	
 		
 		public static void main(String args[]) {
 			
