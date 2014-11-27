@@ -1,202 +1,144 @@
 package ch.fhnw.haggis.server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-//Player class 
-class Player extends Thread {
-	private Socket connection;
-	private DataInputStream input;
-	private DataOutputStream output;
-	private WildCardServer control;
-	private int number;
-	private char mark;
-	protected boolean threadSuspended = true;
-	private String username;
 
-	public Player(Socket s, WildCardServer t, int num) {
-		mark = (num == 0 ? 'X' : 'O');
+public class Player
+    extends Thread
+{
+    private Socket connection;
+    private ObjectInputStream input;
+    private ObjectOutputStream output;
+    private Server server;
+    private boolean threadSuspended = true;
 
-		connection = s;
+    private int userId;
 
-		try {
-			input = new DataInputStream(connection.getInputStream());
-			output = new DataOutputStream(connection.getOutputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+    public Player(Socket socket, Server server, int userId)
+    {
+        this.userId = userId;
 
-		control = t;
-		number = num;
-		public void otherPlayerMoved(int loc) {
-			try {
-				output.writeUTF("Opponent moved");
-				output.writeInt(loc);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+        connection = socket;
 
-		public void run() {
-			boolean done = false;
+        try
+        {
+            input = new ObjectInputStream(connection.getInputStream());
+            output = new ObjectOutputStream(connection.getOutputStream());
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
 
-			try {
-				control.display("Player " + (number == 0 ? 'X' : 'O')
-						+ " connected");
-				output.writeChar(mark);
-				output.writeUTF("Player "
-						+ (number == 0 ? "X connected\n"
-								: "O connected, please wait\n"));
+        this.server = server;
+    }
 
-				// wait for other player to join
-				if (mark == 'X') {
-					output.writeUTF("Waiting for another player");
+    /**
+     * Method to notify this Player that an opponent moved.
+     */
+    public void playerMoved(int playerWithLastMove)
+    {
+        System.out.println("playerMoved " + playerWithLastMove + ", userId=" + userId);
+        if (userId != playerWithLastMove)
+        {
+            try
+            {
+                output.writeObject("Player " + playerWithLastMove + " moved");
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
 
-					try {
-						synchronized (this) {
-							while (threadSuspended)
-								wait();
-						}
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+    public void run()
+    {
+        try
+        {
+            SpieldatenResponse response = new SpieldatenResponse();
+            
+            server.display("Player " + userId + " connected");
+            System.out.println("Player " + userId + " connected");
 
-					output.writeUTF("Other player connected. Your move.");
-				}
+            // output.writeChar(mark);
+            response.setMessage("Next Player connected please wait\n");
+            output.writeObject(response);
+            System.out.println("Player " + userId + " connected");
 
-				// Play game
-				while (!done) {
-					int location = input.readInt();
+            // wait for other player to join
+            // if (mark == 'X') {
+            response.setMessage("Waiting for another player");
+            output.writeObject(response);
+            System.out.println("Waiting for another player");
 
-					if (control.validMove(location, number)) {
-						control.display("loc: " + location);
-						output.writeUTF("Valid move.");
-					} else
-						output.writeUTF("Invalid move, try again");
+            try
+            {
+                synchronized (this)
+                {
+                    System.out.println("Suspending thread " + threadSuspended  + ", userId=" + userId);
+                    while (threadSuspended)
+                        wait();
+                }
+                System.out.println("Thread released, userId=" + userId);
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
 
-					if (control.gameOver())
-						done = true;
-				}
+            response.setMessage("All players connected. Your move.");
+            output.writeObject(response);
+            System.out.println("All players connected, userId=" + userId);
+            // }
 
-				connection.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.exit(1);
-			}
-		}	public void otherPlayerMoved(int loc) {
-			try {
-				output.writeUTF("Opponent moved");
-				output.writeInt(loc);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+            // Play game
+            while (!server.gameOver())
+            {
+                SpieldatenRequest request = (SpieldatenRequest) input.readObject();
 
-		public void run() {
-			boolean done = false;
+                // spieler wählt karten
 
-			try {
-				control.display("Player " + (number == 0 ? 'X' : 'O')
-						+ " connected");
-				output.writeChar(mark);
-				output.writeUTF("Player "
-						+ (number == 0 ? "X connected\n"
-								: "O connected, please wait\n"));
+                if (server.validMove(request, userId))
+                {
+                    server.display("loc: " + request);
+                    output.writeObject("Valid move.");
+                }
+                else
+                {
+                    output.writeObject("Invalid move, try again");
+                }
 
-				// wait for other player to join
-				if (mark == 'X') {
-					output.writeUTF("Waiting for another player");
+            }
 
-					try {
-						synchronized (this) {
-							while (threadSuspended)
-								wait();
-						}
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+            connection.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
 
-					output.writeUTF("Other player connected. Your move.");
-				}
+    }
 
-				// Play game
-				while (!done) {
-					int location = input.readInt();
+    public void setThreadSuspended(boolean threadSuspended)
+    {
+        this.threadSuspended = threadSuspended;
+    }
 
-					if (control.validMove(location, number)) {
-						control.display("loc: " + location);
-						output.writeUTF("Valid move.");
-					} else
-						output.writeUTF("Invalid move, try again");
+    @Override
+    public String toString()
+    {
+        return "Player [threadSuspended=" + threadSuspended + ", userId=" + userId + "]";
+    }
 
-					if (control.gameOver())
-						done = true;
-				}
-
-				connection.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.exit(1);
-			}
-			}
-
-	public void otherPlayerMoved(int loc) {
-		try {
-			output.writeUTF("Opponent moved");
-			output.writeInt(loc);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void run() {
-		boolean done = false;
-
-		try {
-			control.display("Player " + (number == 0 ? 'X' : 'O')
-					+ " connected");
-			output.writeChar(mark);
-			output.writeUTF("Player "
-					+ (number == 0 ? "X connected\n"
-							: "O connected, please wait\n"));
-
-			// wait for other player to join
-			if (mark == 'X') {
-				output.writeUTF("Waiting for another player");
-
-				try {
-					synchronized (this) {
-						while (threadSuspended)
-							wait();
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-
-				output.writeUTF("Other player connected. Your move.");
-			}
-
-			// Play game
-			while (!done) {
-				int location = input.readInt();
-
-				if (control.validMove(location, number)) {
-					control.display("loc: " + location);
-					output.writeUTF("Valid move.");
-				} else
-					output.writeUTF("Invalid move, try again");
-
-				if (control.gameOver())
-					done = true;
-			}
-
-			connection.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-	}
 }
