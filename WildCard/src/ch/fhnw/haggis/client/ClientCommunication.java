@@ -5,7 +5,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import ch.fhnw.haggis.server.SpieldatenRequest;
+import ch.fhnw.haggis.server.SpieldatenResponse;
 
+
+/**
+ * Communication for the Client.
+ */
 public class ClientCommunication
 {
     private Socket socket;
@@ -17,8 +23,8 @@ public class ClientCommunication
         try
         {
             socket = new Socket("localhost", 6789);
-            input = new ObjectInputStream(socket.getInputStream());
             output = new ObjectOutputStream(socket.getOutputStream());
+            input = new ObjectInputStream(socket.getInputStream());
         }
         catch (IOException e)
         {
@@ -26,23 +32,21 @@ public class ClientCommunication
         }
     }
 
-    public ObjectInputStream getInput()
+    /**
+     * Send the SpieldatenRequest to the server.
+     */
+    public void sendToServer(SpieldatenRequest request) throws IOException
     {
-        return input;
+        output.writeObject(request);
+        output.flush();
     }
 
-    public void setInput(ObjectInputStream input)
+    /**
+     * Read the SpieldatenResponse from the server.
+     */
+    public SpieldatenResponse readFromServer() throws IOException, ClassNotFoundException
     {
-        this.input = input;
+        return (SpieldatenResponse) input.readObject();
     }
 
-    public ObjectOutputStream getOutput()
-    {
-        return output;
-    }
-
-    public void setOutput(ObjectOutputStream output)
-    {
-        this.output = output;
-    }
 }

@@ -136,10 +136,10 @@ public class GuiLoginScreen
         Hand myHand = null;
         try
         {
-            SpieldatenResponse response = (SpieldatenResponse) clientCommunication.getInput()
-                .readObject();
+            SpieldatenResponse response = clientCommunication.readFromServer();
             message = response.getMessage();
             myHand = response.getMyHand();
+            System.out.println("Message from server " + response);
             // TODO message z.B. "waiting for users" auf GUI anzeigen
         }
         catch (IOException e)

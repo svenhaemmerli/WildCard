@@ -1,17 +1,13 @@
 package ch.fhnw.haggis.server;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 
 public class Player
     extends Thread
 {
-    private Socket connection;
-    private ObjectInputStream input;
-    private ObjectOutputStream output;
+    private ServerCommunication serverCommunication;
     private Server server;
     private boolean threadSuspended = true;
 
@@ -20,21 +16,8 @@ public class Player
     public Player(Socket socket, Server server, int userId)
     {
         this.userId = userId;
-
-        connection = socket;
-
-        try
-        {
-            input = new ObjectInputStream(connection.getInputStream());
-            output = new ObjectOutputStream(connection.getOutputStream());
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            System.exit(1);
-        }
-
         this.server = server;
+        serverCommunication = new ServerCommunication(socket);
     }
 
     /**
@@ -42,12 +25,14 @@ public class Player
      */
     public void playerMoved(int playerWithLastMove)
     {
-        System.out.println("playerMoved " + playerWithLastMove + ", userId=" + userId);
+        server.logToServer("playerMoved " + playerWithLastMove + ", userId=" + userId);
         if (userId != playerWithLastMove)
         {
             try
             {
-                output.writeObject("Player " + playerWithLastMove + " moved");
+                SpieldatenResponse response = new SpieldatenResponse();
+                response.setMessage("Player " + playerWithLastMove + " moved");
+                serverCommunication.sendToClient(response);
             }
             catch (IOException e)
             {
@@ -61,30 +46,25 @@ public class Player
         try
         {
             SpieldatenResponse response = new SpieldatenResponse();
-            
-            server.display("Player " + userId + " connected");
-            System.out.println("Player " + userId + " connected");
 
-            // output.writeChar(mark);
-            response.setMessage("Next Player connected please wait\n");
-            output.writeObject(response);
-            System.out.println("Player " + userId + " connected");
+            server.logToServer("Player " + userId + " connected");
+
+            response.setMessage("Next Player connected. Waiting for another player.");
+            serverCommunication.sendToClient(response);
+            server.logToServer("Player " + userId + " connected");
 
             // wait for other player to join
-            // if (mark == 'X') {
-            response.setMessage("Waiting for another player");
-            output.writeObject(response);
-            System.out.println("Waiting for another player");
+            // if (server. == 'X') {
 
             try
             {
                 synchronized (this)
                 {
-                    System.out.println("Suspending thread " + threadSuspended  + ", userId=" + userId);
+                    server.logToServer("Suspending thread " + threadSuspended + ", userId=" + userId);
                     while (threadSuspended)
                         wait();
                 }
-                System.out.println("Thread released, userId=" + userId);
+                server.logToServer("Thread released, userId=" + userId);
             }
             catch (InterruptedException e)
             {
@@ -92,30 +72,32 @@ public class Player
             }
 
             response.setMessage("All players connected. Your move.");
-            output.writeObject(response);
-            System.out.println("All players connected, userId=" + userId);
+            serverCommunication.sendToClient(response);
+            server.logToServer("All players connected, userId=" + userId);
             // }
 
             // Play game
             while (!server.gameOver())
             {
-                SpieldatenRequest request = (SpieldatenRequest) input.readObject();
+                SpieldatenRequest request = serverCommunication.readFromClient();
 
                 // spieler wählt karten
 
                 if (server.validMove(request, userId))
                 {
-                    server.display("loc: " + request);
-                    output.writeObject("Valid move.");
+                    server.logToServer("loc: " + request);
+                    response.setMessage("Valid move.");
+                    serverCommunication.sendToClient(response);
                 }
                 else
                 {
-                    output.writeObject("Invalid move, try again");
+                    response.setMessage("Invalid move, try again");
+                    serverCommunication.sendToClient(response);
                 }
 
             }
 
-            connection.close();
+            serverCommunication.close();
         }
         catch (IOException e)
         {

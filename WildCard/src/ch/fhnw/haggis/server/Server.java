@@ -2,14 +2,13 @@ package ch.fhnw.haggis.server;
 
 import java.net.Inet4Address;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 
 public class Server
 {
     private Player[] players;
     private int currentPlayer;
-
-    // private ServerSocket serverSocket;
 
     private ServerGui serverGui;
     private Gameplay gameplay;
@@ -42,20 +41,21 @@ public class Server
     public void run() throws Exception
     {
         ServerSocket serverSocket = new ServerSocket(6789);
-        serverGui.writeLog("Server running on IP: " + Inet4Address.getLocalHost().getHostAddress());
-        serverGui.writeLog("Waiting for connections...");
+        logToServer("Server running on IP: " + Inet4Address.getLocalHost().getHostAddress());
+        logToServer("Waiting for connections...");
 
         // creating the 3 connections
         for (int i = 0; i < players.length; i++)
         {
             int userId = i;
-            System.out.println("Waiting to create connection for user " + userId);
+            logToServer("Waiting to create connection for user " + userId);
 
-            players[i] = new Player(serverSocket.accept(), this, userId);
-            System.out.println("Created connection for user " + userId);
+            Socket connectionSocket = serverSocket.accept();
+            players[i] = new Player(connectionSocket, this, userId);
+            logToServer("Created connection for user " + userId);
             players[i].start();
 
-            System.out.println("Started thread for user " + userId);
+            logToServer("Started thread for user " + userId);
         }
         // as soon as all players are connected we start with player zero
         synchronized (players[0])
@@ -64,19 +64,14 @@ public class Server
             players[0].setThreadSuspended(false);
             // notify the thread of the player to continue
             players[0].notify();
-            System.out.println("Notify");
+            logToServer("Notify");
         }
-    }
-
-    public void display(String message)
-    {
-        serverGui.writeLog(message);
     }
 
     // // valid / invalid
     public synchronized boolean validMove(SpieldatenRequest request, int userId)
     {
-        System.out.println("Valid move, user=" + userId);
+        logToServer("Valid move, user=" + userId);
         // boolean moveDone = false;
 
         // only proceed if request if from current user
@@ -84,7 +79,7 @@ public class Server
         {
             try
             {
-                System.out.println("Waiting userId=" + userId);
+                logToServer("Waiting userId=" + userId);
                 wait();
             }
             catch (InterruptedException e)
@@ -93,7 +88,7 @@ public class Server
             }
         }
 
-        System.out.println("Process gameplay request, userId=" + userId);
+        logToServer("Process gameplay request, userId=" + userId);
 
         // logik des spiels
         boolean ok = gameplay.processRequest(request);
@@ -114,19 +109,27 @@ public class Server
             return false;
     }
 
-//    public boolean isOccupied(int loc)
-//    {
-//        System.out.println("isOccupied");
-//        // if (board[loc] == 'X' || board[loc] == 'O')
-//        // return true;
-//        // else
-//        return false;
-//    }
+    // public boolean isOccupied(int loc)
+    // {
+    // logToServer("isOccupied");
+    // // if (board[loc] == 'X' || board[loc] == 'O')
+    // // return true;
+    // // else
+    // return false;
+    // }
 
     public boolean gameOver()
     {
 
         return false;
+    }
+
+    /**
+     * Write a message to the GUI of the server.
+     */
+    public void logToServer(String message)
+    {
+        serverGui.writeLog(message);
     }
 
 }

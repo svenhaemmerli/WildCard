@@ -23,7 +23,7 @@ public class Gameplay
 
     public void initializeGame()
     {
-        System.out.println("Initializing game...");
+        serverGui.writeLog("Initializing game...");
         // prepare deck
         deck = new Deck();
         Collections.shuffle(deck.getDeck());

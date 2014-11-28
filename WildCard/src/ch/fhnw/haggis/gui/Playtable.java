@@ -365,8 +365,9 @@ public class Playtable
         {
             try
             {
-                SpieldatenResponse response = (SpieldatenResponse) clientCommunication.getInput()
-                    .readObject();
+                SpieldatenResponse response = clientCommunication.readFromServer();
+                
+                System.out.println("Message from server " + response);
 
                 // response.getMyCards();
             }
