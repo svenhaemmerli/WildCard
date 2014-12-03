@@ -1,11 +1,14 @@
 package ch.fhnw.haggis.server;
 
+import javax.swing.ImageIcon;
+
 public class Card
 {
     private String name;
     private int value;
     private int points;
     private String suit;
+    private ImageIcon icon;
 
     /**
      * @param name
@@ -13,13 +16,14 @@ public class Card
      * @param rang
      * @param farbe
      */
-    public Card(String name, int punktwert, int rang, String farbe)
+    public Card(String name, int punktwert, int rang, String farbe, ImageIcon icon)
     {
         super();
         this.name = name;
         this.value = punktwert;
         this.points = rang;
         this.suit = farbe;
+        this.icon = icon;
     }
 
     public Card()
@@ -66,4 +70,14 @@ public class Card
     {
         this.suit = suit;
     }
+
+	public ImageIcon getIcon() {
+		return icon;
+	}
+
+	public void setIcon(ImageIcon icon) {
+		this.icon = icon;
+	}
+    
+    
 }
