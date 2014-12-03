@@ -17,7 +17,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 import ch.fhnw.haggis.client.ClientCommunication;
 import ch.fhnw.haggis.server.Hand;
@@ -71,7 +73,7 @@ public class Playtable
     private JLabel lblScoreUser1;
     private JLabel lblIsGeber1;
     private JLabel lblTitle;
-    private JButton[] cards;
+    private JToggleButton[] cards;
     private JButton[] playedCards;
 
     private ImageIcon playdesk = new ImageIcon(getClass().getResource("img/playtable.png"));
@@ -210,19 +212,14 @@ public class Playtable
                                                        // the space that a container must leave at
                                                        // each of its edges
 
-        playedCards = createCardButtons(playedCards, 8);
+        playedCards = createPlayedCardButtons(playedCards, 8);
         for (int i = 0; i < playedCards.length; i++)
         {
             // playedCards[i].setPreferredSize(new Dimension(100,200));
             panelPlayDesk.add(playedCards[i], gbcPlayedCards);
         }
 
-        /*
-         * //es gibt die Kn�pfe aus, aber unter welchem Namen? kann es 14mal den button btn geben?
-         * for(int i = 1;i<=8;i++){ JButton btnPlayedCard = new JButton("");
-         * btnPlayedCard.setPreferredSize(new Dimension(100,220)); gbcPlayedCards.gridx = i-1;
-         * gbcPlayedCards.gridy = 0; panelPlayDesk.add(btnPlayedCard,gbcPlayedCards); }
-         */
+   
 
         panelCardsSouth = new JPanel();
         contentPane.add(panelCardsSouth, BorderLayout.SOUTH);
@@ -321,7 +318,7 @@ public class Playtable
                                                        // the space that a container must leave at
                                                        // each of its edges
 
-        cards = createCardButtons(cards, 14);
+        cards = createToggleCardButtons(cards, 14);
         for (int i = 0; i < cards.length; i++)
         {
             // Cards[i].setPreferredSize(new Dimension(100,200));
@@ -342,7 +339,19 @@ public class Playtable
 
     // Method generates a JButton-Array it needs an array to fill and an int with the number of
     // buttons
-    private JButton[] createCardButtons(JButton[] karten, int anzahl)
+    private JToggleButton[] createToggleCardButtons(JToggleButton[] karten, int anzahl)
+    {
+        karten = new JToggleButton[anzahl];
+        for (int i = 0; i < anzahl; i++)
+        {
+            karten[i] = new JToggleButton();
+            karten[i].setPreferredSize(new Dimension(100, 200));
+
+        }
+        return karten;
+    }
+    
+    private JButton[] createPlayedCardButtons(JButton[] karten, int anzahl)
     {
         karten = new JButton[anzahl];
         for (int i = 0; i < anzahl; i++)
