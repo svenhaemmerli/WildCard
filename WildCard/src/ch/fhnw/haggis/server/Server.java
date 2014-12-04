@@ -109,7 +109,7 @@ public class Server
         logToServer("Process gameplay request, userId=" + userId);
 
         // logik des spiels
-        boolean ok = gameplay.processRequest(request);
+        boolean ok = gameplay.processRequest(request, null);
 
         if (ok)
         {

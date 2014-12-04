@@ -30,7 +30,7 @@ public class Gameplay
         serverGui.writeLog("Initializing game...");
     }
 
-    public boolean processRequest(SpieldatenRequest spieldaten)
+    public boolean processRequest(SpieldatenRequest spieldaten, Hand myHand)
     {
     	
     	if(spieldaten.getMessage().equals("ready")){
@@ -41,6 +41,9 @@ public class Gameplay
     	
         //serverGui.writeLog("hand: " + spieldaten.getMyHand().getHand().get(0));
         serverGui.writeLog("Hand ist im processRequest");
+        spieldaten.setMessage("ready");
+        spieldaten.setMyHand(myHand);
+        
         
         return true;
     	}
