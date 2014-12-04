@@ -16,6 +16,7 @@ public class Server
     
     public Deck deck;
     public JokerDeck jdeck;
+    public Hand myHand;
     
 
     public static void main(String args[])
@@ -62,7 +63,7 @@ public class Server
         {
             int userId = i;
                         
-            Hand myHand = new Hand (deck,jdeck);
+            myHand = new Hand (deck,jdeck);
             logToServer("Waiting to create connection for user " + userId);
 
             Socket connectionSocket = serverSocket.accept();
@@ -109,7 +110,7 @@ public class Server
         logToServer("Process gameplay request, userId=" + userId);
 
         // logik des spiels
-        boolean ok = gameplay.processRequest(request, null);
+        boolean ok = gameplay.processRequest(request, myHand);
 
         if (ok)
         {
