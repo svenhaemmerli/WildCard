@@ -500,15 +500,22 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 				if(response.getMessage().equals("ready")){
 					System.out.println("Message from server " + response); 
 					
-					//System.out.println("Karte von Hand: " + response.getMyHand().getHand().get(0).getName());
+					for(int m = 0; m <= response.getMyHand().getHand().size()-1; m++){
+					
+					
+					System.out.println("Karte von Hand: " + response.getMyHand().getHand().get(m).getName());
+					}
+					
 					int i = response.getMyHand().getHand().size();
 					
 					
 					cards = createToggleCardButtons(cards, i );
-					for (int j = 0; j < cards.length; j++) {
+					for (int j = 0; j < i; j++) {
 						cards[j].setIcon(response.getMyHand().getHand().get(j).getIcon());
 						panelPlayerCard.add(cards[j], gbcPlayercards);
 					}
+					
+					
 				/**
 				 * Handle an invalid move	
 				 */

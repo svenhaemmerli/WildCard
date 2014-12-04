@@ -1,5 +1,6 @@
 package ch.fhnw.haggis.server;
 
+import java.awt.Image;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -12,8 +13,14 @@ public class JokerDeck {
 		//Alle Joker karten importieren
     	
     	ImageIcon bube = new ImageIcon(getClass().getResource("images/Bube.jpg"));
+    	bube.setImage(bube.getImage().getScaledInstance(150, 220,
+				Image.SCALE_DEFAULT));
     	ImageIcon dame = new ImageIcon(getClass().getResource("images/Dame.jpg"));
+    	dame.setImage(dame.getImage().getScaledInstance(150, 220,
+				Image.SCALE_DEFAULT));
     	ImageIcon koenig = new ImageIcon(getClass().getResource("images/König.jpg"));
+    	koenig.setImage(koenig.getImage().getScaledInstance(150, 220,
+				Image.SCALE_DEFAULT));
     	
         joker.add(new Card("joker_jack1", 2, 11, "joker", bube));
         joker.add(new Card("joker_queen1", 3, 12, "joker", dame));
