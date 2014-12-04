@@ -37,6 +37,7 @@ public class ServerCommunication
     {
         output.writeObject(response);
         output.flush();
+        output.reset();
     }
 
     /**
