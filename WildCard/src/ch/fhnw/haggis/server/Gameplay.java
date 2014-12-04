@@ -33,7 +33,7 @@ public class Gameplay
     public boolean processRequest(SpieldatenRequest spieldaten)
     {
     	
-    	if(spieldaten.getMessage().equals("bereit")){
+    	if(spieldaten.getMessage().equals("ready")){
     	
 //        Hand myHand = new Hand(deck);
 //        Hand h = distributeCard(deck, myHand);
