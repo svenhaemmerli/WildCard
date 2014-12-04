@@ -17,6 +17,7 @@ public class Server
     public Deck deck;
     public JokerDeck jdeck;
     public Hand myHand;
+    public int score;
     
 
     public static void main(String args[])
@@ -46,6 +47,7 @@ public class Server
         jdeck = new JokerDeck();
         deck = new Deck();
         Collections.shuffle(deck.getDeck());
+        score = 0;
         
         
     }
@@ -67,7 +69,7 @@ public class Server
             logToServer("Waiting to create connection for user " + userId);
 
             Socket connectionSocket = serverSocket.accept();
-            players[i] = new Player(connectionSocket, this, userId, myHand);
+            players[i] = new Player(connectionSocket, this, userId, myHand, score);
             logToServer("Created connection for user " + userId);
             players[i].start();
 
