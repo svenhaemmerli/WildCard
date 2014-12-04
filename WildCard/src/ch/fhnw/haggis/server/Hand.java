@@ -17,7 +17,7 @@ public class Hand implements Serializable
     
     public ArrayList<Card> pod = new ArrayList<Card>(); // pod cards
     
-    public Hand (Deck d){
+    public Hand (Deck d, JokerDeck a){
     	
     	while (d.getDeck().isEmpty() != true && this.hand.size() < 14)
         {
@@ -33,6 +33,20 @@ public class Hand implements Serializable
         }
 
         System.out.println("Ende hand ohne Joker");
+        
+        while (a.getJoker().isEmpty() != true && this.hand.size() < 17)
+        {
+            this.hand.add(a.getJoker().get(0));
+            a.getJoker().remove(a.getJoker().get(0));
+        }
+
+        Iterator<Card> c = this.hand.iterator(); // Hand Ausgabe
+        while (c.hasNext())
+        {
+            System.out.println("Listenelement: " + c.next().getName());
+        }
+
+        System.out.println("Ende hand mit Joker");
     }
 
     public void playCard(Card c)
