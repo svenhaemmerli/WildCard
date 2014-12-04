@@ -263,6 +263,9 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		panelJokerCards = new JPanel();
 		panelCardsSouth.add(panelJokerCards, BorderLayout.NORTH);
 
+		/**
+		 * Platzhalter für JokerButtons
+		 */
 		btnJack = new JToggleButton("");
 		btnJack.setIcon(null);
 		btnJack.setPreferredSize(new Dimension(150, 220));
@@ -277,7 +280,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		btnKing.setIcon(null);
 		btnKing.setPreferredSize(new Dimension(150, 220));
 		panelJokerCards.add(btnKing);
-
+		
+		//Platzhalter für die Userinformationen - Container für InfoPanel und ActionPanel(Buttons)
 		panelInfoUser1 = new JPanel();
 		panelCardsSouth.add(panelInfoUser1, BorderLayout.EAST);
 		panelInfoUser1.setLayout(new BorderLayout());
