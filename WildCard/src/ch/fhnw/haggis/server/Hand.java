@@ -8,6 +8,26 @@ public class Hand
     public ArrayList<Card> hand = new ArrayList<Card>(); // given cards
 
     public ArrayList<Card> win = new ArrayList<Card>(); // won cards
+    
+    public ArrayList<Card> pod = new ArrayList<Card>(); // pod cards
+    
+    public Hand (Deck d){
+    	
+    	while (d.getDeck().isEmpty() != true && this.hand.size() < 14)
+        {
+            this.hand.add(d.getDeck().get(0)); // Karten von Deck zu Hand hinzuf�gen
+            d.getDeck().remove(d.getDeck().get(0)); // Karten aus Deck l�schen
+
+        }
+
+        Iterator<Card> b = this.hand.iterator(); // Hand Ausgabe
+        while (b.hasNext())
+        {
+            System.out.println("Listenelement: " + b.next().getName());
+        }
+
+        System.out.println("Ende hand ohne Joker");
+    }
 
     public void playCard(Card c)
     { // play a card
