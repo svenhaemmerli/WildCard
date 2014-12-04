@@ -36,7 +36,7 @@ public class Gameplay
     public boolean processRequest(SpieldatenRequest spieldaten)
     {
     	
-    	if(spieldaten.getMessage().equals("bereit")){
+    	if(spieldaten.getMessage().equals("ready")){
     	
         deck = new Deck();
         Collections.shuffle(deck.getDeck());

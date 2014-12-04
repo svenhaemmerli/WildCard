@@ -144,7 +144,7 @@ public class GuiLoginScreen
             SpieldatenRequest request = new SpieldatenRequest();
             request.setMessage("ready");
             clientCommunication.sendToServer(request);
-            ///////////////////// Müsste ich ihm hier nicht noch sagen, er soll nun die Daten vom Server requesten?? ////////////////////////////
+            
             
         }
         catch (IOException e)
