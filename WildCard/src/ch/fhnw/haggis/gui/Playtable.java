@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
@@ -25,6 +26,7 @@ import javax.swing.border.LineBorder;
 
 import ch.fhnw.haggis.client.ClientCommunication;
 import ch.fhnw.haggis.server.Hand;
+import ch.fhnw.haggis.server.SpieldatenRequest;
 import ch.fhnw.haggis.server.SpieldatenResponse;
 
 @SuppressWarnings("serial")
@@ -453,13 +455,22 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 			e.printStackTrace();
 		}
     	*/
-	        if(ae.getActionCommand().equals("legen"))
+	        if(ae.getActionCommand().equals("play"))
 	        {
 	        	System.out.println("legen");
 	        	
-		} 
-	        if(ae.getActionCommand().equals("passen"))
+	        } 
+	        if(ae.getActionCommand().equals("pass"))
 	        {
+	        	SpieldatenRequest request = new SpieldatenRequest();
+	        	request.setMessage("pass");
+	        	request.setMyHand(null);
+	        	try {
+					clientCommunication.sendToServer(request);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	        	System.out.println("passen");
 	        	
 	        }
@@ -480,7 +491,13 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 
 				System.out.println("Message from server " + response);
 				
-				if(response.getMessage().equals("bereit")){
+				
+				/**
+				 * Start to display all the cards
+				 */
+				
+				//Get the message from the server, if the message is ready, display the hand you get on the buttons
+				if(response.getMessage().equals("ready")){
 					System.out.println("Message from server " + response); 
 					
 					System.out.println("Karte von Hand: " + response.getMyHand().getHand().get(0).getName());
@@ -491,7 +508,14 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 					for (int j = 0; j < cards.length; j++) {
 						cards[j].setIcon(response.getMyHand().getHand().get(j).getIcon());
 						panelPlayerCard.add(cards[j], gbcPlayercards);
-					}	
+					}
+				/**
+				 * Handle an invalid move	
+				 */
+				//get the message from the server, if the message is invalid move, open a dialogbox	
+				if(response.getMessage().equals("valid move")){
+					JOptionPane.showMessageDialog(contentPane, "Your Move was invalid, try again."); // Dialogbox
+				}
 					
 				}	
 				
