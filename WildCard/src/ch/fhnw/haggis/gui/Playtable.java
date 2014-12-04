@@ -48,9 +48,9 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 	private JButton btnPassen;
 	private JPanel panelPlayerCard;
 	private JPanel panelJokerCards;
-	private JButton btnJack;
-	private JButton btnQueen;
-	private JButton btnKing;
+	private JToggleButton btnJack;
+	private JToggleButton btnQueen;
+	private JToggleButton btnKing;
 	private JPanel panelUserInfo2;
 	private JLabel lblUser2;
 	private JLabel lblScoreUser2Static;
@@ -92,25 +92,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		
 		
 		this.clientCommunication = clientCommunication;
-		/*
-		try {
-			SpieldatenResponse response = clientCommunication.readFromServer();
-			SpieldatenResponse m = new SpieldatenResponse();
-			m = (SpieldatenResponse) response;
-			
-			for(int i = 0; i <= m.getMyHand().getHand().size(); i++){
-				
-				System.out.println(m.getMyHand().getHand().get(i).getName());
-				
-				
-			}
-			
-			
-		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
+		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Haggis - WILDCARD");
@@ -281,27 +263,18 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		panelJokerCards = new JPanel();
 		panelCardsSouth.add(panelJokerCards, BorderLayout.NORTH);
 
-		btnJack = new JButton("");
-		ImageIcon bube = new ImageIcon(getClass().getResource("img/Bube.jpg"));
-		bube.setImage(bube.getImage().getScaledInstance(150, 220,
-				Image.SCALE_DEFAULT));
-		btnJack.setIcon(bube);
+		btnJack = new JToggleButton("");
+		btnJack.setIcon(null);
 		btnJack.setPreferredSize(new Dimension(150, 220));
 		panelJokerCards.add(btnJack);
 
-		btnQueen = new JButton("");
-		ImageIcon queen = new ImageIcon(getClass().getResource("img/Dame.jpg"));
-		queen.setImage(queen.getImage().getScaledInstance(150, 220,
-				Image.SCALE_DEFAULT));
-		btnQueen.setIcon(queen);
+		btnQueen = new JToggleButton("");
+		btnQueen.setIcon(null);
 		btnQueen.setPreferredSize(new Dimension(150, 220));
 		panelJokerCards.add(btnQueen);
 
-		btnKing = new JButton("");
-		ImageIcon king = new ImageIcon(getClass().getResource("img/Koenig.jpg"));
-		king.setImage(king.getImage().getScaledInstance(150, 220,
-				Image.SCALE_DEFAULT));
-		btnKing.setIcon(king);
+		btnKing = new JToggleButton("");
+		btnKing.setIcon(null);
 		btnKing.setPreferredSize(new Dimension(150, 220));
 		panelJokerCards.add(btnKing);
 
@@ -380,28 +353,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 														// at
 														// each of its edges
 
-		//Buttons mit den Daten aus der Karte füllen
-		/*
-		try {
-			SpieldatenResponse response = clientCommunication.readFromServer();
-			
-			for(int i = 0; i <= response.getMyHand().getHand().size(); i++){
-				
-				cards = createToggleCardButtons(cards, i);
-				for (int j = 0; j < cards.length; j++) {
-					cards[i].setIcon(response.getMyHand().getHand().get(j).getIcon());
-					panelPlayerCard.add(cards[j], gbcPlayercards);
-				}	
-				
-				
-			}
-			
-			
-		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 */
+		
 		
 		/* Versuch ohne Serveranbindung
 		cards = createToggleCardButtons(cards, 14);
@@ -459,7 +411,9 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 	        {
 	        	System.out.println("legen");
 	        	
-	        } 
+	        }
+	        
+	        
 	        if(ae.getActionCommand().equals("pass"))
 	        {
 	        	SpieldatenRequest request = new SpieldatenRequest();
@@ -498,18 +452,39 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 				
 				//Get the message from the server, if the message is ready, display the hand you get on the buttons
 				if(response.getMessage().equals("ready")){
+					
+					/**
+					 * Message in Konsole Schreiben, Score beim aktiven user setzen
+					 */
 					System.out.println("Message from server " + response); 
-					
+					lblScoreUser1.setText(""+response.getScore());
+		
 					for(int m = 0; m <= response.getMyHand().getHand().size()-1; m++){
-					
-					
 					System.out.println("Karte von Hand: " + response.getMyHand().getHand().get(m).getName());
 					}
 					
-					int i = response.getMyHand().getHand().size();
+					/**
+					 * Joker Karten auf GUI darstellen
+					 */
+						
+						for(int k = 0; k < response.getMyHand().getHand().size(); k++){
+						if(response.getMyHand().getHand().get(k).getPoints() == 11){
+						btnJack.setIcon(response.getMyHand().getHand().get(k).getIcon());	
+						}
+						if(response.getMyHand().getHand().get(k).getPoints() == 12){
+						btnQueen.setIcon(response.getMyHand().getHand().get(k).getIcon());	
+						}
+						if(response.getMyHand().getHand().get(k).getPoints() == 13){
+						btnKing.setIcon(response.getMyHand().getHand().get(k).getIcon());	
+						}
+						
+					}
 					
-					
-					cards = createToggleCardButtons(cards, i );
+					/**
+					 * Karten ohne Joker - auf GUI platzieren
+					 */
+					int i = response.getMyHand().getHand().size()-3;
+					cards = createToggleCardButtons(cards, i ); //i-3 damit es die Joker nicht dort ausgibt
 					for (int j = 0; j < i; j++) {
 						cards[j].setIcon(response.getMyHand().getHand().get(j).getIcon());
 						panelPlayerCard.add(cards[j], gbcPlayercards);
@@ -520,7 +495,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 				 * Handle an invalid move	
 				 */
 				//get the message from the server, if the message is invalid move, open a dialogbox	
-				if(response.getMessage().equals("valid move")){
+				if(response.getMessage().equals("invalid move"))
+				{
 					JOptionPane.showMessageDialog(contentPane, "Your Move was invalid, try again."); // Dialogbox
 				}
 					
