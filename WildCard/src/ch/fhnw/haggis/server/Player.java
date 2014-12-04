@@ -10,13 +10,15 @@ public class Player
     private ServerCommunication serverCommunication;
     private Server server;
     private boolean threadSuspended = true;
+    private Hand myHand;
 
     private int userId;
 
-    public Player(Socket socket, Server server, int userId)
+    public Player(Socket socket, Server server, int userId, Hand myHand)
     {
         this.userId = userId;
         this.server = server;
+        this.myHand = myHand;
         serverCommunication = new ServerCommunication(socket);
     }
 

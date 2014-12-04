@@ -3,6 +3,7 @@ package ch.fhnw.haggis.server;
 import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Collections;
 
 
 public class Server
@@ -12,6 +13,10 @@ public class Server
 
     private ServerGui serverGui;
     private Gameplay gameplay;
+    
+    public Deck deck;
+    public JokerDeck jdeck;
+    
 
     public static void main(String args[])
     {
@@ -36,6 +41,12 @@ public class Server
 
         serverGui = new ServerGui();
         gameplay = new Gameplay(serverGui);
+        
+        jdeck = new JokerDeck();
+        deck = new Deck();
+        Collections.shuffle(deck.getDeck());
+        
+        
     }
 
     public void run() throws Exception
@@ -46,12 +57,16 @@ public class Server
 
         // creating the 3 connections
         for (int i = 0; i < players.length; i++)
+        	
+        	
         {
             int userId = i;
+                        
+            Hand myHand = new Hand (deck,jdeck);
             logToServer("Waiting to create connection for user " + userId);
 
             Socket connectionSocket = serverSocket.accept();
-            players[i] = new Player(connectionSocket, this, userId);
+            players[i] = new Player(connectionSocket, this, userId, myHand);
             logToServer("Created connection for user " + userId);
             players[i].start();
 
