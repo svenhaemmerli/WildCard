@@ -48,7 +48,15 @@ public class Gameplay
         return true;
     	}
         
-        // do the business ...
+    	else if (spieldaten.getMessage().equals("pass")){
+        	
+    	serverGui.writeLog("Spieler passt");
+    	spieldaten.setMessage("valid move");
+    	spieldaten.setMyHand(myHand);
+        
+    	return true;
+    	
+        }
 
         return false;
     }
