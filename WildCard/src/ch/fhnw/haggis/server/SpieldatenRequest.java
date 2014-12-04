@@ -12,6 +12,8 @@ public class SpieldatenRequest
     private static final long serialVersionUID = 3635384963538773512L;
 
     private String message;
+    private Hand myHand;
+    ////////////////////// hier sollte auch eine Hand zum Server geschickt werden oder?? //////////////////////////////
 
     @Override
     public String toString()
@@ -29,4 +31,12 @@ public class SpieldatenRequest
         this.message = message;
     }
 
+	public Hand getMyHand() {
+		return myHand;
+	}
+
+	public void setMyHand(Hand myHand) {
+		this.myHand = myHand;
+	}
+    
 }

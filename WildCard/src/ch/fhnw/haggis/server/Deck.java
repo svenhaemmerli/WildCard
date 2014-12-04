@@ -1,13 +1,18 @@
 package ch.fhnw.haggis.server;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
 
-public class Deck
+public class Deck implements Serializable
 {
-    private ArrayList<Card> deck = new ArrayList<Card>();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1704089689189312874L;
+	private ArrayList<Card> deck = new ArrayList<Card>();
 
     public Deck()
     {

@@ -45,16 +45,20 @@ public class Player
     {
         try
         {
+        	
             SpieldatenResponse response = new SpieldatenResponse();
-
+            
             server.logToServer("Player " + userId + " connected");
 
             response.setMessage("Next Player connected. Waiting for another player.");
             serverCommunication.sendToClient(response);
+        	
             server.logToServer("Player " + userId + " connected");
-
+        	
+        
             // wait for other player to join
             // if (server. == 'X') {
+            
 
             try
             {
@@ -70,34 +74,50 @@ public class Player
             {
                 e.printStackTrace();
             }
-
-            response.setMessage("All players connected. Your move.");
-            serverCommunication.sendToClient(response);
-            server.logToServer("All players connected, userId=" + userId);
-            // }
-
+        	
+            
+            	
+            		//SpieldatenResponse response1 = new SpieldatenResponse();
+                    response.setMessage("All players connected. Your move.");
+                    server.logToServer(response.getMessage());
+                    serverCommunication.sendToClient(response);
+                    server.logToServer("All players connected, userId=" + userId);
+            	
+            	
+            
+            
+        	
             // Play game
-            while (!server.gameOver())
+        	
+            while  (!server.gameOver())
             {
+            	//synchronized(this){
                 SpieldatenRequest request = serverCommunication.readFromClient();
-
-                // spieler w√§hlt karten
+                
+                
+                // spieler w‰hlt karten
 
                 if (server.validMove(request, userId))
                 {
                     server.logToServer("loc: " + request);
-                    response.setMessage("Valid move.");
+                    //response.setMessage("Valid move.");
+                    response.setMessage(request.getMessage());
+                    response.setMyHand(request.getMyHand());
                     serverCommunication.sendToClient(response);
+                    server.logToServer("message wurde an client geschickt");
                 }
                 else
                 {
                     response.setMessage("Invalid move, try again");
                     serverCommunication.sendToClient(response);
+                    server.logToServer("invalid move");
                 }
-
+            	//}
+            
+            
             }
-
             serverCommunication.close();
+        
         }
         catch (IOException e)
         {
@@ -110,7 +130,7 @@ public class Player
             System.exit(1);
         }
 
-    }
+        }
 
     public void setThreadSuspended(boolean threadSuspended)
     {

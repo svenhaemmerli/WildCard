@@ -1,10 +1,17 @@
 package ch.fhnw.haggis.server;
 
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 
-public class Card
+public class Card implements Serializable
 {
-    private String name;
+	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8118435653047467973L;
+	private String name;
     private int value;
     private int points;
     private String suit;

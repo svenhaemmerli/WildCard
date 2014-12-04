@@ -57,14 +57,17 @@ public class Server
 
             logToServer("Started thread for user " + userId);
         }
+        
+        
         // as soon as all players are connected we start with player zero
         synchronized (players[0])
         {
             // release the thread
             players[0].setThreadSuspended(false);
             // notify the thread of the player to continue
-            players[0].notify();
             logToServer("Notify");
+            players[0].notify();
+            
         }
     }
 

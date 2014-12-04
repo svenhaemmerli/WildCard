@@ -1,7 +1,9 @@
 package ch.fhnw.haggis.server;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Iterator;
+import ch.fhnw.haggis.server.*;
 
 
 public class Gameplay
@@ -13,6 +15,8 @@ public class Gameplay
     // private List<Integer> connectedClients = new ArrayList<Integer>();
 
     private Deck deck;
+	
+    
 
     public Gameplay(ServerGui serverGui)
     {
@@ -31,11 +35,23 @@ public class Gameplay
 
     public boolean processRequest(SpieldatenRequest spieldaten)
     {
-        SpieldatenResponse response = new SpieldatenResponse();
-
+    	
+    	if(spieldaten.getMessage().equals("bereit")){
+    	
+        deck = new Deck();
+        Collections.shuffle(deck.getDeck());
+        Hand myHand = new Hand();
+        Hand h = distributeCard(deck, myHand);
+        spieldaten.setMyHand(h);
+        serverGui.writeLog("hand: " + spieldaten.getMyHand().getHand().get(0).getName());
+        serverGui.writeLog("ist im processRequest");
+        
+        return true;
+    	}
+        
         // do the business ...
 
-        return true;
+        return false;
     }
 
     public Hand distributeCard(Deck d, Hand h)
@@ -48,13 +64,13 @@ public class Gameplay
 
         }
 
-        Iterator<Card> b = h.hand.iterator(); // Hand Ausgabe
+        /*Iterator<Card> b = h.hand.iterator(); // Hand Ausgabe
         while (b.hasNext())
         {
             System.out.println("Listenelement: " + b.next().getName());
         }
 
-        System.out.println("Ende hand ohne Joker");
+        */System.out.println("Ende hand ohne Joker");
 
         return h;
 

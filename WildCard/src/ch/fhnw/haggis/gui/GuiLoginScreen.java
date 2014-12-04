@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 import ch.fhnw.haggis.client.ClientCommunication;
 import ch.fhnw.haggis.server.Card;
 import ch.fhnw.haggis.server.Hand;
+import ch.fhnw.haggis.server.SpieldatenRequest;
 import ch.fhnw.haggis.server.SpieldatenResponse;
 
 
@@ -127,11 +128,9 @@ public class GuiLoginScreen
     public void actionPerformed(ActionEvent ae)
     {
         String user = username.getText();
-        // testInput(user);
+        
         System.out.println(user);
-        // User myUser = new User(user);
-        // System.out.println(myUser.getName());
-
+        
         String message = null;
         Hand myHand = null;
         try
@@ -141,6 +140,12 @@ public class GuiLoginScreen
             myHand = response.getMyHand();
             System.out.println("Message from server " + response);
             // TODO message z.B. "waiting for users" auf GUI anzeigen
+            
+            SpieldatenRequest request = new SpieldatenRequest();
+            request.setMessage("bereit");
+            clientCommunication.sendToServer(request);
+            ///////////////////// Müsste ich ihm hier nicht noch sagen, er soll nun die Daten vom Server requesten?? ////////////////////////////
+            
         }
         catch (IOException e)
         {

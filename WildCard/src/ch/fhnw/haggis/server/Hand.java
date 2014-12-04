@@ -1,11 +1,17 @@
 package ch.fhnw.haggis.server;
 
+import java.io.Serializable;
 import java.util.*;
 
 
-public class Hand
+public class Hand implements Serializable
 {
-    public ArrayList<Card> hand = new ArrayList<Card>(); // given cards
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4660817019770190530L;
+
+	public ArrayList<Card> hand = new ArrayList<Card>(); // given cards
 
     public ArrayList<Card> win = new ArrayList<Card>(); // won cards
 
@@ -32,4 +38,21 @@ public class Hand
 
         win.add(d);
     }
+
+	public ArrayList<Card> getHand() {
+		return hand;
+	}
+
+	public void setHand(ArrayList<Card> hand) {
+		this.hand = hand;
+	}
+
+	public ArrayList<Card> getWin() {
+		return win;
+	}
+
+	public void setWin(ArrayList<Card> win) {
+		this.win = win;
+	}
+    
 }
