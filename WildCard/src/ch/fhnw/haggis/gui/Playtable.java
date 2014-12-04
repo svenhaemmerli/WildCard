@@ -315,14 +315,14 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		/**
 		 * @btnLegen Button Legen mit ActionListener versehen
 		 */
-		btnLegen = new JButton("legen");
+		btnLegen = new JButton("play");
 		btnLegen.addActionListener(this);
 		panelAction.add(btnLegen);
 		
 		/**
 		 * @btnPassen Button Passen mit Action Listener versehen
 		 */
-		btnPassen = new JButton("passen");
+		btnPassen = new JButton("pass");
 		btnPassen.addActionListener(this);
 		panelAction.add(btnPassen);
 		

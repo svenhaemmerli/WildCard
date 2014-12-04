@@ -65,7 +65,7 @@ public class Server
                         
             myHand = new Hand (deck,jdeck);
             logToServer("Waiting to create connection for user " + userId);
-
+            
             Socket connectionSocket = serverSocket.accept();
             players[i] = new Player(connectionSocket, this, userId, myHand);
             logToServer("Created connection for user " + userId);
