@@ -142,7 +142,7 @@ public class GuiLoginScreen
             // TODO message z.B. "waiting for users" auf GUI anzeigen
             
             SpieldatenRequest request = new SpieldatenRequest();
-            request.setMessage("bereit");
+            request.setMessage("ready");
             clientCommunication.sendToServer(request);
             ///////////////////// Müsste ich ihm hier nicht noch sagen, er soll nun die Daten vom Server requesten?? ////////////////////////////
             
