@@ -500,7 +500,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 				if(response.getMessage().equals("ready")){
 					System.out.println("Message from server " + response); 
 					
-					System.out.println("Karte von Hand: " + response.getMyHand().getHand().get(0).getName());
+					//System.out.println("Karte von Hand: " + response.getMyHand().getHand().get(0).getName());
 					int i = response.getMyHand().getHand().size();
 					
 					
