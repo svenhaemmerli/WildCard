@@ -30,6 +30,7 @@ public class Player
         {
             try
             {
+            	//alles was an die inaktiven Spieler geschickt werden muss
                 SpieldatenResponse response = new SpieldatenResponse();
                 response.setMessage("Player " + playerWithLastMove + " moved");
                 serverCommunication.sendToClient(response);

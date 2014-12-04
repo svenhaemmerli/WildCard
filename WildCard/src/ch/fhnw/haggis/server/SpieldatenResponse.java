@@ -14,6 +14,8 @@ public class SpieldatenResponse
     private String message;
 
     private Hand myHand;
+    
+    private int score;
 
     @Override
     public String toString()
@@ -40,5 +42,13 @@ public class SpieldatenResponse
     {
         this.myHand = myHand;
     }
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
 
 }

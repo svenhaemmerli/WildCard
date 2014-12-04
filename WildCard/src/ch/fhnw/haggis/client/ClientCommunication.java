@@ -39,6 +39,7 @@ public class ClientCommunication
     {
         output.writeObject(request);
         output.flush();
+        output.reset();
     }
 
     /**

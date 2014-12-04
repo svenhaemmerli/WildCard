@@ -40,7 +40,7 @@ public class Gameplay
     	
         deck = new Deck();
         Collections.shuffle(deck.getDeck());
-        Hand myHand = new Hand();
+        Hand myHand = new Hand(deck);
         Hand h = distributeCard(deck, myHand);
         spieldaten.setMyHand(h);
         serverGui.writeLog("hand: " + spieldaten.getMyHand().getHand().get(0).getName());
