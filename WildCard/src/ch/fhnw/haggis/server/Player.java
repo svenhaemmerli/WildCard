@@ -113,7 +113,7 @@ public class Player
                 }
                 else
                 {
-                    response.setMessage("Invalid move, try again");
+                    response.setMessage("invalid move");
                     serverCommunication.sendToClient(response);
                     server.logToServer("invalid move");
                 }

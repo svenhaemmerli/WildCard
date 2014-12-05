@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -139,6 +140,7 @@ public class GuiLoginScreen
             message = response.getMessage();
             myHand = response.getMyHand();
             System.out.println("Message from server " + response);
+            JOptionPane.showMessageDialog(null, message);
             // TODO message z.B. "waiting for users" auf GUI anzeigen
             
             SpieldatenRequest request = new SpieldatenRequest();

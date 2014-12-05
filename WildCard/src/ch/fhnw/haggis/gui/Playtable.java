@@ -460,7 +460,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 					/**
 					 * Message in Konsole Schreiben, Score beim aktiven user setzen
 					 */
-					System.out.println("Message from server " + response); 
+					System.out.println("Message from server " + response);
+					//JOptionPane.showMessageDialog(null, "Ready. Your Turn");
 					lblScoreUser1.setText(""+response.getScore());
 		
 					for(int m = 0; m <= response.getMyHand().getHand().size()-1; m++){
@@ -501,7 +502,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 				//get the message from the server, if the message is invalid move, open a dialogbox	
 				if(response.getMessage().equals("invalid move"))
 				{
-					JOptionPane.showMessageDialog(contentPane, "Your Move was invalid, try again."); // Dialogbox
+					JOptionPane.showMessageDialog(null, "Your Move was invalid, try again."); // Dialogbox
 				}
 					
 				}	

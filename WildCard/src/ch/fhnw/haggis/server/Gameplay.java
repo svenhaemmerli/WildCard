@@ -47,7 +47,7 @@ public class Gameplay
         
         return true;
     	}
-        
+       
     	else if (spieldaten.getMessage().equals("pass")){
         	
     	serverGui.writeLog("Spieler passt");
