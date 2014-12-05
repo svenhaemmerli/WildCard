@@ -390,7 +390,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 			int anzahl) {
 		karten = new JToggleButton[anzahl];
 		for (int i = 0; i < anzahl; i++) {
-			karten[i] = new JToggleButton();
+			karten[i] = new JToggleButton((""+anzahl));
 			karten[i].setPreferredSize(new Dimension(100, 200));
 
 		}
@@ -410,12 +410,12 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 	// Methode zum legen der Karten
 	public void actionPerformed (ActionEvent ae){
 
-		int norKart = cards.length;
-		int jokKart = jokers.length;
-		int alleKarten = norKart + jokKart;
-		for(int y = 0; y < alleKarten; y++ ){
-			
-		}
+//		int norKart = cards.length;
+//		int jokKart = jokers.length;
+//		int alleKarten = norKart + jokKart;
+//		for(int y = 0; y < alleKarten; y++ ){
+//			
+//		}
 			
 		
 	        if(ae.getActionCommand().equals("play"))
