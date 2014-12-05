@@ -390,7 +390,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 			int anzahl) {
 		karten = new JToggleButton[anzahl];
 		for (int i = 0; i < anzahl; i++) {
-			karten[i] = new JToggleButton((""+anzahl));
+			karten[i] = new JToggleButton();
 			karten[i].setPreferredSize(new Dimension(100, 200));
 
 		}
@@ -410,21 +410,22 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 	// Methode zum legen der Karten
 	public void actionPerformed (ActionEvent ae){
 
-//		int norKart = cards.length;
-//		int jokKart = jokers.length;
-//		int alleKarten = norKart + jokKart;
-//		for(int y = 0; y < alleKarten; y++ ){
-//			
-//		}
+	
+
 			
 		
 	        if(ae.getActionCommand().equals("play"))
 	        {
+	        	int norKart = cards.length;
+	    		int jokKart = jokers.length;
+	    		
 	        	
-	        	for(int z = 0; z < cards.length; z++){
+	        	for(int z = 0; z < norKart; z++){
 	        		if(cards[z].isSelected()){
 	        			System.out.println(cards[z].getText());
 	        		}
+	        	}
+	        	for(int z = 0; z < jokKart; z++){
 	        		if(jokers[z].isSelected()){
 	        			System.out.println(jokers[z].getText());
 	        		}
@@ -432,7 +433,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 	        	
 	        	
 	        	SpieldatenRequest request = new SpieldatenRequest();
-	        	request.setMessage("olla");
+	        	request.setMessage("play");
 	        	try{
 	        		clientCommunication.sendToServer(request);
 	        	}
@@ -529,6 +530,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 						}
 						else{
 							jokers[countJoker].setIcon(response.getMyHand().getHand().get(i).getIcon());
+							jokers[countJoker].setText(response.getMyHand().getHand().get(i).getName());
 							panelJokerCards.add(jokers[countJoker], gbcJokerCards);
 							countJoker++;
 						}
@@ -543,46 +545,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 					}
 					
 					
-					/*
-						int jokersAmount = 3;
-						jokers = createToggleCardButtons(jokers, jokersAmount);
-						for(int b = 0; b < jokersAmount; b++){
-							jokers[b].setIcon(null);
-							imageloop:
-							
-							for(int k = 0; k < response.getMyHand().getHand().size(); k++){
-								if(response.getMyHand().getHand().get(k).getPoints() == 11){
-								jokers[b].setIcon(response.getMyHand().getHand().get(k).getIcon());
-								
-								break imageloop;
-								}
-								else if(response.getMyHand().getHand().get(k).getPoints() == 12){
-								jokers[b].setIcon(response.getMyHand().getHand().get(k).getIcon());
-								break imageloop;
-								}
-								else if(response.getMyHand().getHand().get(k).getPoints() == 13){
-								jokers[b].setIcon(response.getMyHand().getHand().get(k).getIcon());	
-								break imageloop;
-								}
-							
-								
-							}
-							panelJokerCards.add(jokers[b], gbcJokerCards);
-						}
-						
-						*/
 					
-					/**
-					 * Karten ohne Joker - auf GUI platzieren
-					 */
-						/*
-					int i = response.getMyHand().getHand().size();
-					cards = createToggleCardButtons(cards, i ); //i-3 damit es die Joker nicht dort ausgibt
-					for (int j = 0; j < i; j++) {
-						cards[j].setIcon(response.getMyHand().getHand().get(j).getIcon());
-						panelPlayerCard.add(cards[j], gbcPlayercards);
-					}
-					*/
+						
 				}
 				/**
 				 * Handle an invalid move	
