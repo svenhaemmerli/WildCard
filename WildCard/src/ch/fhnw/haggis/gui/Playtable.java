@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -75,8 +76,10 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 	private JLabel lblTitle;
 	private JToggleButton[] cards;
 	private JButton[] playedCards;
+	private JToggleButton[] jokers;
 	
 	GridBagConstraints gbcPlayercards = new GridBagConstraints();
+	GridBagConstraints gbcJokerCards = new GridBagConstraints();
 
 	private ImageIcon icon = new ImageIcon(getClass().getResource(
 			"img/hand_otherplayer_s.png"));
@@ -262,10 +265,15 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 
 		panelJokerCards = new JPanel();
 		panelCardsSouth.add(panelJokerCards, BorderLayout.NORTH);
+		GridBagLayout gblJockerCards = new GridBagLayout();
+		panelJokerCards.setLayout(gblJockerCards);
 
 		/**
 		 * Platzhalter für JokerButtons
 		 */
+		gbcJokerCards.insets = new Insets(0, 0, 0, 0);
+		
+		/*
 		btnJack = new JToggleButton("");
 		btnJack.setIcon(null);
 		btnJack.setPreferredSize(new Dimension(150, 220));
@@ -280,6 +288,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		btnKing.setIcon(null);
 		btnKing.setPreferredSize(new Dimension(150, 220));
 		panelJokerCards.add(btnKing);
+		*/
 		
 		//Platzhalter für die Userinformationen - Container für InfoPanel und ActionPanel(Buttons)
 		panelInfoUser1 = new JPanel();
@@ -400,19 +409,36 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 
 	// Methode zum legen der Karten
 	public void actionPerformed (ActionEvent ae){
-    	/*
-    	try {
-    		clientCommunication.readFromServer();
-			SpieldatenResponse m = new SpieldatenResponse();
-			m = (SpieldatenResponse) response;
+
+		int norKart = cards.length;
+		int jokKart = jokers.length;
+		int alleKarten = norKart + jokKart;
+		for(int y = 0; y < alleKarten; y++ ){
 			
-		} catch (ClassNotFoundException | IOException e) {
-			
-			e.printStackTrace();
 		}
-    	*/
+			
+		
 	        if(ae.getActionCommand().equals("play"))
 	        {
+	        	
+	        	for(int z = 0; z < cards.length; z++){
+	        		if(cards[z].isSelected()){
+	        			System.out.println(cards[z].getText());
+	        		}
+	        		if(jokers[z].isSelected()){
+	        			System.out.println(jokers[z].getText());
+	        		}
+	        	}
+	        	
+	        	
+	        	SpieldatenRequest request = new SpieldatenRequest();
+	        	request.setMessage("olla");
+	        	try{
+	        		clientCommunication.sendToServer(request);
+	        	}
+	        	catch (IOException e){
+	        		e.printStackTrace();
+	        	}
 	        	System.out.println("legen");
 	        	
 	        }
@@ -426,7 +452,6 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 	        	try {
 					clientCommunication.sendToServer(request);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 	        	System.out.println("passen");
@@ -464,48 +489,112 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 					//JOptionPane.showMessageDialog(null, "Ready. Your Turn");
 					lblScoreUser1.setText(""+response.getScore());
 		
+					
+					/**
+					 * @params anzahlNormalCards, anzahlJokerCards
+					 * zuerst zählen, wie viele Buttons jeweils erstellt werden müssen
+					 */
+					int anzahlNormalCards = 0;
+					int anzahlJokerCards = 0;
+					for(int i = 0; i < response.getMyHand().getHand().size(); i++){
+						if(response.getMyHand().getHand().get(i).getPoints() < 11){
+							anzahlNormalCards++;
+						}
+						
+						else{
+							anzahlJokerCards++;
+						}
+					}
+					/**
+					 * @params cards, jokers
+					 * anhand der Anzahl Karten (normal, Joker) die Buttons erstellen
+					 */
+					cards = createToggleCardButtons(cards, anzahlNormalCards);
+					jokers = createToggleCardButtons(jokers, anzahlJokerCards);
+					
+					/**
+					 * @params countNormal, countJoker
+					 * werden gebraucht, um das Bild das geladen wird, an die richtige stelle zu schreiben (falls der König auf Stelle 15 gefunden wird (i = 15) könnte der button
+					 * sonst nicht zugewiesen werden
+					 */
+					int countNormal = 0;
+					int countJoker = 0;
+					
+					for(int i = 0; i < response.getMyHand().getHand().size(); i++){
+						if(response.getMyHand().getHand().get(i).getPoints() < 11){
+							cards[countNormal].setIcon(response.getMyHand().getHand().get(i).getIcon());
+							cards[countNormal].setText(response.getMyHand().getHand().get(i).getName());
+							panelPlayerCard.add(cards[countNormal], gbcPlayercards);
+							countNormal++;
+						}
+						else{
+							jokers[countJoker].setIcon(response.getMyHand().getHand().get(i).getIcon());
+							panelJokerCards.add(jokers[countJoker], gbcJokerCards);
+							countJoker++;
+						}
+					}
+					
+					/**
+					 * Alle karten in der Konsole ausgeben - zur Kontrolle ob alles richtig gemacht wurde
+					 **/
+					
 					for(int m = 0; m <= response.getMyHand().getHand().size()-1; m++){
 					System.out.println("Karte von Hand: " + response.getMyHand().getHand().get(m).getName());
 					}
 					
-					/**
-					 * Joker Karten auf GUI darstellen
-					 */
+					
+					/*
+						int jokersAmount = 3;
+						jokers = createToggleCardButtons(jokers, jokersAmount);
+						for(int b = 0; b < jokersAmount; b++){
+							jokers[b].setIcon(null);
+							imageloop:
+							
+							for(int k = 0; k < response.getMyHand().getHand().size(); k++){
+								if(response.getMyHand().getHand().get(k).getPoints() == 11){
+								jokers[b].setIcon(response.getMyHand().getHand().get(k).getIcon());
+								
+								break imageloop;
+								}
+								else if(response.getMyHand().getHand().get(k).getPoints() == 12){
+								jokers[b].setIcon(response.getMyHand().getHand().get(k).getIcon());
+								break imageloop;
+								}
+								else if(response.getMyHand().getHand().get(k).getPoints() == 13){
+								jokers[b].setIcon(response.getMyHand().getHand().get(k).getIcon());	
+								break imageloop;
+								}
+							
+								
+							}
+							panelJokerCards.add(jokers[b], gbcJokerCards);
+						}
 						
-						for(int k = 0; k < response.getMyHand().getHand().size(); k++){
-						if(response.getMyHand().getHand().get(k).getPoints() == 11){
-						btnJack.setIcon(response.getMyHand().getHand().get(k).getIcon());	
-						}
-						if(response.getMyHand().getHand().get(k).getPoints() == 12){
-						btnQueen.setIcon(response.getMyHand().getHand().get(k).getIcon());	
-						}
-						if(response.getMyHand().getHand().get(k).getPoints() == 13){
-						btnKing.setIcon(response.getMyHand().getHand().get(k).getIcon());	
-						}
-						
-					}
+						*/
 					
 					/**
 					 * Karten ohne Joker - auf GUI platzieren
 					 */
-					int i = response.getMyHand().getHand().size()-3;
+						/*
+					int i = response.getMyHand().getHand().size();
 					cards = createToggleCardButtons(cards, i ); //i-3 damit es die Joker nicht dort ausgibt
 					for (int j = 0; j < i; j++) {
 						cards[j].setIcon(response.getMyHand().getHand().get(j).getIcon());
 						panelPlayerCard.add(cards[j], gbcPlayercards);
 					}
-					
-					
+					*/
+				}
 				/**
 				 * Handle an invalid move	
 				 */
+				
 				//get the message from the server, if the message is invalid move, open a dialogbox	
 				if(response.getMessage().equals("invalid move"))
 				{
 					JOptionPane.showMessageDialog(null, "Your Move was invalid, try again."); // Dialogbox
 				}
 					
-				}	
+					
 				
 
 				// response.getMyCards();
