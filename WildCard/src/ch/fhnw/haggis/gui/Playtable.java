@@ -1,6 +1,7 @@
 package ch.fhnw.haggis.gui;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -16,6 +17,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -34,6 +36,8 @@ import ch.fhnw.haggis.client.ClientCommunication;
 import ch.fhnw.haggis.server.Hand;
 import ch.fhnw.haggis.server.SpieldatenRequest;
 import ch.fhnw.haggis.server.SpieldatenResponse;
+import ch.fhnw.haggis.server.Card;
+import ch.fhnw.haggis.server.Deck;
 
 @SuppressWarnings("serial")
 public class Playtable extends JFrame implements Runnable, ActionListener {
@@ -82,6 +86,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 	private JToggleButton[] cards;
 	private JButton[] playedCards;
 	private JToggleButton[] jokers;
+	private Hand myHand;
 
 	GridBagConstraints gbcPlayercards = new GridBagConstraints();
 	GridBagConstraints gbcJokerCards = new GridBagConstraints();
@@ -357,6 +362,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 
 
 		setVisible(true);
+		
+//------------------------------------------------------------------logical part-------------------------------------------//
 
 		communicationThread = new Thread(this);
 		communicationThread.start();
@@ -388,26 +395,41 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 
 	// Methode zum legen der Karten
 	public void actionPerformed(ActionEvent ae) {
+		
+		SpieldatenRequest request = new SpieldatenRequest();
+		
 
 		if (ae.getActionCommand().equals("play")) {
 			int norKart = cards.length;
 			int jokKart = jokers.length;
+			
 
 			for (int z = 0; z < norKart; z++) {
 				if (cards[z].isSelected()) {
 					cards[z].setBorder(BorderFactory
 							.createBevelBorder(BevelBorder.RAISED));
 					System.out.println(cards[z].getText());
+					//read Arraylist and fill to hand					
+					Card c = new Card();
+					Deck guiDeck = new Deck();
+					c = guiDeck.findByName(cards[z].getText());
+					myHand.hand.add(c);	
+			
 				}
+				request.setMyHand(myHand);
+				
 			}
-			for (int z = 0; z < jokKart; z++) {
-				if (jokers[z].isSelected()) {
-					System.out.println(jokers[z].getText());
-				}
-			}
+//			for (int z = 0; z < jokKart; z++) {
+//				if (jokers[z].isSelected()) {
+//					System.out.println(jokers[z].getText());
+//				}
+//			}
 
-			SpieldatenRequest request = new SpieldatenRequest();
+			
 			request.setMessage("play");
+			
+			
+			
 			try {
 				clientCommunication.sendToServer(request);
 			} catch (IOException e) {
@@ -418,7 +440,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		}
 
 		if (ae.getActionCommand().equals("pass")) {
-			SpieldatenRequest request = new SpieldatenRequest();
+			
 			request.setMessage("pass");
 			request.setMyHand(null);
 			try {
