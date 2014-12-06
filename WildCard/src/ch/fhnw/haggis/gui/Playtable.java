@@ -480,7 +480,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 				 */
 				
 				//Get the message from the server, if the message is ready, display the hand you get on the buttons
-				if(response.getMessage().equals("ready")){
+				if(response.getMessage().equals("valid move")){
 					
 					/**
 					 * Message in Konsole Schreiben, Score beim aktiven user setzen
