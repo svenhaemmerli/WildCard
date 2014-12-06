@@ -48,14 +48,12 @@ public class Hand implements Serializable {
     }
 
    
-    public void processCardsPlayed(ArrayList<Card> myHand){ //Add cards to pot, remove form myHand
-    	Iterator<Card> a = myHand.iterator();
-        int count = 0;
-        while (a.hasNext())
+    public void processCardsPlayed(Hand myHand){ //Add cards to pot, remove form myHand
+    	
+        while (myHand.hand.isEmpty()==false)
         {
-        	pot.add(a.next());
-        	myHand.remove(a.next());
-            count++;
+        	pot.add(myHand.hand.get(0));
+        	myHand.hand.remove(myHand.hand.get(0));
         }
     }
     public void addCardsWon(ArrayList<Card> pot) { // Add cards to the won, remove from pot

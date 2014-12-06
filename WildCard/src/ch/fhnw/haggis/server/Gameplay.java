@@ -52,14 +52,15 @@ public class Gameplay
     		
     		if(rules){
     		
-    			//myHand.processCardsPlayed(myHand);
-    			//cards need to be processed and if myHand is empty, new Hand...		   			
+    			spieldaten.getMyHand().processCardsPlayed(myHand);
+    			
+    			if(myHand.hand.isEmpty()){
+    				//distribute new Cards
+    			}
     		
     			return true;
     		}
     		return false;
-    		
-    		
     	}
 
         return false;
