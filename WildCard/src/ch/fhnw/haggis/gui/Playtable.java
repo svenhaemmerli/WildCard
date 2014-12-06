@@ -12,9 +12,12 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,6 +26,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 import ch.fhnw.haggis.client.ClientCommunication;
@@ -77,7 +82,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 	private JToggleButton[] cards;
 	private JButton[] playedCards;
 	private JToggleButton[] jokers;
-	
+
 	GridBagConstraints gbcPlayercards = new GridBagConstraints();
 	GridBagConstraints gbcJokerCards = new GridBagConstraints();
 
@@ -89,13 +94,10 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 
 	public Playtable(String userName, ClientCommunication clientCommunication,
 			String message, Hand myHand) {
-		
+
 		// TODO message und myHand auf Playtable anzeigen
 
-		
-		
 		this.clientCommunication = clientCommunication;
-		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Haggis - WILDCARD");
@@ -263,6 +265,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		panelCardsSouth.add(panelPlayerCard, BorderLayout.CENTER);
 		panelPlayerCard.setLayout(new GridLayout(1, 14));
 
+		
+		//Die JokerKarten werden in der run-methode erstellt - und anschliessend dann hier platziert
 		panelJokerCards = new JPanel();
 		panelCardsSouth.add(panelJokerCards, BorderLayout.NORTH);
 		GridBagLayout gblJockerCards = new GridBagLayout();
@@ -272,25 +276,10 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		 * Platzhalter für JokerButtons
 		 */
 		gbcJokerCards.insets = new Insets(0, 0, 0, 0);
-		
-		/*
-		btnJack = new JToggleButton("");
-		btnJack.setIcon(null);
-		btnJack.setPreferredSize(new Dimension(150, 220));
-		panelJokerCards.add(btnJack);
 
-		btnQueen = new JToggleButton("");
-		btnQueen.setIcon(null);
-		btnQueen.setPreferredSize(new Dimension(150, 220));
-		panelJokerCards.add(btnQueen);
 
-		btnKing = new JToggleButton("");
-		btnKing.setIcon(null);
-		btnKing.setPreferredSize(new Dimension(150, 220));
-		panelJokerCards.add(btnKing);
-		*/
-		
-		//Platzhalter für die Userinformationen - Container für InfoPanel und ActionPanel(Buttons)
+		// Platzhalter für die Userinformationen - Container für InfoPanel und
+		// ActionPanel(Buttons)
 		panelInfoUser1 = new JPanel();
 		panelCardsSouth.add(panelInfoUser1, BorderLayout.EAST);
 		panelInfoUser1.setLayout(new BorderLayout());
@@ -304,14 +293,14 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		btnLegen = new JButton("play");
 		btnLegen.addActionListener(this);
 		panelAction.add(btnLegen);
-		
+
 		/**
 		 * @btnPassen Button Passen mit Action Listener versehen
 		 */
 		btnPassen = new JButton("pass");
 		btnPassen.addActionListener(this);
 		panelAction.add(btnPassen);
-		
+
 		/**
 		 * Userinformationen auf GUI anzeigen
 		 */
@@ -349,12 +338,12 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		lblTitle.setPreferredSize(new Dimension(200, 85));
 		contentPane.add(lblTitle, BorderLayout.NORTH);
 
-		//GridBagConstraints gbcPlayercards = new GridBagConstraints();// Use
-																		// GridBagConstraints
-																		// to
-																		// place
-																		// the
-																		// components
+		// GridBagConstraints gbcPlayercards = new GridBagConstraints();// Use
+		// GridBagConstraints
+		// to
+		// place
+		// the
+		// components
 		gbcPlayercards.insets = new Insets(0, 0, 0, 0);// top, left, bottom,
 														// right representation
 														// of
@@ -366,17 +355,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 														// at
 														// each of its edges
 
-		
-		
-		/* Versuch ohne Serveranbindung
-		cards = createToggleCardButtons(cards, 14);
-		for (int i = 0; i < cards.length; i++) {
-			// Cards[i].setPreferredSize(new Dimension(100,200));
-			panelPlayerCard.add(cards[i], gbcPlayercards);
-		}
-		*/
 
-		
 		setVisible(true);
 
 		communicationThread = new Thread(this);
@@ -408,58 +387,89 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 	}
 
 	// Methode zum legen der Karten
-	public void actionPerformed (ActionEvent ae){
+	public void actionPerformed(ActionEvent ae) {
 
-	
+		if (ae.getActionCommand().equals("play")) {
+			int norKart = cards.length;
+			int jokKart = jokers.length;
 
-			
-		
-	        if(ae.getActionCommand().equals("play"))
-	        {
-	        	int norKart = cards.length;
-	    		int jokKart = jokers.length;
-	    		
-	        	
-	        	for(int z = 0; z < norKart; z++){
-	        		if(cards[z].isSelected()){
-	        			System.out.println(cards[z].getText());
-	        		}
-	        	}
-	        	for(int z = 0; z < jokKart; z++){
-	        		if(jokers[z].isSelected()){
-	        			System.out.println(jokers[z].getText());
-	        		}
-	        	}
-	        	
-	        	
-	        	SpieldatenRequest request = new SpieldatenRequest();
-	        	request.setMessage("play");
-	        	try{
-	        		clientCommunication.sendToServer(request);
-	        	}
-	        	catch (IOException e){
-	        		e.printStackTrace();
-	        	}
-	        	System.out.println("legen");
-	        	
-	        }
-	        
-	        
-	        if(ae.getActionCommand().equals("pass"))
-	        {
-	        	SpieldatenRequest request = new SpieldatenRequest();
-	        	request.setMessage("pass");
-	        	request.setMyHand(null);
-	        	try {
-					clientCommunication.sendToServer(request);
-				} catch (IOException e) {
-					e.printStackTrace();
+			for (int z = 0; z < norKart; z++) {
+				if (cards[z].isSelected()) {
+					cards[z].setBorder(BorderFactory
+							.createBevelBorder(BevelBorder.RAISED));
+					System.out.println(cards[z].getText());
 				}
-	        	System.out.println("passen");
-	        	
-	        }
+			}
+			for (int z = 0; z < jokKart; z++) {
+				if (jokers[z].isSelected()) {
+					System.out.println(jokers[z].getText());
+				}
+			}
+
+			SpieldatenRequest request = new SpieldatenRequest();
+			request.setMessage("play");
+			try {
+				clientCommunication.sendToServer(request);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println("legen");
+
 		}
 
+		if (ae.getActionCommand().equals("pass")) {
+			SpieldatenRequest request = new SpieldatenRequest();
+			request.setMessage("pass");
+			request.setMyHand(null);
+			try {
+				clientCommunication.sendToServer(request);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println("passen");
+
+		}
+
+	}
+	//Element Klasse - damit ich auf Instanzvariablen der oberen Klasse zugreifen kann - falls nötig.
+	//Hat mir mit cards.lengt leider nicht richtig geklappt
+	public class ToggleButtonListener implements ItemListener {
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			// hervorheben der Buttons, damit man weiss, welcher Button gedrückt
+			// wurde (JToggleButton) wird von Icon überdeckt, deshalb so gelöst
+
+			// Listener für die normalen Karten
+			for (int x = 0; x < cards.length; x++) {
+				if (e.getSource() == cards[x]) { //damit der richtige Button angesprochen wird
+					if (e.getStateChange() == ItemEvent.SELECTED) { //was passiert wenn der button selektiert ist
+						Border borderButtonSelected = new LineBorder(Color.ORANGE, 4);
+						cards[x].setBorder(borderButtonSelected);
+						//System.out.println("Selected norm. Karte:" + x); zum testen, ob der richtige Button selektiert wurde
+					} else if (e.getStateChange() == ItemEvent.DESELECTED) { //was passiert, wenn der button deselektiert wird
+						Border borderButtonDeselected = new LineBorder(Color.GRAY, 1);
+						cards[x].setBorder(borderButtonDeselected);
+						//System.out.println("Deselected norm. Karte:" + x);
+					}
+				}
+			}
+			//Listener für die Joker karten
+			for (int y = 0; y < jokers.length; y++) {
+				if (e.getSource() == jokers[y]) {
+					if (e.getStateChange() == ItemEvent.SELECTED) {
+						Border borderButtonSelected = new LineBorder(Color.ORANGE, 4);
+						jokers[y].setBorder(borderButtonSelected);
+						//System.out.println("Selected Joker Karte:" + y);
+					} else if (e.getStateChange() == ItemEvent.DESELECTED) {
+						Border borderButtonDeselected = new LineBorder(Color.GRAY, 1);
+						jokers[y].setBorder(borderButtonDeselected);
+						// System.out.println("Deselected Joker Karte:" + y);
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * Wartet auf Antworten vom Server (Endlosschlaufe). Mit diesen Antworten
@@ -473,92 +483,94 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 				response = clientCommunication.readFromServer();
 
 				System.out.println("Message from server " + response);
-				
-				
+
 				/**
 				 * Start to display all the cards
 				 */
-				
-				//Get the message from the server, if the message is ready, display the hand you get on the buttons
-				if(response.getMessage().equals("valid move")){
-					
+
+				// Get the message from the server, if the message is ready,
+				// display the hand you get on the buttons
+				if (response.getMessage().equals("valid move")) {
+
 					/**
-					 * Message in Konsole Schreiben, Score beim aktiven user setzen
+					 * Message in Konsole Schreiben, Score beim aktiven user
+					 * setzen
 					 */
 					System.out.println("Message from server " + response);
-					//JOptionPane.showMessageDialog(null, "Ready. Your Turn");
-					lblScoreUser1.setText(""+response.getScore());
-		
-					
+					// JOptionPane.showMessageDialog(null, "Ready. Your Turn");
+					lblScoreUser1.setText("" + response.getScore());
+
 					/**
-					 * @params anzahlNormalCards, anzahlJokerCards
-					 * zuerst zählen, wie viele Buttons jeweils erstellt werden müssen
+					 * @params anzahlNormalCards, anzahlJokerCards zuerst
+					 *         zählen, wie viele Buttons jeweils erstellt werden
+					 *         müssen
 					 */
 					int anzahlNormalCards = 0;
 					int anzahlJokerCards = 0;
-					for(int i = 0; i < response.getMyHand().hand.size(); i++){
-						if(response.getMyHand().hand.get(i).getPoints() < 11){
+					for (int i = 0; i < response.getMyHand().hand.size(); i++) {
+						if (response.getMyHand().hand.get(i).getPoints() < 11) {
 							anzahlNormalCards++;
 						}
-						
-						else{
+
+						else {
 							anzahlJokerCards++;
 						}
 					}
 					/**
-					 * @params cards, jokers
-					 * anhand der Anzahl Karten (normal, Joker) die Buttons erstellen
+					 * @params cards, jokers anhand der Anzahl Karten (normal,
+					 *         Joker) die Buttons erstellen
 					 */
 					cards = createToggleCardButtons(cards, anzahlNormalCards);
 					jokers = createToggleCardButtons(jokers, anzahlJokerCards);
-					
+
 					/**
-					 * @params countNormal, countJoker
-					 * werden gebraucht, um das Bild das geladen wird, an die richtige stelle zu schreiben (falls der König auf Stelle 15 gefunden wird (i = 15) könnte der button
-					 * sonst nicht zugewiesen werden
+					 * @params countNormal, countJoker werden gebraucht, um das
+					 *         Bild das geladen wird, an die richtige stelle zu
+					 *         schreiben (falls der König auf Stelle 15 gefunden
+					 *         wird (i = 15) könnte der button sonst nicht
+					 *         zugewiesen werden
 					 */
 					int countNormal = 0;
 					int countJoker = 0;
-					
-					for(int i = 0; i < response.getMyHand().hand.size(); i++){
-						if(response.getMyHand().hand.get(i).getPoints() < 11){
+
+					// Listener für button gedrückt
+					ToggleButtonListener listener = new ToggleButtonListener();
+
+					for (int i = 0; i < response.getMyHand().hand.size(); i++) {
+						if (response.getMyHand().hand.get(i).getPoints() < 11) {
 							cards[countNormal].setIcon(response.getMyHand().hand.get(i).getIcon());
 							cards[countNormal].setText(response.getMyHand().hand.get(i).getName());
-							panelPlayerCard.add(cards[countNormal], gbcPlayercards);
+							cards[countNormal].addItemListener(listener);
+							panelPlayerCard.add(cards[countNormal],gbcPlayercards);
 							countNormal++;
-						}
-						else{
+						} else {
 							jokers[countJoker].setIcon(response.getMyHand().hand.get(i).getIcon());
 							jokers[countJoker].setText(response.getMyHand().hand.get(i).getName());
-							panelJokerCards.add(jokers[countJoker], gbcJokerCards);
+							jokers[countJoker].addItemListener(listener);
+							panelJokerCards.add(jokers[countJoker],	gbcJokerCards);
 							countJoker++;
 						}
 					}
-					
+
 					/**
-					 * Alle karten in der Konsole ausgeben - zur Kontrolle ob alles richtig gemacht wurde
+					 * Alle karten in der Konsole ausgeben - zur Kontrolle ob
+					 * alles richtig gemacht wurde
 					 **/
-					
-					for(int m = 0; m <= response.getMyHand().hand.size()-1; m++){
-					System.out.println("Karte von Hand: " + response.getMyHand().hand.get(m).getName());
+
+					for (int m = 0; m <= response.getMyHand().hand.size() - 1; m++) {
+						System.out.println("Karte von Hand: " + response.getMyHand().hand.get(m).getName());
 					}
-					
-					
-					
-						
+
 				}
 				/**
-				 * Handle an invalid move	
+				 * Handle an invalid move
 				 */
-				
-				//get the message from the server, if the message is invalid move, open a dialogbox	
-				if(response.getMessage().equals("invalid move"))
-				{
+
+				// get the message from the server, if the message is invalid
+				// move, open a dialogbox
+				if (response.getMessage().equals("invalid move")) {
 					JOptionPane.showMessageDialog(null, "Your Move was invalid, try again."); // Dialogbox
 				}
-					
-					
-				
 
 				// response.getMyCards();
 			} catch (IOException e) {
@@ -570,10 +582,6 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 			}
 		}
 	}
-
-	/*
-	 * //Zum testen public static void main(String[] args) { wb_playtable frame
-	 * = new wb_playtable();
-	 */
 }
+
 // }
