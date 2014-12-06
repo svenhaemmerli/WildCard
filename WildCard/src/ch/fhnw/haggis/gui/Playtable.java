@@ -392,22 +392,29 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		if (ae.getActionCommand().equals("play")) {
 			int norKart = cards.length;
 			int jokKart = jokers.length;
+			
+			SpieldatenRequest request = new SpieldatenRequest();
+			request.setMessage("play");
+			
+			//Hand sendHand = new Hand();
+			
 
 			for (int z = 0; z < norKart; z++) {
 				if (cards[z].isSelected()) {
-					cards[z].setBorder(BorderFactory
-							.createBevelBorder(BevelBorder.RAISED));
+					
+					//(SpieldatenRequest) sendHand.add(cards[z].getText());
 					System.out.println(cards[z].getText());
+					
 				}
 			}
 			for (int z = 0; z < jokKart; z++) {
 				if (jokers[z].isSelected()) {
+					//sendHand.hand.add(jokers[z]);
 					System.out.println(jokers[z].getText());
 				}
 			}
 
-			SpieldatenRequest request = new SpieldatenRequest();
-			request.setMessage("play");
+			//request.setMyHand(sendHand);
 			try {
 				clientCommunication.sendToServer(request);
 			} catch (IOException e) {
