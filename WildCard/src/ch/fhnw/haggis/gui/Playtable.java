@@ -416,58 +416,53 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 			int norKart = cards.length;
 			int jokKart = jokers.length;
 			
-<<<<<<< HEAD
-=======
-			SpieldatenRequest request = new SpieldatenRequest();
+
+
 			request.setMessage("play");
 			
 			//Hand sendHand = new Hand();
 			
->>>>>>> branch 'master' of https://github.com/svenhaemmerli/WildCard.git
+
 
 			for (int z = 0; z < norKart; z++) {
 				if (cards[z].isSelected()) {
 					
 					//(SpieldatenRequest) sendHand.add(cards[z].getText());
 					System.out.println(cards[z].getText());
-<<<<<<< HEAD
+
 					//read Arraylist and fill to hand					
 					Card c = new Card();
 					Deck guiDeck = new Deck();
 					c = guiDeck.findByName(cards[z].getText());
 					myHand.hand.add(c);	
 			
-=======
-					
->>>>>>> branch 'master' of https://github.com/svenhaemmerli/WildCard.git
+
 				}
 				request.setMyHand(myHand);
 				
-			}
-<<<<<<< HEAD
+
 //			for (int z = 0; z < jokKart; z++) {
 //				if (jokers[z].isSelected()) {
 //					System.out.println(jokers[z].getText());
 //				}
 //			}
-=======
-			for (int z = 0; z < jokKart; z++) {
-				if (jokers[z].isSelected()) {
-					//sendHand.hand.add(jokers[z]);
-					System.out.println(jokers[z].getText());
-				}
-			}
->>>>>>> branch 'master' of https://github.com/svenhaemmerli/WildCard.git
 
-<<<<<<< HEAD
+//			for (int z = 0; z < jokKart; z++) {
+//				if (jokers[z].isSelected()) {
+//					//sendHand.hand.add(jokers[z]);
+//					System.out.println(jokers[z].getText());
+//				}
+//			}
+
 			
 			request.setMessage("play");
 			
 			
 			
-=======
+
 			//request.setMyHand(sendHand);
->>>>>>> branch 'master' of https://github.com/svenhaemmerli/WildCard.git
+
+
 			try {
 				clientCommunication.sendToServer(request);
 			} catch (IOException e) {
@@ -481,15 +476,20 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 			
 			request.setMessage("pass");
 			request.setMyHand(null);
+			
 			try {
 				clientCommunication.sendToServer(request);
-			} catch (IOException e) {
+			} 
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 			System.out.println("passen");
-
 		}
-
+		else {
+			System.out.println("invalid Move");
+		}
+		}
+			
 	}
 	//Element Klasse - damit ich auf Instanzvariablen der oberen Klasse zugreifen kann - falls nötig.
 	//Hat mir mit cards.lengt leider nicht richtig geklappt
