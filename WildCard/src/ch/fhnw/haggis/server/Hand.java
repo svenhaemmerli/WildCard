@@ -77,6 +77,42 @@ public class Hand implements Serializable {
         return count;
     }
     
+    public void distributeNewCards (ArrayList<Card> hand){
+    	
+    	JokerDeck jdeck2 = new JokerDeck();
+    	Deck deck2 = new Deck();
+    	
+    	
+    	while (deck2.getDeck().isEmpty() != true && this.hand.size() < 14)
+        {
+            this.hand.add(deck2.getDeck().get(0)); // Cards removed from deck to hand
+            deck2.getDeck().remove(deck2.getDeck().get(0)); 
+
+        }
+
+//        Iterator<Card> b = this.hand.iterator(); // Hand Ausgabe
+//        while (b.hasNext())
+//        {
+//            System.out.println("Listenelement: " + b.next().getName());
+//        }
+//
+//        System.out.println("Ende hand ohne Joker");
+        
+        while (jdeck2.getJoker().isEmpty() != true && this.hand.size() < 17)
+        {
+            this.hand.add(jdeck2.getJoker().get(0));
+            jdeck2.getJoker().remove(jdeck2.getJoker().get(0));
+        }
+
+        Iterator<Card> c = this.hand.iterator(); 
+        while (c.hasNext())
+        {
+            System.out.println("Listenelement: " + c.next().getName());
+        }
+
+        System.out.println("Ende hand mit Joker");
+    }
+    
 
     
    //-------------------------------------------getter & setter -------------------------------------------------------------------------//

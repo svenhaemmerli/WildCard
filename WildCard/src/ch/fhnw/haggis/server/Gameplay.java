@@ -55,7 +55,7 @@ public class Gameplay
     			spieldaten.getMyHand().processCardsPlayed(myHand);
     			
     			if(myHand.hand.isEmpty()){
-    				//distribute new Cards
+    				myHand.distributeNewCards(myHand.hand);
     			}
     		
     			return true;
