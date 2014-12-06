@@ -47,8 +47,15 @@ public class Hand implements Serializable {
         System.out.println("Ende hand mit Joker");
     }
 
-   
-    public void processCardsPlayed(Hand myHand){ //Add cards to pot, remove form myHand
+
+
+	public Hand() {
+		// leere Hand, damit ich diese anschliessend im playtable befüllen kann.
+	}
+
+
+
+	public void processCardsPlayed(Hand myHand){ //Add cards to pot, remove form myHand
     	
         while (myHand.hand.isEmpty()==false)
         {

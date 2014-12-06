@@ -40,7 +40,7 @@ import ch.fhnw.haggis.server.Card;
 import ch.fhnw.haggis.server.Deck;
 
 @SuppressWarnings("serial")
-public class Playtable extends JFrame implements Runnable, ActionListener {
+public class Playtable extends JFrame implements Runnable, ActionListener, ItemListener {
 
 	private JPanel contentPane;
 	private JPanel panelCardsWest;
@@ -91,8 +91,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 	GridBagConstraints gbcPlayercards = new GridBagConstraints();
 	GridBagConstraints gbcJokerCards = new GridBagConstraints();
 
-	private ImageIcon icon = new ImageIcon(getClass().getResource(
-			"img/hand_otherplayer_s.png"));
+	private ImageIcon icon = new ImageIcon(getClass().getResource("img/hand_otherplayer_s.png"));
 
 	private ClientCommunication clientCommunication;
 	private Thread communicationThread;
@@ -121,6 +120,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		setSize(w, h);
 		setLocationRelativeTo(null); // place it in the center of the screen
 		setResizable(false);
+		
+		//<----------------------------------------------------------------------- Informationen für User 2 ------------------------------------------------------------>
 
 		// setup a new container for the other players cards
 		panelCardsWest = new JPanel();
@@ -131,6 +132,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		/**
 		 * @params Image icon is loaded previously and now put onto the JLabel
 		 */
+		
 		lblImgCards2 = new JLabel(icon);
 		panelCardsWest.add(lblImgCards2, BorderLayout.CENTER);
 		lblImgCards2.setPreferredSize(new Dimension(250, 100));
@@ -174,6 +176,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		lblIsgeber2.setHorizontalAlignment(SwingConstants.RIGHT);
 		panelUserInfo2.add(lblIsgeber2);
 
+		//<----------------------------------------------------------------------- Informationen für User 3 ------------------------------------------------------------>
+		
 		panelCardsEast = new JPanel();
 		contentPane.add(panelCardsEast, BorderLayout.EAST);
 		panelCardsEast.setLayout(new BorderLayout());
@@ -217,6 +221,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		lblIsGeber3 = new JLabel("isGeber()");
 		lblIsGeber3.setHorizontalAlignment(SwingConstants.RIGHT);
 		panelUserInfo3.add(lblIsGeber3);
+		
+		//<----------------------------------------------------------------------- Spieltisch ------------------------------------------------------------>
 
 		// Spieltisch in der Mitte, mit den gespielten Karten darauf
 		panelPlayDesk = new JPanel();
@@ -247,6 +253,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 			// playedCards[i].setPreferredSize(new Dimension(100,200));
 			panelPlayDesk.add(playedCards[i], gbcPlayedCards);
 		}
+		
+		//<----------------------------------------------------------------------- Copyright ------------------------------------------------------------>
 
 		panelCardsSouth = new JPanel();
 		contentPane.add(panelCardsSouth, BorderLayout.SOUTH);
@@ -260,10 +268,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		lblCopyright.setFont(new Font("Arial", Font.BOLD, 13));
 		lblCopyright.setHorizontalAlignment(SwingConstants.RIGHT);
 
-		/**
-		 * @btnLegen the button to place your selected cards
-		 * @btnPassen if you cannot play, go to the next player
-		 */
+		
 
 		// The panel for the user to display his cards
 		panelPlayerCard = new JPanel();
@@ -288,6 +293,12 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		panelInfoUser1 = new JPanel();
 		panelCardsSouth.add(panelInfoUser1, BorderLayout.EAST);
 		panelInfoUser1.setLayout(new BorderLayout());
+		
+		//<----------------------------------------------------------------------- Buttons für die Aktionen hinzufügen ------------------------------------------------------------>
+				/**
+				 * @btnLegen the button to place your selected cards
+				 * @btnPassen if you cannot play, go to the next player
+				 */
 
 		panelAction = new JPanel();
 		panelInfoUser1.add(panelAction, BorderLayout.SOUTH);
@@ -309,7 +320,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		/**
 		 * Userinformationen auf GUI anzeigen
 		 */
-
+		//<----------------------------------------------------------------------- Informationen für User 1 ------------------------------------------------------------>
+				
 		panelInfo = new JPanel();
 		panelInfoUser1.add(panelInfo, BorderLayout.NORTH);
 		panelInfo.setLayout(new GridLayout(4, 2, 0, 0));
@@ -336,6 +348,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		lblIsGeber1 = new JLabel("isGeber()");
 		lblIsGeber1.setHorizontalAlignment(SwingConstants.RIGHT);
 		panelInfo.add(lblIsGeber1);
+		
+		//<----------------------------------------------------------------------- Spieltisch beschrieb ------------------------------------------------------------>
 
 		lblTitle = new JLabel("Haggis - Spieltisch");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -343,12 +357,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		lblTitle.setPreferredSize(new Dimension(200, 85));
 		contentPane.add(lblTitle, BorderLayout.NORTH);
 
-		// GridBagConstraints gbcPlayercards = new GridBagConstraints();// Use
-		// GridBagConstraints
-		// to
-		// place
-		// the
-		// components
+		//<----------------------------------------------------------------------- Platzhalter für die Karten des Spielers ------------------------------------------------------------>
 		gbcPlayercards.insets = new Insets(0, 0, 0, 0);// top, left, bottom,
 														// right representation
 														// of
@@ -368,6 +377,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		communicationThread = new Thread(this);
 		communicationThread.start();
 	}
+	
+	//<-----------------------------------------------------------------------Methoden zum Karten erstellen ------------------------------------------------------------>
 
 	// Method generates a JButton-Array it needs an array to fill and an int
 	// with the number of
@@ -393,6 +404,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		return karten;
 	}
 
+	//<----------------------------------------------------------------------- Action Listeners ------------------------------------------------------------>
+	
 	// Methode zum legen der Karten
 	public void actionPerformed(ActionEvent ae) {
 		
@@ -403,33 +416,58 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 			int norKart = cards.length;
 			int jokKart = jokers.length;
 			
+<<<<<<< HEAD
+=======
+			SpieldatenRequest request = new SpieldatenRequest();
+			request.setMessage("play");
+			
+			//Hand sendHand = new Hand();
+			
+>>>>>>> branch 'master' of https://github.com/svenhaemmerli/WildCard.git
 
 			for (int z = 0; z < norKart; z++) {
 				if (cards[z].isSelected()) {
-					cards[z].setBorder(BorderFactory
-							.createBevelBorder(BevelBorder.RAISED));
+					
+					//(SpieldatenRequest) sendHand.add(cards[z].getText());
 					System.out.println(cards[z].getText());
+<<<<<<< HEAD
 					//read Arraylist and fill to hand					
 					Card c = new Card();
 					Deck guiDeck = new Deck();
 					c = guiDeck.findByName(cards[z].getText());
 					myHand.hand.add(c);	
 			
+=======
+					
+>>>>>>> branch 'master' of https://github.com/svenhaemmerli/WildCard.git
 				}
 				request.setMyHand(myHand);
 				
 			}
+<<<<<<< HEAD
 //			for (int z = 0; z < jokKart; z++) {
 //				if (jokers[z].isSelected()) {
 //					System.out.println(jokers[z].getText());
 //				}
 //			}
+=======
+			for (int z = 0; z < jokKart; z++) {
+				if (jokers[z].isSelected()) {
+					//sendHand.hand.add(jokers[z]);
+					System.out.println(jokers[z].getText());
+				}
+			}
+>>>>>>> branch 'master' of https://github.com/svenhaemmerli/WildCard.git
 
+<<<<<<< HEAD
 			
 			request.setMessage("play");
 			
 			
 			
+=======
+			//request.setMyHand(sendHand);
+>>>>>>> branch 'master' of https://github.com/svenhaemmerli/WildCard.git
 			try {
 				clientCommunication.sendToServer(request);
 			} catch (IOException e) {
@@ -455,9 +493,11 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 	}
 	//Element Klasse - damit ich auf Instanzvariablen der oberen Klasse zugreifen kann - falls nötig.
 	//Hat mir mit cards.lengt leider nicht richtig geklappt
-	public class ToggleButtonListener implements ItemListener {
 
-		@Override
+	//<----------------------------------------------------------------------- ItemListener für die Karten ------------------------------------------------------------>
+	
+	//public class ToggleButtonListener implements ItemListener {
+
 		public void itemStateChanged(ItemEvent e) {
 			// hervorheben der Buttons, damit man weiss, welcher Button gedrückt
 			// wurde (JToggleButton) wird von Icon überdeckt, deshalb so gelöst
@@ -491,7 +531,9 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 				}
 			}
 		}
-	}
+	//}
+		
+		//<----------------------------------------------------------------------- Run Methode zum Bearbeiten der Serverantworten ------------------------------------------------------------>
 
 	/**
 	 * Wartet auf Antworten vom Server (Endlosschlaufe). Mit diesen Antworten
@@ -522,6 +564,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 					// JOptionPane.showMessageDialog(null, "Ready. Your Turn");
 					lblScoreUser1.setText("" + response.getScore());
 
+					//<----------------------------------------------------------------------- Kartenbuttons erstellen ------------------------------------------------------------>
+					
 					/**
 					 * @params anzahlNormalCards, anzahlJokerCards zuerst
 					 *         zählen, wie viele Buttons jeweils erstellt werden
@@ -554,21 +598,24 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 					 */
 					int countNormal = 0;
 					int countJoker = 0;
+					
+					//<----------------------------------------------------------------------- Buttons mit Bildern füllen ------------------------------------------------------------>
 
 					// Listener für button gedrückt
-					ToggleButtonListener listener = new ToggleButtonListener();
+					
+					//ToggleButtonListener listener = new ToggleButtonListener();
 
 					for (int i = 0; i < response.getMyHand().hand.size(); i++) {
 						if (response.getMyHand().hand.get(i).getPoints() < 11) {
 							cards[countNormal].setIcon(response.getMyHand().hand.get(i).getIcon());
 							cards[countNormal].setText(response.getMyHand().hand.get(i).getName());
-							cards[countNormal].addItemListener(listener);
+							cards[countNormal].addItemListener(this); //(listener)
 							panelPlayerCard.add(cards[countNormal],gbcPlayercards);
 							countNormal++;
 						} else {
 							jokers[countJoker].setIcon(response.getMyHand().hand.get(i).getIcon());
 							jokers[countJoker].setText(response.getMyHand().hand.get(i).getName());
-							jokers[countJoker].addItemListener(listener);
+							jokers[countJoker].addItemListener(this); //(listener)
 							panelJokerCards.add(jokers[countJoker],	gbcJokerCards);
 							countJoker++;
 						}
@@ -584,6 +631,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 					}
 
 				}
+				
 				/**
 				 * Handle an invalid move
 				 */
