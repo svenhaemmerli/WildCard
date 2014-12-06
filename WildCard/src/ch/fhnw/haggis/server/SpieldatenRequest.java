@@ -13,7 +13,7 @@ public class SpieldatenRequest
 
     private String message;
     private Hand myHand;
-    ////////////////////// hier sollte auch eine Hand zum Server geschickt werden oder?? //////////////////////////////
+    
 
     @Override
     public String toString()

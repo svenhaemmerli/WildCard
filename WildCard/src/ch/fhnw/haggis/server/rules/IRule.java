@@ -4,14 +4,14 @@ import java.util.List;
 
 import ch.fhnw.haggis.server.Card;
 
-public interface IRule {
+public class IRule {
 
 	/**
 	 * Description.
 	 * 
 	 * @return the description of the draw.
 	 */
-	public String description();
+	public String description;
 
 	/**
 	 * Check if the list of cards matches the given rule.
@@ -20,6 +20,9 @@ public interface IRule {
 	 *            The cards.
 	 * @return true if the cards match the rule.
 	 */
-	public boolean matchesRule(List<Card> cards);
+	public boolean matchesRule (){
+	
+	return true;
+	}
 
 }

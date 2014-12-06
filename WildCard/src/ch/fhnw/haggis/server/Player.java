@@ -4,17 +4,16 @@ import java.io.IOException;
 import java.net.Socket;
 
 
-public class Player
-    extends Thread
-{
-    private ServerCommunication serverCommunication;
+public class Player extends Thread {
+
+	private ServerCommunication serverCommunication;
     private Server server;
     private boolean threadSuspended = true;
     private Hand myHand;
     private int score;
-
     private int userId;
 
+    //Constructor Player
     public Player(Socket socket, Server server, int userId, Hand myHand, int score)
     {
         this.userId = userId;
@@ -23,7 +22,32 @@ public class Player
         serverCommunication = new ServerCommunication(socket);
         this.score = score;
     }
+//-----------------------------getter & setter ----------------------------------------------------------------------------//   
+    public Hand getMyHand() {
+		return myHand;
+	}
 
+	public void setMyHand(Hand myHand) {
+		this.myHand = myHand;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	} 
+
+//-------------------------------------------getter & setter end--------------------------------------------------------// 
     /**
      * Method to notify this Player that an opponent moved.
      */
@@ -37,6 +61,7 @@ public class Player
             	//alles was an die inaktiven Spieler geschickt werden muss
                 SpieldatenResponse response = new SpieldatenResponse();
                 response.setMessage("Player " + playerWithLastMove + " moved");
+                response.setMyHand(myHand);
                 serverCommunication.sendToClient(response);
             }
             catch (IOException e)
@@ -79,19 +104,13 @@ public class Player
             {
                 e.printStackTrace();
             }
-        	
-            
+        	         
             	
             		//SpieldatenResponse response1 = new SpieldatenResponse();
                     response.setMessage("All players connected. Your move.");
                     server.logToServer(response.getMessage());
                     serverCommunication.sendToClient(response);
                     server.logToServer("All players connected, userId=" + userId);
-            	
-            	
-            
-            
-        	
             // Play game
         	
             while  (!server.gameOver())
@@ -106,8 +125,11 @@ public class Player
                 {
                     server.logToServer("loc: " + request);
                     //response.setMessage("Valid move.");
-                    response.setMessage(request.getMessage());
-                    response.setMyHand(request.getMyHand());
+                    response.setMessage("valid move");
+                    response.setMyHand(myHand);
+                    response.setScore(score);
+                   // response.setPot(myHand.getPot());
+                    
                     serverCommunication.sendToClient(response);
                     server.logToServer("message wurde an client geschickt");
                 }

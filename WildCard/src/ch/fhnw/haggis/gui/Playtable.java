@@ -470,8 +470,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 		while (true) {
 			try {
 				SpieldatenResponse response = new SpieldatenResponse();
-				response = clientCommunication
-						.readFromServer();
+				response = clientCommunication.readFromServer();
 
 				System.out.println("Message from server " + response);
 				
@@ -497,8 +496,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 					 */
 					int anzahlNormalCards = 0;
 					int anzahlJokerCards = 0;
-					for(int i = 0; i < response.getMyHand().getHand().size(); i++){
-						if(response.getMyHand().getHand().get(i).getPoints() < 11){
+					for(int i = 0; i < response.getMyHand().hand.size(); i++){
+						if(response.getMyHand().hand.get(i).getPoints() < 11){
 							anzahlNormalCards++;
 						}
 						
@@ -521,16 +520,16 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 					int countNormal = 0;
 					int countJoker = 0;
 					
-					for(int i = 0; i < response.getMyHand().getHand().size(); i++){
-						if(response.getMyHand().getHand().get(i).getPoints() < 11){
-							cards[countNormal].setIcon(response.getMyHand().getHand().get(i).getIcon());
-							cards[countNormal].setText(response.getMyHand().getHand().get(i).getName());
+					for(int i = 0; i < response.getMyHand().hand.size(); i++){
+						if(response.getMyHand().hand.get(i).getPoints() < 11){
+							cards[countNormal].setIcon(response.getMyHand().hand.get(i).getIcon());
+							cards[countNormal].setText(response.getMyHand().hand.get(i).getName());
 							panelPlayerCard.add(cards[countNormal], gbcPlayercards);
 							countNormal++;
 						}
 						else{
-							jokers[countJoker].setIcon(response.getMyHand().getHand().get(i).getIcon());
-							jokers[countJoker].setText(response.getMyHand().getHand().get(i).getName());
+							jokers[countJoker].setIcon(response.getMyHand().hand.get(i).getIcon());
+							jokers[countJoker].setText(response.getMyHand().hand.get(i).getName());
 							panelJokerCards.add(jokers[countJoker], gbcJokerCards);
 							countJoker++;
 						}
@@ -540,8 +539,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener {
 					 * Alle karten in der Konsole ausgeben - zur Kontrolle ob alles richtig gemacht wurde
 					 **/
 					
-					for(int m = 0; m <= response.getMyHand().getHand().size()-1; m++){
-					System.out.println("Karte von Hand: " + response.getMyHand().getHand().get(m).getName());
+					for(int m = 0; m <= response.getMyHand().hand.size()-1; m++){
+					System.out.println("Karte von Hand: " + response.getMyHand().hand.get(m).getName());
 					}
 					
 					

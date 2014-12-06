@@ -4,19 +4,17 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Iterator;
 import ch.fhnw.haggis.server.*;
+import ch.fhnw.haggis.server.rules.*;
 
 
 public class Gameplay
 {
     public int points;
+    public boolean rules;
     
 
     private ServerGui serverGui;
     // private List<Integer> connectedClients = new ArrayList<Integer>();
-
-    
-	
-    
 
     public Gameplay(ServerGui serverGui)
     {
@@ -35,15 +33,8 @@ public class Gameplay
     	
     	if(spieldaten.getMessage().equals("ready")){
     	
-//        Hand myHand = new Hand(deck);
-//        Hand h = distributeCard(deck, myHand);
-//        spieldaten.setMyHand(h);
-    	
-        //serverGui.writeLog("hand: " + spieldaten.getMyHand().getHand().get(0));
         serverGui.writeLog("Hand ist im processRequest");
-        spieldaten.setMessage("ready");
-        spieldaten.setMyHand(myHand);
-        
+        //Hier müssten die Usernamen der beiden anderen User gelesen werden
         
         return true;
     	}
@@ -51,12 +42,25 @@ public class Gameplay
     	else if (spieldaten.getMessage().equals("pass")){
         	
     	serverGui.writeLog("Spieler passt");
-    	spieldaten.setMessage("valid move");
-    	spieldaten.setMyHand(myHand);
         
     	return true;
     	
         }
+    	else if (spieldaten.getMessage().equals("play")){
+    		
+    		//rules.matchesRule();
+    		
+    		if(rules){
+    		
+    			//myHand.processCardsPlayed(myHand);
+    			//cards need to be processed and if myHand is empty, new Hand...		   			
+    		
+    			return true;
+    		}
+    		return false;
+    		
+    		
+    	}
 
         return false;
     }
