@@ -123,7 +123,9 @@ public class Server
 
             // find the next player
             currentPlayer = (currentPlayer + 1) % 3;
-            notify();
+            players[currentPlayer].setThreadSuspended(false);
+            logToServer("set suspended");
+            notifyAll();
             return true;
         }
         else
