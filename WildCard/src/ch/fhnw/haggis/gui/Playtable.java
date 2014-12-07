@@ -83,6 +83,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 	private JButton[] playedCards;
 	private JToggleButton[] jokers;
 
+	
+
 	GridBagConstraints gbcPlayercards = new GridBagConstraints();
 	GridBagConstraints gbcJokerCards = new GridBagConstraints();
 
@@ -170,6 +172,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 		lblIsgeber2 = new JLabel("isGeber()");
 		lblIsgeber2.setHorizontalAlignment(SwingConstants.RIGHT);
 		panelUserInfo2.add(lblIsgeber2);
+
 
 		//<----------------------------------------------------------------------- Informationen für User 3 ------------------------------------------------------------>
 		
