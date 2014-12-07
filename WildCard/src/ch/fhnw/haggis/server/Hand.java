@@ -129,6 +129,13 @@ public class Hand implements Serializable {
 	public void setHand(ArrayList<Card> hand) {
 		this.hand = hand;
 	}
+	
+
+	public ArrayList<Card> getHand() {
+		return hand;
+	}
+
+
 
 	public ArrayList<Card> getWin() {
 		return win;

@@ -34,6 +34,18 @@ public class JokerDeck {
         joker.add(new Card("joker_queen3", 3, 12, "joker", dame));
         joker.add(new Card("joker_king3", 5, 13, "joker", koenig));
     }
+	
+	public Card findByName(String name)
+    {
+        for (Card card : joker)
+        {
+            if (card.getName().equals(name))
+            {
+                return card;
+            }
+        }
+        return null;
+    }
 
 	public ArrayList<Card> getJoker() {
 		return joker;

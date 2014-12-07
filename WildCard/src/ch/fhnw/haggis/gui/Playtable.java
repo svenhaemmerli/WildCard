@@ -511,32 +511,24 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 					hand.add(c);
 				}
 			}
-			myHand.setHand(hand);
-			request.setMyHand(myHand);
+			//myHand.setHand(hand);
+			//request.setMyHand(myHand);
 				
-
+			
 			for (int z = 0; z < jokKart; z++) {
 				if (jokers[z].isSelected()) {
 					System.out.println(jokers[z].getText());
 					
 					JokerDeck guiJoker = new JokerDeck();
 					Card c = new Card();
+					c = guiJoker.findByName(jokers[z].getText());
+					hand.add(c);
 					
 				}
 			}
 
-//			for (int z = 0; z < jokKart; z++) {
-//				if (jokers[z].isSelected()) {
-//					//sendHand.hand.add(jokers[z]);
-//					System.out.println(jokers[z].getText());
-//				}
-//			}
-
-			
-			
-			
-
-			//request.setMyHand(sendHand);
+			myHand.setHand(hand);
+			request.setMyHand(myHand);
 
 
 			try {
