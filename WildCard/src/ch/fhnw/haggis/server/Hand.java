@@ -49,8 +49,9 @@ public class Hand implements Serializable {
 
 
 
-	public Hand() {
+	public Hand(ArrayList <Card> hand) {
 		// leere Hand, damit ich diese anschliessend im playtable befüllen kann.
+		this.hand = hand;
 	}
 
 

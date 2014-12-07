@@ -1,7 +1,6 @@
 package ch.fhnw.haggis.gui;
 
 import java.awt.BorderLayout;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -34,6 +33,7 @@ import javax.swing.border.LineBorder;
 
 import ch.fhnw.haggis.client.ClientCommunication;
 import ch.fhnw.haggis.server.Hand;
+import ch.fhnw.haggis.server.JokerDeck;
 import ch.fhnw.haggis.server.SpieldatenRequest;
 import ch.fhnw.haggis.server.SpieldatenResponse;
 import ch.fhnw.haggis.server.Card;
@@ -86,7 +86,16 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 	private JToggleButton[] cards;
 	private JButton[] playedCards;
 	private JToggleButton[] jokers;
-	private Hand myHand;
+	private JPanel JokerInfo2;
+	private JLabel hatJoker2;
+	private JLabel hatBube2;
+	private JLabel hatDame2;
+	private JLabel hatKoenig2;
+	private JPanel JokerInfo3;
+	private JLabel hatJoker3;
+	private JLabel hatBube3;
+	private JLabel hatDame3;
+	private JLabel hatKoenig3;
 
 	
 
@@ -125,6 +134,8 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 		
 		//<----------------------------------------------------------------------- Informationen für User 2 ------------------------------------------------------------>
 
+	
+		
 		// setup a new container for the other players cards
 		panelCardsWest = new JPanel();
 		contentPane.add(panelCardsWest, BorderLayout.WEST);
@@ -135,9 +146,42 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 		 * @params Image icon is loaded previously and now put onto the JLabel
 		 */
 		
+	
+		
 		lblImgCards2 = new JLabel(icon);
 		panelCardsWest.add(lblImgCards2, BorderLayout.CENTER);
 		lblImgCards2.setPreferredSize(new Dimension(250, 100));
+		
+		
+		JokerInfo2 = new JPanel();
+		panelCardsWest.add(JokerInfo2, BorderLayout.NORTH);
+		JokerInfo2.setLayout(new GridBagLayout());
+		GridBagConstraints gbcJoker2 = new GridBagConstraints();
+		hatJoker2 = new JLabel("vorhandene Joker");
+		hatJoker2.setHorizontalAlignment(SwingConstants.LEFT);
+		gbcJoker2.gridx = 0;
+		gbcJoker2.gridy = 0;
+		JokerInfo2.add(hatJoker2, gbcJoker2);
+		hatBube2 = new JLabel("test_bube");
+		hatBube2.setHorizontalAlignment(SwingConstants.LEFT);
+		hatBube2.setFont(new Font("Arial", Font.PLAIN, 13));
+		gbcJoker2.gridx = 0;
+		gbcJoker2.gridy = 1;
+		JokerInfo2.add(hatBube2, gbcJoker2);
+		hatDame2 = new JLabel("test_dame");
+		hatDame2.setHorizontalAlignment(SwingConstants.LEFT);
+		hatDame2.setFont(new Font("Arial", Font.PLAIN, 13));
+		gbcJoker2.gridx = 0;
+		gbcJoker2.gridy = 2;
+		JokerInfo2.add(hatDame2, gbcJoker2);
+		hatKoenig2 = new JLabel("test_koenig");
+		hatKoenig2.setHorizontalAlignment(SwingConstants.LEFT);
+		hatKoenig2.setFont(new Font("Arial", Font.PLAIN, 13));
+		gbcJoker2.gridx = 0;
+		gbcJoker2.gridy = 3;
+		JokerInfo2.add(hatKoenig2, gbcJoker2);
+		
+		
 
 		panelUserInfo2 = new JPanel();
 		panelCardsWest.add(panelUserInfo2, BorderLayout.SOUTH);
@@ -184,6 +228,34 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 		panelCardsEast = new JPanel();
 		contentPane.add(panelCardsEast, BorderLayout.EAST);
 		panelCardsEast.setLayout(new BorderLayout());
+		
+		JokerInfo3 = new JPanel();
+		panelCardsEast.add(JokerInfo3, BorderLayout.NORTH);
+		JokerInfo3.setLayout(new GridBagLayout());
+		GridBagConstraints gbcJoker3 = new GridBagConstraints();
+		hatJoker3 = new JLabel("vorhandene Joker");
+		hatJoker3.setHorizontalAlignment(SwingConstants.LEFT);
+		gbcJoker3.gridx = 0;
+		gbcJoker3.gridy = 0;
+		JokerInfo3.add(hatJoker3, gbcJoker3);
+		hatBube3 = new JLabel("test_bube");
+		hatBube3.setHorizontalAlignment(SwingConstants.LEFT);
+		hatBube3.setFont(new Font("Arial", Font.PLAIN, 13));
+		gbcJoker3.gridx = 0;
+		gbcJoker3.gridy = 1;
+		JokerInfo3.add(hatBube3, gbcJoker3);
+		hatDame3 = new JLabel("test_dame");
+		hatDame3.setHorizontalAlignment(SwingConstants.LEFT);
+		hatDame3.setFont(new Font("Arial", Font.PLAIN, 13));
+		gbcJoker3.gridx = 0;
+		gbcJoker3.gridy = 2;
+		JokerInfo3.add(hatDame3, gbcJoker3);
+		hatKoenig3 = new JLabel("test_koenig");
+		hatKoenig3.setHorizontalAlignment(SwingConstants.LEFT);
+		hatKoenig3.setFont(new Font("Arial", Font.PLAIN, 13));
+		gbcJoker3.gridx = 0;
+		gbcJoker3.gridy = 3;
+		JokerInfo3.add(hatKoenig3, gbcJoker3);
 
 		lblImgCards3 = new JLabel(icon);
 		lblImgCards3.setPreferredSize(new Dimension(250, 100));
@@ -419,14 +491,12 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 			int norKart = cards.length;
 			int jokKart = jokers.length;
 			
-
+			Deck guiDeck = new Deck();
+			ArrayList <Card> hand = new ArrayList <Card>();
+			Hand myHand = new Hand(hand) ;
 
 			request.setMessage("play");
 			
-			//Hand sendHand = new Hand();
-			
-
-
 			for (int z = 0; z < norKart; z++) {
 				if (cards[z].isSelected()) {
 					
@@ -435,20 +505,25 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 
 					//read Arraylist and fill to hand					
 					Card c = new Card();
-					Deck guiDeck = new Deck();
+					//Deck guiDeck = new Deck(); //kann das Deck nicht finden (debugger)
 					c = guiDeck.findByName(cards[z].getText());
-					myHand.hand.add(c);	
-			
-
+					
+					hand.add(c);
 				}
-				request.setMyHand(myHand);
+			}
+			myHand.setHand(hand);
+			request.setMyHand(myHand);
 				
 
-//			for (int z = 0; z < jokKart; z++) {
-//				if (jokers[z].isSelected()) {
-//					System.out.println(jokers[z].getText());
-//				}
-//			}
+			for (int z = 0; z < jokKart; z++) {
+				if (jokers[z].isSelected()) {
+					System.out.println(jokers[z].getText());
+					
+					JokerDeck guiJoker = new JokerDeck();
+					Card c = new Card();
+					
+				}
+			}
 
 //			for (int z = 0; z < jokKart; z++) {
 //				if (jokers[z].isSelected()) {
@@ -457,8 +532,6 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 //				}
 //			}
 
-			
-			request.setMessage("play");
 			
 			
 			
@@ -473,9 +546,10 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 			}
 			System.out.println("legen");
 
+		
 		}
 
-		if (ae.getActionCommand().equals("pass")) {
+		else if (ae.getActionCommand().equals("pass")) {
 			
 			request.setMessage("pass");
 			request.setMyHand(null);
@@ -493,7 +567,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 		}
 		}
 			
-	}
+	
 	//Element Klasse - damit ich auf Instanzvariablen der oberen Klasse zugreifen kann - falls nötig.
 	//Hat mir mit cards.lengt leider nicht richtig geklappt
 
