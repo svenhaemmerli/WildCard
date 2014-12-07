@@ -37,7 +37,8 @@ public class Card implements Serializable
     {
 
     }
-
+    
+   
     public String getName()
     {
         return name;

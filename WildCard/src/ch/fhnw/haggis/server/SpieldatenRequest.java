@@ -37,6 +37,8 @@ public class SpieldatenRequest
 
 	public void setMyHand(Hand myHand) {
 		this.myHand = myHand;
+		
 	}
+	
     
 }
