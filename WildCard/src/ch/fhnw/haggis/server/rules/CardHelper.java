@@ -11,7 +11,7 @@ public class CardHelper {
 	 * @return true if card is a joker.
 	 */
 	public static boolean isJoker(Card card) {
-		if (card.getValue() >= 11 && card.getValue() <= 13) {
+		if (card.getPoints() >= 11 && card.getPoints() <= 13) {
 			return true;
 		}
 		return false;

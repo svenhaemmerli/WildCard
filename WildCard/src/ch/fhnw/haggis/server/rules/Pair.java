@@ -1,10 +1,10 @@
 package ch.fhnw.haggis.server.rules;
 
 import java.util.List;
-
 import ch.fhnw.haggis.server.Card;
+import ch.fhnw.haggis.server.rules.IRule;
 
-public class Pair implements IRule {
+public class Pair extends Sets implements IRule {
 
 	@Override
 	public String description() {
@@ -13,12 +13,7 @@ public class Pair implements IRule {
 
 	@Override
 	public boolean matchesRule(List<Card> cards) {
-		Card c1 = cards.get(0);
-		Card c2 = cards.get(1);
-
-		return cards.size() == 2
-				&& (c1.getValue() == c2.getValue() 
-				|| CardHelper.isJoker(c1) && !CardHelper.isJoker(c2)
-				|| !CardHelper.isJoker(c1) && CardHelper.isJoker(c2));
+		
+		return super.matchesRule(cards, 2);
 	}
 }

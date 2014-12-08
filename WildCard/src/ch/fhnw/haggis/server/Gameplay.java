@@ -1,10 +1,5 @@
 package ch.fhnw.haggis.server;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Iterator;
-import ch.fhnw.haggis.server.*;
-import ch.fhnw.haggis.server.rules.*;
 
 
 public class Gameplay
@@ -34,7 +29,7 @@ public class Gameplay
     	if(spieldaten.getMessage().equals("ready")){
     	
         serverGui.writeLog("Hand ist im processRequest");
-        //Hier müssten die Usernamen der beiden anderen User gelesen werden
+        //Hier mï¿½ssten die Usernamen der beiden anderen User gelesen werden
         
         return true;
     	}

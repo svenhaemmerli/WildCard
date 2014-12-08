@@ -4,7 +4,7 @@ import java.util.List;
 
 import ch.fhnw.haggis.server.Card;
 
-public class Single implements IRule {
+public class Single extends Sets implements IRule {
 
 	@Override
 	public String description() {
@@ -13,6 +13,7 @@ public class Single implements IRule {
 
 	@Override
 	public boolean matchesRule(List<Card> cards) {
-		return cards.size() == 1;
+		
+		return super.matchesRule(cards, 1);
 	}
 }
