@@ -96,7 +96,9 @@ public class Player extends Thread {
                 {
                     server.logToServer("Suspending thread " + threadSuspended + ", userId=" + userId);
                     while (threadSuspended)
-                        wait();
+                    	wait();
+                    
+                        
                 }
                 server.logToServer("Thread released, userId=" + userId);
             }

@@ -125,7 +125,7 @@ public class Server
             currentPlayer = (currentPlayer + 1) % 3;
             players[currentPlayer].setThreadSuspended(false);
             logToServer("set suspended");
-            notifyAll();
+            notify();
             return true;
         }
         else
