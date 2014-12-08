@@ -96,11 +96,13 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 	private JLabel hatBube3;
 	private JLabel hatDame3;
 	private JLabel hatKoenig3;
+	
 
 	
 
 	GridBagConstraints gbcPlayercards = new GridBagConstraints();
 	GridBagConstraints gbcJokerCards = new GridBagConstraints();
+	GridBagConstraints gbcPlayedCards = new GridBagConstraints();
 
 	private ImageIcon icon = new ImageIcon(getClass().getResource("img/hand_otherplayer_s.png"));
 
@@ -306,12 +308,6 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 		GridBagLayout gblPanelPlayDesk = new GridBagLayout();
 		panelPlayDesk.setLayout(gblPanelPlayDesk);
 
-		GridBagConstraints gbcPlayedCards = new GridBagConstraints();// Use
-																		// GridBagConstraints
-																		// to
-																		// place
-																		// the
-																		// components
 		gbcPlayedCards.insets = new Insets(0, 0, 0, 0);// top, left, bottom,
 														// right representation
 														// of
@@ -323,11 +319,11 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 														// at
 														// each of its edges
 
-		playedCards = createPlayedCardButtons(playedCards, 8);
-		for (int i = 0; i < playedCards.length; i++) {
-			// playedCards[i].setPreferredSize(new Dimension(100,200));
-			panelPlayDesk.add(playedCards[i], gbcPlayedCards);
-		}
+//		playedCards = createPlayedCardButtons(playedCards, 8);
+//		for (int i = 0; i < playedCards.length; i++) {
+//			// playedCards[i].setPreferredSize(new Dimension(100,200));
+//			panelPlayDesk.add(playedCards[i], gbcPlayedCards);
+//		}
 		
 		//<----------------------------------------------------------------------- Copyright ------------------------------------------------------------>
 
@@ -500,12 +496,10 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 			for (int z = 0; z < norKart; z++) {
 				if (cards[z].isSelected()) {
 					
-					//(SpieldatenRequest) sendHand.add(cards[z].getText());
 					System.out.println(cards[z].getText());
 
 					//read Arraylist and fill to hand					
 					Card c = new Card();
-					//Deck guiDeck = new Deck(); //kann das Deck nicht finden (debugger)
 					c = guiDeck.findByName(cards[z].getText());
 					
 					hand.add(c);
@@ -630,7 +624,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 					 * setzen
 					 */
 					System.out.println("Message from server " + response);
-					// JOptionPane.showMessageDialog(null, "Ready. Your Turn");
+					JOptionPane.showMessageDialog(null, "Ready. Your Turn");
 					lblScoreUser1.setText("" + response.getScore());
 
 					//<----------------------------------------------------------------------- Kartenbuttons erstellen ------------------------------------------------------------>
@@ -698,6 +692,20 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 					for (int m = 0; m <= response.getMyHand().hand.size() - 1; m++) {
 						System.out.println("Karte von Hand: " + response.getMyHand().hand.get(m).getName());
 					}
+					
+					//<----------------------------------------------------------------------- Buttons für Pot generieren------------------------------------------------------------>
+					
+					
+					
+					playedCards = createPlayedCardButtons(playedCards, response.getMyHand().pot.size());
+					
+					//Bilder laden und den Text des buttons setzen
+					for (int i = 0; i < response.getMyHand().getPot().size(); i++) {
+						playedCards[i].setIcon(response.getMyHand().getPot().get(i).getIcon());
+						playedCards[i].setText(response.getMyHand().getPot().get(i).getName());
+						panelPlayDesk.add(playedCards[i], gbcPlayedCards);
+					}
+
 
 				}
 				
