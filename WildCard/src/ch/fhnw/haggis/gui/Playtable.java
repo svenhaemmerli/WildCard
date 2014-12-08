@@ -422,7 +422,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 		
 		//<----------------------------------------------------------------------- Spieltisch beschrieb ------------------------------------------------------------>
 
-		lblTitle = new JLabel("Haggis - Spieltisch");
+		lblTitle = new JLabel("Haggis - Team WildCard");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setFont(new Font("Arial", Font.BOLD, 30));
 		lblTitle.setPreferredSize(new Dimension(200, 85));
