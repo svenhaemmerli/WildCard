@@ -7,6 +7,10 @@ public class UserData {
 	private int amtCards;
 	private int giver; //int because of the id of the player
 	
+	public UserData (){
+		
+	}
+	
 	public UserData (String username){
 		
 	}

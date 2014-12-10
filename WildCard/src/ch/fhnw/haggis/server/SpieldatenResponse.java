@@ -23,8 +23,7 @@ public class SpieldatenResponse
     private boolean giver;
     
     
-    private String username1;
-    private String username2;
+    private UserData data;
 
     @Override
     public String toString()
@@ -84,20 +83,14 @@ public class SpieldatenResponse
 			this.giver = giver;
 		}
 
-		public String getUsername1() {
-			return username1;
+		public UserData getData() {
+			return data;
 		}
 
-		public void setUsername1(String username1) {
-			this.username1 = username1;
+		public void setData(UserData data) {
+			this.data = data;
 		}
 
-		public String getUsername2() {
-			return username2;
-		}
-
-		public void setUsername2(String username2) {
-			this.username2 = username2;
-		}
+		
 
 }

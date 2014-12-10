@@ -13,7 +13,7 @@ public class SpieldatenRequest
 
     private String message;
     private Hand myHand;
-    
+    private UserData data;
     
 
     @Override
@@ -40,6 +40,16 @@ public class SpieldatenRequest
 		this.myHand = myHand;
 		
 	}
+
+	public UserData getData() {
+		return data;
+	}
+
+	public void setData(UserData data) {
+		this.data = data;
+	}
+	
+	
 	
     
 }

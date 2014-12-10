@@ -28,6 +28,7 @@ import ch.fhnw.haggis.server.Card;
 import ch.fhnw.haggis.server.Hand;
 import ch.fhnw.haggis.server.SpieldatenRequest;
 import ch.fhnw.haggis.server.SpieldatenResponse;
+import ch.fhnw.haggis.server.UserData;
 
 
 @SuppressWarnings("serial")
@@ -143,7 +144,10 @@ public class GuiLoginScreen
             JOptionPane.showMessageDialog(null, message);
             
             SpieldatenRequest request = new SpieldatenRequest();
+            UserData data = new UserData();
+            data.setUsername(user);
             request.setMessage("ready");
+            request.setData(data);
             clientCommunication.sendToServer(request);
             
             
