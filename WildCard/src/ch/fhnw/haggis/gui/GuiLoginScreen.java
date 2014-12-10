@@ -146,8 +146,8 @@ public class GuiLoginScreen
             SpieldatenRequest request = new SpieldatenRequest();
             UserData data = new UserData();
             data.setUsername(user);
-            request.setMessage("ready");
             request.setData(data);
+            request.setMessage("ready");
             clientCommunication.sendToServer(request);
             
             

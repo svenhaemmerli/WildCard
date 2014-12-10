@@ -1,6 +1,8 @@
 package ch.fhnw.haggis.server;
 
-public class UserData {
+import java.io.Serializable;
+
+public class UserData implements Serializable{
 	
 	private String username;
 	private int score;
