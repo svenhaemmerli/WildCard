@@ -1,7 +1,7 @@
 package ch.fhnw.haggis.server;
 
 import java.io.Serializable;
-
+import ch.fhnw.haggis.server.*;
 
 /**
  * Klasse um Spieldaten vom Client zum Server zu schicken.
@@ -13,6 +13,7 @@ public class SpieldatenRequest
 
     private String message;
     private Hand myHand;
+    
     
 
     @Override

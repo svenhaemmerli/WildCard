@@ -138,10 +138,9 @@ public class GuiLoginScreen
         {
             SpieldatenResponse response = clientCommunication.readFromServer();
             message = response.getMessage();
-            myHand = response.getMyHand();
+            //myHand = response.getMyHand();
             System.out.println("Message from server " + response);
             JOptionPane.showMessageDialog(null, message);
-            // TODO message z.B. "waiting for users" auf GUI anzeigen
             
             SpieldatenRequest request = new SpieldatenRequest();
             request.setMessage("ready");
