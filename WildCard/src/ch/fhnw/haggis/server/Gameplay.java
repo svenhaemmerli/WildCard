@@ -4,8 +4,9 @@ package ch.fhnw.haggis.server;
 
 public class Gameplay
 {
-    public int points;
+   
     public boolean rules;
+    public int countEmpty; 
     
 
     private ServerGui serverGui;
@@ -25,10 +26,13 @@ public class Gameplay
 
     public boolean processRequest(SpieldatenRequest spieldaten, Hand myHand)
     {
-    	
+    	//Abfrage if 2 hands empty
+    	//for (int i=0;i<Player.;i++){
+    	    		
+    	//}
     	if(spieldaten.getMessage().equals("ready")){
     	
-        serverGui.writeLog("Hand ist im processRequest");
+        serverGui.writeLog("ready");
         //Hier m�ssten die Usernamen der beiden anderen User gelesen werden
         
         return true;
@@ -43,13 +47,20 @@ public class Gameplay
         }
     	else if (spieldaten.getMessage().equals("play")){
     		
-    		//rules.matchesRule();
     		
-    		if(rules){
+    		//Ivos Regeln hier abrufen
+    		
+    		if(rules && countEmpty<2){
     		
     			spieldaten.getMyHand().processCardsPlayed(myHand);
     			
     			if(myHand.hand.isEmpty()){
+    				//Player.this.setThreadSuspended(true);
+    				System.out.println("Hand leer");
+    				
+    			}
+    			else if (rules && countEmpty==2){
+    				
     				myHand.distributeNewCards(myHand.hand);
     			}
     		
