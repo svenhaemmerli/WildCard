@@ -126,7 +126,7 @@ public class Player extends Thread {
                 if (server.validMove(request, userId))
                 {
                     server.logToServer("loc: " + request);
-                    //response.setMessage("Valid move.");
+                    //sends response
                     response.setMessage("valid move");
                     response.setMyHand(myHand);
                     response.setScore(score);
