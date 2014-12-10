@@ -24,148 +24,148 @@ public class Deck implements Serializable
     	
     	//Alle Bilder der roten karten imporitern
     	ImageIcon ired2 = new ImageIcon(getClass().getResource("images/rot02.jpg"));
-    	ired2.setImage(ired2.getImage().getScaledInstance(150, 220,
+    	ired2.setImage(ired2.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon ired3 = new ImageIcon(getClass().getResource("images/rot03.jpg"));
-    	ired3.setImage(ired3.getImage().getScaledInstance(150, 220,
+    	ired3.setImage(ired3.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon ired4 = new ImageIcon(getClass().getResource("images/rot04.jpg"));
-    	ired4.setImage(ired4.getImage().getScaledInstance(150, 220,
+    	ired4.setImage(ired4.getImage().getScaledInstance(132, 200,
     			Image.SCALE_DEFAULT));
     	ImageIcon ired5 = new ImageIcon(getClass().getResource("images/rot05.jpg"));
-    	ired5.setImage(ired5.getImage().getScaledInstance(150, 220,
+    	ired5.setImage(ired5.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon ired6 = new ImageIcon(getClass().getResource("images/rot06.jpg"));
-    	ired6.setImage(ired6.getImage().getScaledInstance(150, 220,
+    	ired6.setImage(ired6.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon ired7 = new ImageIcon(getClass().getResource("images/rot07.jpg"));
-    	ired7.setImage(ired7.getImage().getScaledInstance(150, 220,
+    	ired7.setImage(ired7.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon ired8 = new ImageIcon(getClass().getResource("images/rot08.jpg"));
-    	ired8.setImage(ired8.getImage().getScaledInstance(150, 220,
+    	ired8.setImage(ired8.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon ired9 = new ImageIcon(getClass().getResource("images/rot09.jpg"));
-    	ired9.setImage(ired9.getImage().getScaledInstance(150, 220,
+    	ired9.setImage(ired9.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon ired10 = new ImageIcon(getClass().getResource("images/rot10.jpg"));
-    	ired10.setImage(ired10.getImage().getScaledInstance(150, 220,
+    	ired10.setImage(ired10.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	
     	//alle Bilder der gelben Karten importieren
     	ImageIcon iyel2 = new ImageIcon(getClass().getResource("images/gelb02.jpg"));
-    	iyel2.setImage(iyel2.getImage().getScaledInstance(150, 220,
+    	iyel2.setImage(iyel2.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iyel3 = new ImageIcon(getClass().getResource("images/gelb03.jpg"));
-    	iyel3.setImage(iyel3.getImage().getScaledInstance(150, 220,
+    	iyel3.setImage(iyel3.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iyel4 = new ImageIcon(getClass().getResource("images/gelb04.jpg"));
-    	iyel4.setImage(iyel4.getImage().getScaledInstance(150, 220,
+    	iyel4.setImage(iyel4.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iyel5 = new ImageIcon(getClass().getResource("images/gelb05.jpg"));
-    	iyel5.setImage(iyel5.getImage().getScaledInstance(150, 220,
+    	iyel5.setImage(iyel5.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iyel6 = new ImageIcon(getClass().getResource("images/gelb06.jpg"));
-    	iyel6.setImage(iyel6.getImage().getScaledInstance(150, 220,
+    	iyel6.setImage(iyel6.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iyel7 = new ImageIcon(getClass().getResource("images/gelb07.jpg"));
-    	iyel7.setImage(iyel7.getImage().getScaledInstance(150, 220,
+    	iyel7.setImage(iyel7.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iyel8 = new ImageIcon(getClass().getResource("images/gelb08.jpg"));
-    	iyel8.setImage(iyel8.getImage().getScaledInstance(150, 220,
+    	iyel8.setImage(iyel8.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iyel9 = new ImageIcon(getClass().getResource("images/gelb09.jpg"));
-    	iyel9.setImage(iyel9.getImage().getScaledInstance(150, 220,
+    	iyel9.setImage(iyel9.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iyel10 = new ImageIcon(getClass().getResource("images/gelb10.jpg"));
-    	iyel10.setImage(iyel10.getImage().getScaledInstance(150, 220,
+    	iyel10.setImage(iyel10.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	
     	//alle Bilder der grauen Karten importieren
     	ImageIcon igrey2 = new ImageIcon(getClass().getResource("images/grau02.jpg"));
-    	igrey2.setImage(igrey2.getImage().getScaledInstance(150, 220,
+    	igrey2.setImage(igrey2.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igrey3 = new ImageIcon(getClass().getResource("images/grau03.jpg"));
-    	igrey3.setImage(igrey3.getImage().getScaledInstance(150, 220,
+    	igrey3.setImage(igrey3.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igrey4 = new ImageIcon(getClass().getResource("images/grau04.jpg"));
-    	igrey4.setImage(igrey4.getImage().getScaledInstance(150, 220,
+    	igrey4.setImage(igrey4.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igrey5 = new ImageIcon(getClass().getResource("images/grau05.jpg"));
-    	igrey5.setImage(igrey5.getImage().getScaledInstance(150, 220,
+    	igrey5.setImage(igrey5.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igrey6 = new ImageIcon(getClass().getResource("images/grau06.jpg"));
-    	igrey6.setImage(igrey6.getImage().getScaledInstance(150, 220,
+    	igrey6.setImage(igrey6.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igrey7 = new ImageIcon(getClass().getResource("images/grau07.jpg"));
-    	igrey7.setImage(igrey7.getImage().getScaledInstance(150, 220,
+    	igrey7.setImage(igrey7.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igrey8 = new ImageIcon(getClass().getResource("images/grau08.jpg"));
-    	igrey8.setImage(igrey8.getImage().getScaledInstance(150, 220,
+    	igrey8.setImage(igrey8.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igrey9 = new ImageIcon(getClass().getResource("images/grau09.jpg"));
-    	igrey9.setImage(igrey9.getImage().getScaledInstance(150, 220,
+    	igrey9.setImage(igrey9.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igrey10 = new ImageIcon(getClass().getResource("images/grau10.jpg"));
-    	igrey10.setImage(igrey10.getImage().getScaledInstance(150, 220,
+    	igrey10.setImage(igrey10.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	
     	
     	//alle Bilder der gruenen Karten importieren
     	ImageIcon igreen2 = new ImageIcon(getClass().getResource("images/gruen02.jpg"));
-    	igreen2.setImage(igreen2.getImage().getScaledInstance(150, 220,
+    	igreen2.setImage(igreen2.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igreen3 = new ImageIcon(getClass().getResource("images/gruen03.jpg"));
-    	igreen3.setImage(igreen3.getImage().getScaledInstance(150, 220,
+    	igreen3.setImage(igreen3.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igreen4 = new ImageIcon(getClass().getResource("images/gruen04.jpg"));
-    	igreen4.setImage(igreen4.getImage().getScaledInstance(150, 220,
+    	igreen4.setImage(igreen4.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igreen5 = new ImageIcon(getClass().getResource("images/gruen05.jpg"));
-    	igreen5.setImage(igreen5.getImage().getScaledInstance(150, 220,
+    	igreen5.setImage(igreen5.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igreen6 = new ImageIcon(getClass().getResource("images/gruen06.jpg"));
-    	igreen6.setImage(igreen6.getImage().getScaledInstance(150, 220,
+    	igreen6.setImage(igreen6.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igreen7 = new ImageIcon(getClass().getResource("images/gruen07.jpg"));
-    	igreen7.setImage(igreen7.getImage().getScaledInstance(150, 220,
+    	igreen7.setImage(igreen7.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igreen8 = new ImageIcon(getClass().getResource("images/gruen08.jpg"));
-    	igreen8.setImage(igreen8.getImage().getScaledInstance(150, 220,
+    	igreen8.setImage(igreen8.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igreen9 = new ImageIcon(getClass().getResource("images/gruen09.jpg"));
-    	igreen9.setImage(igreen9.getImage().getScaledInstance(150, 220,
+    	igreen9.setImage(igreen9.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon igreen10 = new ImageIcon(getClass().getResource("images/gruen10.jpg"));
-    	igreen10.setImage(igreen10.getImage().getScaledInstance(150, 220,
+    	igreen10.setImage(igreen10.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	
     	//alle Bilder der orangen Karten importieren
     	ImageIcon iorange2 = new ImageIcon(getClass().getResource("images/orange02.jpg"));
-    	iorange2.setImage(iorange2.getImage().getScaledInstance(150, 220,
+    	iorange2.setImage(iorange2.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iorange3 = new ImageIcon(getClass().getResource("images/orange03.jpg"));
-    	iorange3.setImage(iorange3.getImage().getScaledInstance(150, 220,
+    	iorange3.setImage(iorange3.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iorange4 = new ImageIcon(getClass().getResource("images/orange04.jpg"));
-    	iorange4.setImage(iorange4.getImage().getScaledInstance(150, 220,
+    	iorange4.setImage(iorange4.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iorange5 = new ImageIcon(getClass().getResource("images/orange05.jpg"));
-    	iorange5.setImage(iorange5.getImage().getScaledInstance(150, 220,
+    	iorange5.setImage(iorange5.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iorange6 = new ImageIcon(getClass().getResource("images/orange06.jpg"));
-    	iorange6.setImage(iorange6.getImage().getScaledInstance(150, 220,
+    	iorange6.setImage(iorange6.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iorange7 = new ImageIcon(getClass().getResource("images/orange07.jpg"));
-    	iorange7.setImage(iorange7.getImage().getScaledInstance(150, 220,
+    	iorange7.setImage(iorange7.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iorange8 = new ImageIcon(getClass().getResource("images/orange08.jpg"));
-    	iorange8.setImage(iorange8.getImage().getScaledInstance(150, 220,
+    	iorange8.setImage(iorange8.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iorange9 = new ImageIcon(getClass().getResource("images/orange09.jpg"));
-    	iorange9.setImage(iorange9.getImage().getScaledInstance(150, 220,
+    	iorange9.setImage(iorange9.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	ImageIcon iorange10 = new ImageIcon(getClass().getResource("images/orange10.jpg"));
-    	iorange10.setImage(iorange10.getImage().getScaledInstance(150, 220,
+    	iorange10.setImage(iorange10.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     
     	/**
