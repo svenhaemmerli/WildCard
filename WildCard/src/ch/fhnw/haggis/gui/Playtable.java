@@ -673,6 +673,7 @@ public class Playtable extends JFrame implements Runnable, ActionListener, ItemL
 							cards[countNormal].setIcon(response.getMyHand().hand.get(i).getIcon());
 							cards[countNormal].setText(response.getMyHand().hand.get(i).getName());
 							cards[countNormal].addItemListener(this); //(listener)
+							cards[countNormal].setPreferredSize(new Dimension(132,200));
 							panelPlayerCard.add(cards[countNormal],gbcPlayercards);
 							countNormal++;
 						} else {
