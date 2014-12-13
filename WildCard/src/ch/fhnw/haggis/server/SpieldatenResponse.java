@@ -9,26 +9,25 @@ import java.io.Serializable;
 public class SpieldatenResponse
     implements Serializable
 {
-   
 
-	private static final long serialVersionUID = 3635384963538773512L;
+    private static final long serialVersionUID = 3635384963538773512L;
 
+    private String step;
     private String message;
 
     private Hand myHand;
     private Hand pot;
-    
+
     private int score;
     private int amtCards;
     private boolean giver;
-    
-    
+
     private UserData data;
 
     @Override
     public String toString()
     {
-        return "SpieldatenResponse [message=" + message + "]";
+        return "SpieldatenRequest [step=" + step + ", message=" + message + "]";
     }
 
     public String getMessage()
@@ -51,46 +50,64 @@ public class SpieldatenResponse
         this.myHand = myHand;
     }
 
-	public int getScore() {
-		return score;
-	}
+    public int getScore()
+    {
+        return score;
+    }
 
-	public void setScore(int score) {
-		this.score = score;
-	}
-	
-	 public Hand getPot() {
-			return pot;
-		}
+    public void setScore(int score)
+    {
+        this.score = score;
+    }
 
-		public void setPot(Hand pot) {
-			this.pot = pot;
-		}
+    public Hand getPot()
+    {
+        return pot;
+    }
 
-		public int getAmtCards() {
-			return amtCards;
-		}
+    public void setPot(Hand pot)
+    {
+        this.pot = pot;
+    }
 
-		public void setAmtCards(int amtCards) {
-			this.amtCards = amtCards;
-		}
+    public int getAmtCards()
+    {
+        return amtCards;
+    }
 
-		public boolean isGiver() {
-			return giver;
-		}
+    public void setAmtCards(int amtCards)
+    {
+        this.amtCards = amtCards;
+    }
 
-		public void setGiver(boolean giver) {
-			this.giver = giver;
-		}
+    public boolean isGiver()
+    {
+        return giver;
+    }
 
-		public UserData getData() {
-			return data;
-		}
+    public void setGiver(boolean giver)
+    {
+        this.giver = giver;
+    }
 
-		public void setData(UserData data) {
-			this.data = data;
-		}
+    public UserData getData()
+    {
+        return data;
+    }
 
-		
+    public void setData(UserData data)
+    {
+        this.data = data;
+    }
+
+    public String getStep()
+    {
+        return step;
+    }
+
+    public void setStep(String step)
+    {
+        this.step = step;
+    }
 
 }

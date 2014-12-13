@@ -2,18 +2,21 @@ package ch.fhnw.haggis.server;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 
-public class Player extends Thread {
+public class Player
+    extends Thread
+{
 
-	private ServerCommunication serverCommunication;
+    private ServerCommunication serverCommunication;
     private Server server;
     private boolean threadSuspended = true;
     private Hand myHand;
     private int score;
     private int userId;
 
-    //Constructor Player
+    // Constructor Player
     public Player(Socket socket, Server server, int userId, Hand myHand, int score)
     {
         this.userId = userId;
@@ -22,52 +25,65 @@ public class Player extends Thread {
         serverCommunication = new ServerCommunication(socket);
         this.score = score;
     }
-//-----------------------------getter & setter ----------------------------------------------------------------------------//   
-    public Hand getMyHand() {
-		return myHand;
-	}
 
-	public void setMyHand(Hand myHand) {
-		this.myHand = myHand;
-	}
+    // -----------------------------getter & setter
+    // ----------------------------------------------------------------------------//
+    public Hand getMyHand()
+    {
+        return myHand;
+    }
 
-	public int getScore() {
-		return score;
-	}
+    public void setMyHand(Hand myHand)
+    {
+        this.myHand = myHand;
+    }
 
-	public void setScore(int score) {
-		this.score = score;
-	}
+    public int getScore()
+    {
+        return score;
+    }
 
-	public int getUserId() {
-		return userId;
-	}
+    public void setScore(int score)
+    {
+        this.score = score;
+    }
 
-	public void setUserId(int userId) {
-		this.userId = userId;
-	} 
+    public int getUserId()
+    {
+        return userId;
+    }
 
-//-------------------------------------------getter & setter end--------------------------------------------------------// 
+    public void setUserId(int userId)
+    {
+        this.userId = userId;
+    }
+
+    // -------------------------------------------getter & setter
+    // end--------------------------------------------------------//
     /**
      * Method to notify this Player that an opponent moved.
      */
-    public void playerMoved(int playerWithLastMove)
+    public void playerMoved(int playerWithLastMove, ArrayList<Card> currentPot)
     {
-        server.logToServer("playerMoved " + playerWithLastMove + ", userId=" + userId);
-        if (userId != playerWithLastMove)
+        try
         {
-            try
+            server.logToServer("playerMoved " + playerWithLastMove + ", userId=" + userId);
+            if (userId != playerWithLastMove)
             {
-            	//alles was an die inaktiven Spieler geschickt werden muss
+
+                myHand.pot = currentPot; // set the current pot to the hand
+
+                // alles was an die inaktiven Spieler geschickt werden muss
                 SpieldatenResponse response = new SpieldatenResponse();
-                response.setMessage("Player " + playerWithLastMove + " moved");
+                response.setStep("yourMove");
+                response.setMessage("Player " + playerWithLastMove + " moved. Your turn.");
                 response.setMyHand(myHand);
                 serverCommunication.sendToClient(response);
             }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -75,78 +91,80 @@ public class Player extends Thread {
     {
         try
         {
-        	
             SpieldatenResponse response = new SpieldatenResponse();
-            
+
             server.logToServer("Player " + userId + " connected");
 
-            response.setMessage("Next Player connected. Waiting for another player.");
-            serverCommunication.sendToClient(response);
-        	
-            server.logToServer("Player " + userId + " connected");
-        	
-        
-            // wait for other player to join
-            // if (server. == 'X') {
-            
+            // wenn alle user connected sind, kann der letzte der sich angemeldet hat beginnen
+            if (server.checkAllUsersConnected())
+            {
+                response.setStep("yourMove");
+                response.setMessage("All players connected. Your move.");
+                response.setMyHand(myHand); // initiale hand für diesen player
+                serverCommunication.sendToClient(response);
 
-            try
-            {
-                synchronized (this)
-                {
-                    server.logToServer("Suspending thread " + threadSuspended + ", userId=" + userId);
-                    while (threadSuspended)
-                    	wait();
-                    
-                        
-                }
-                server.logToServer("Thread released, userId=" + userId);
+                server.logToServer("All players connected. Player to move " + userId);
             }
-            catch (InterruptedException e)
+            // es haben sich noch nicht alle angemeldet
+            else
             {
-                e.printStackTrace();
+                response.setStep("waitingForOtherPlayers");
+                response.setMessage("Waiting for another player.");
+                response.setMyHand(myHand); // initial hand für diesen player
+                serverCommunication.sendToClient(response);
             }
-        	         
-            	
-            		//SpieldatenResponse response1 = new SpieldatenResponse();
-                    response.setMessage("All players connected. Your move.");
-                    server.logToServer(response.getMessage());
-                    serverCommunication.sendToClient(response);
-                    server.logToServer("All players connected, userId=" + userId);
+
             // Play game
-        	
-            while  (!server.gameOver())
+            while (!server.gameOver())
             {
-            	//synchronized(this){
+                // synchronized(this){
                 SpieldatenRequest request = serverCommunication.readFromClient();
-                
-                
-                // spieler w�hlt karten
 
-                if (server.validMove(request, userId))
+                // falls eine Anfrage von einem client kam, aber der Spieler gar nicht an der Reihe
+                // ist, brechen wir ab.
+                if (!server.checkIfUsersTurn(userId))
                 {
-                    server.logToServer("loc: " + request);
-                    //sends response
-                    response.setMessage("valid move");
-                    response.setMyHand(myHand);
-                    response.setScore(score);
-                   // response.setPot(myHand.getPot());
-                    
+                    response.setStep("notYourTurn");
+                    response.setMessage("Not your turn!");
                     serverCommunication.sendToClient(response);
-                    server.logToServer("message wurde an client geschickt");
+                    server.logToServer("Not your turn user " + userId);
+                    continue;// skip rest of loop
                 }
-                else
+
+                // spieler wählt karten
+                boolean ok = server.handleMove(request, userId);
+
+                // falls gepasst wurde, senden wir nicht noch eine zusätzliche message
+                if (!request.getStep().equals("pass"))
                 {
-                    response.setMessage("invalid move");
-                    serverCommunication.sendToClient(response);
-                    server.logToServer("invalid move");
+                    if (ok)
+                    {
+                        
+                        myHand.pot = server.gameplay.getPot();
+                        myHand.removePlayedCardsFromHand(server.gameplay.getPot());// entferne alle gespielten aus der hand
+                        
+                        // sends response
+                        response.setStep("validMove");
+                        response.setMessage("valid move");
+                        response.setMyHand(myHand);
+                        response.setScore(score);
+                        // response.setPot(myHand.getPot());
+
+                        serverCommunication.sendToClient(response);
+                        server.logToServer("message wurde an client geschickt");
+                    }
+                    // falls nicht ok und nicht pass
+                    else
+                    {
+                        response.setStep("invalidMove");
+                        response.setMessage("invalid move");
+                        serverCommunication.sendToClient(response);
+                        server.logToServer("invalid move");
+                    }
                 }
-            	//}
-            
-            
+
             }
             serverCommunication.close();
-        
         }
         catch (IOException e)
         {
@@ -159,7 +177,7 @@ public class Player extends Thread {
             System.exit(1);
         }
 
-        }
+    }
 
     public void setThreadSuspended(boolean threadSuspended)
     {

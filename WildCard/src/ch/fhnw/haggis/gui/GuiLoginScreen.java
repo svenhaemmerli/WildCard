@@ -130,40 +130,10 @@ public class GuiLoginScreen
     public void actionPerformed(ActionEvent ae)
     {
         String user = username.getText();
-        
         System.out.println(user);
-        
-        String message = null;
-        Hand myHand = null;
-        try
-        {
-            SpieldatenResponse response = clientCommunication.readFromServer();
-            message = response.getMessage();
-            //myHand = response.getMyHand();
-            System.out.println("Message from server " + response);
-            JOptionPane.showMessageDialog(null, message);
-            
-            SpieldatenRequest request = new SpieldatenRequest();
-            UserData data = new UserData();
-            data.setUsername(user);
-            request.setData(data);
-            request.setMessage("ready");
-            clientCommunication.sendToServer(request);
-            
-            
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-
         dispose();
 
-        Playtable playtable = new Playtable(user, this.clientCommunication, message, myHand);
+        new Playtable(user, this.clientCommunication);
     }
 
     /* m�glicher Test ob eingegebner Name max. 15 Zeichen ist */

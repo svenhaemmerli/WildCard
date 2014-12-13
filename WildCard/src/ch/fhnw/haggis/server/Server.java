@@ -9,16 +9,18 @@ import java.util.Collections;
 public class Server
 {
     private Player[] players;
-    private int currentPlayer;
+    private int aktiverSpieler;
 
-    private ServerGui serverGui;
-    private Gameplay gameplay;
-    
+    public ServerGui serverGui;
+    public Gameplay gameplay;
+
     public Deck deck;
     public JokerDeck jdeck;
     public Hand myHand;
     public int score;
-    
+
+    private int numberOfPlayers = 2;
+    private boolean allPlayersConnected;
 
     public static void main(String args[])
     {
@@ -36,20 +38,18 @@ public class Server
 
     public Server()
     {
-        // max 3 players
-        players = new Player[3];
-        // starting with player 0
-        currentPlayer = 0;
+        players = new Player[numberOfPlayers];
+
+        // der erste aktive spieler ist der letzte der sich anmeldet.
+        aktiverSpieler = numberOfPlayers - 1;
 
         serverGui = new ServerGui();
         gameplay = new Gameplay(serverGui);
-        
+
         jdeck = new JokerDeck();
         deck = new Deck();
         Collections.shuffle(deck.getDeck());
         score = 0;
-        
-        
     }
 
     public void run() throws Exception
@@ -58,16 +58,14 @@ public class Server
         logToServer("Server running on IP: " + Inet4Address.getLocalHost().getHostAddress());
         logToServer("Waiting for connections...");
 
-        // creating the 3 connections
+        // creating the connections
         for (int i = 0; i < players.length; i++)
-        	
-        	
         {
             int userId = i;
-                        
-            myHand = new Hand (deck,jdeck);
+
+            myHand = new Hand(deck, jdeck);
             logToServer("Waiting to create connection for user " + userId);
-            
+
             Socket connectionSocket = serverSocket.accept();
             players[i] = new Player(connectionSocket, this, userId, myHand, score);
             logToServer("Created connection for user " + userId);
@@ -75,75 +73,56 @@ public class Server
 
             logToServer("Started thread for user " + userId);
         }
-        
-        
-        // as soon as all players are connected we start with player zero
-        synchronized (players[0])
-        {
-            // release the thread
-            players[0].setThreadSuspended(false);
-            // notify the thread of the player to continue
-            logToServer("Notify");
-            players[0].notify();
-            
-        }
+        // if all connections could be made we know that all players are connected
+        allPlayersConnected = true;
     }
 
-    // // valid / invalid
-    public synchronized boolean validMove(SpieldatenRequest request, int userId)
+    // Überprüft, ob der userId der aktive spieler ist.
+    public boolean checkIfUsersTurn(int userId)
     {
-        logToServer("Valid move, user=" + userId);
-        // boolean moveDone = false;
-
-        // only proceed if request if from current user
-        while (userId != currentPlayer)
+        if (aktiverSpieler == userId)
         {
-            try
-            {
-                logToServer("Waiting userId=" + userId);
-                wait();
-            }
-            catch (InterruptedException e)
-            {
-                e.printStackTrace();
-            }
+            return true;
+        }
+        return false;
+    }
+
+    // check if all users are connected
+    public boolean checkAllUsersConnected()
+    {
+        return allPlayersConnected;
+    }
+    
+    public boolean handleMove(SpieldatenRequest request, int requestUserId)
+    {
+        // falls der request nicht vom aktivenSpieler kommt, brechen wir ab
+        if (aktiverSpieler != requestUserId)
+        {
+            return false;
         }
 
-        logToServer("Process gameplay request, userId=" + userId);
-
-        // logik des spiels
-        boolean ok = gameplay.processRequest(request, myHand);
+        boolean ok = gameplay.processRequest(request);
 
         if (ok)
         {
-            // notify players that there was a move
-            players[0].playerMoved(currentPlayer);
-            players[1].playerMoved(currentPlayer);
-            players[2].playerMoved(currentPlayer);
-
+            // notify every player that there was a move
+            for (int i = 0; i < players.length; i++)
+            {
+                System.out.println("notify " + i + " that there was a move");
+                players[i].playerMoved(aktiverSpieler, gameplay.getPot());
+            }
             // find the next player
-            currentPlayer = (currentPlayer + 1) % 3;
-            players[currentPlayer].setThreadSuspended(false);
-            logToServer("set suspended");
-            notify();
+            aktiverSpieler = (aktiverSpieler + 1) % numberOfPlayers;
+
             return true;
         }
         else
             return false;
-    }
 
-    // public boolean isOccupied(int loc)
-    // {
-    // logToServer("isOccupied");
-    // // if (board[loc] == 'X' || board[loc] == 'O')
-    // // return true;
-    // // else
-    // return false;
-    // }
+    }
 
     public boolean gameOver()
     {
-
         return false;
     }
 
@@ -155,4 +134,13 @@ public class Server
         serverGui.writeLog(message);
     }
 
+    public int getAktiverSpieler()
+    {
+        return aktiverSpieler;
+    }
+
+    public boolean isAllPlayersConnected()
+    {
+        return allPlayersConnected;
+    }
 }

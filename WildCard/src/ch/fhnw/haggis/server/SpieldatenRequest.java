@@ -1,7 +1,6 @@
 package ch.fhnw.haggis.server;
 
 import java.io.Serializable;
-import ch.fhnw.haggis.server.*;
 
 /**
  * Klasse um Spieldaten vom Client zum Server zu schicken.
@@ -11,6 +10,7 @@ public class SpieldatenRequest
 {
     private static final long serialVersionUID = 3635384963538773512L;
 
+    private String step;
     private String message;
     private Hand myHand;
     private UserData data;
@@ -19,7 +19,7 @@ public class SpieldatenRequest
     @Override
     public String toString()
     {
-        return "SpieldatenRequest [message=" + message + "]";
+        return "SpieldatenRequest [step=" + step + ", message=" + message + "]";
     }
 
     public String getMessage()
@@ -48,8 +48,15 @@ public class SpieldatenRequest
 	public void setData(UserData data) {
 		this.data = data;
 	}
-	
-	
-	
+
+    public String getStep()
+    {
+        return step;
+    }
+
+    public void setStep(String step)
+    {
+        this.step = step;
+    }
     
 }

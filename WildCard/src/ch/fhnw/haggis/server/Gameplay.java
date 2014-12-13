@@ -23,18 +23,22 @@ import ch.fhnw.haggis.server.rules.Sixset;
 import ch.fhnw.haggis.server.rules.Triplet;
 
 
-
 public class Gameplay
 {
-   
+
     public boolean rules;
-    public int countEmpty; 
-    
+    public int countEmpty;
+
     private List<IRule> allRules = new ArrayList<IRule>();
     private IRule regelFuerSpiel = null;
-    
 
     private ServerGui serverGui;
+    
+    // pot für ganzes spiel
+    private ArrayList<Card> pot = new ArrayList<Card>();
+    
+    private int lowestRank;
+
     // private List<Integer> connectedClients = new ArrayList<Integer>();
 
     public Gameplay(ServerGui serverGui)
@@ -47,7 +51,7 @@ public class Gameplay
     public void initializeGame()
     {
         serverGui.writeLog("Initializing game...");
-        
+
         // alle Regeln für das Spiel
         allRules.add(new Single());
         allRules.add(new Pair());
@@ -67,68 +71,105 @@ public class Gameplay
         allRules.add(new MultipleEightset());
         allRules.add(new MultipleSequences());
     }
-
-    public boolean processRequest(SpieldatenRequest spieldaten, Hand myHand)
+    
+    // nach einer Spielrunde muss zurückgesetzt werden.
+    public void resetAfterRunde()
     {
-    	//Abfrage if 2 hands empty
-    	//for (int i=0;i<Player.;i++){
-    	    		
-    	//}
-    	if(spieldaten.getMessage().equals("ready")){
-    	
-        serverGui.writeLog("ready");
-        //Hier m�ssten die Usernamen der beiden anderen User gelesen werden
-        
-        return true;
-    	}
-       
-    	else if (spieldaten.getMessage().equals("pass")){
-        	
-    	serverGui.writeLog("Spieler passt");
-        
-    	return true;
-    	
-        }
-    	else if (spieldaten.getMessage().equals("play")){
-    		
-    		
-    		//Ivos Regeln hier abrufen
-    	    
-    	    // bei der ersten Hand der Runde muss festgestellt werden welche Regel zum Zug kommt.
-    	    // TODO regelFuerSpiel muss null gesetzt werden nachdem eine Runde gespielt wurde, damit für die neue Runde die neue Regel gefunden werden kann.
-    	    if(regelFuerSpiel == null)
-    	    {
-    	        regelFuerSpiel = findeRegel(spieldaten.getMyHand().getHand());
-    	        // falls für diese hand keine regelgefunden werden konnte
-    	        if(regelFuerSpiel == null)
-    	        {
-    	            // TODO meldung, dass keine Regel gefunden wurde
-    	        }
-    	    }
-    		
-    		if(rules && countEmpty<2){
-    		
-    			spieldaten.getMyHand().processCardsPlayed(myHand);
-    			
-    			if(myHand.hand.isEmpty()){
-    				//Player.this.setThreadSuspended(true);
-    				System.out.println("Hand leer");
-    				
-    			}
-    			else if (rules && countEmpty==2){
-    				
-    				myHand.distributeNewCards(myHand.hand);
-    			}
-    		
-    			return true;
-    		}
-    		return false;
-    	}
+        regelFuerSpiel = null; // Spielregel zurücksetzen
+        lowestRank = 0;
+        pot.clear(); // pot löschen
+    }
 
+    public boolean processRequest(SpieldatenRequest spieldaten)
+    {
+        Hand myHand = spieldaten.getMyHand();
+
+        // client is playing
+        if (spieldaten.getStep().equals("play"))
+        {
+            // Ivos Regeln hier abrufen
+
+            // bei der ersten Hand der Runde muss festgestellt werden welche Regel zum Zug kommt.
+            // TODO regelFuerSpiel muss null gesetzt werden nachdem eine Runde gespielt wurde, damit
+            // für
+            // die neue Runde die neue Regel gefunden werden kann.
+            if (regelFuerSpiel == null)
+            {
+                regelFuerSpiel = findeRegel(spieldaten.getMyHand().getHand());
+                
+                serverGui.writeLog("Regel für Spielrunde bestimmt: " + regelFuerSpiel.description());
+                System.out.println("Regel für Spielrunde bestimmt: " + regelFuerSpiel.description());
+
+                // falls für diese hand keine regelgefunden werden konnte
+                if (regelFuerSpiel == null)
+                {
+                    // TODO meldung, dass keine Regel gefunden wurde
+                    System.out.println("Keine Regel gefunden!");
+                    serverGui.writeLog("Keine Regel gefunden!");
+                    return false;
+                }
+            }
+            
+            if(regelFuerSpiel.matchesRule(myHand.getHand()))
+            {
+                // TODO zusätzliche Prüfungen, ob aktuelle hand höher ist als hand aus letzer spielrunde.
+                regelFuerSpiel.getLowestRank();
+                
+                
+                // gespielte karten in pot setzen
+                pot.addAll(myHand.getHand());
+               
+                // TODO distribute new cards
+//                if (myHand.hand.isEmpty())
+//                {
+//                    // Player.this.setThreadSuspended(true);
+//                    System.out.println("Hand leer");
+//
+//                }
+//                else if (countEmpty == 2)
+//                {
+//                    myHand.distributeNewCards(myHand.hand);
+//                }
+                
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+            
+//            if (rules && countEmpty < 2)
+//            {
+//
+//                spieldaten.getMyHand().processCardsPlayed(myHand);
+//
+//                if (myHand.hand.isEmpty())
+//                {
+//                    // Player.this.setThreadSuspended(true);
+//                    System.out.println("Hand leer");
+//
+//                }
+//                else if (rules && countEmpty == 2)
+//                {
+//
+//                    myHand.distributeNewCards(myHand.hand);
+//                }
+//
+//                return true;
+//            }
+        }
+        else if(spieldaten.getStep().equals("pass"))
+        {
+            return true;
+        }
+        
+        
+        // it was an invalid move
         return false;
     }
-    
-    // suche nach einer regel für die gelieferten karten
+
+    // suche nach einer regel für die gelieferten karten (nur nötig bei der ersten hand einer spielrunde)
     public IRule findeRegel(List<Card> cards)
     {
         for (IRule rule : allRules)
@@ -140,8 +181,12 @@ public class Gameplay
         }
         return null;
     }
-
     
+    public ArrayList<Card> getPot()
+    {
+        return pot;
+    }
+
     // public static void main(String[] args)
     // {
     //
