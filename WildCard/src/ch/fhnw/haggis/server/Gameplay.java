@@ -1,5 +1,27 @@
 package ch.fhnw.haggis.server;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ch.fhnw.haggis.server.rules.Eightset;
+import ch.fhnw.haggis.server.rules.IRule;
+import ch.fhnw.haggis.server.rules.MultipleEightset;
+import ch.fhnw.haggis.server.rules.MultiplePair;
+import ch.fhnw.haggis.server.rules.MultipleQuadruplet;
+import ch.fhnw.haggis.server.rules.MultipleQuintuplet;
+import ch.fhnw.haggis.server.rules.MultipleSequences;
+import ch.fhnw.haggis.server.rules.MultipleSevenset;
+import ch.fhnw.haggis.server.rules.MultipleSixset;
+import ch.fhnw.haggis.server.rules.MultipleTriplet;
+import ch.fhnw.haggis.server.rules.Pair;
+import ch.fhnw.haggis.server.rules.Quadruplet;
+import ch.fhnw.haggis.server.rules.Quintuplet;
+import ch.fhnw.haggis.server.rules.Sevenset;
+import ch.fhnw.haggis.server.rules.Single;
+import ch.fhnw.haggis.server.rules.SingleSequence;
+import ch.fhnw.haggis.server.rules.Sixset;
+import ch.fhnw.haggis.server.rules.Triplet;
+
 
 
 public class Gameplay
@@ -7,6 +29,9 @@ public class Gameplay
    
     public boolean rules;
     public int countEmpty; 
+    
+    private List<IRule> allRules = new ArrayList<IRule>();
+    private IRule regelFuerSpiel = null;
     
 
     private ServerGui serverGui;
@@ -22,6 +47,25 @@ public class Gameplay
     public void initializeGame()
     {
         serverGui.writeLog("Initializing game...");
+        
+        // alle Regeln für das Spiel
+        allRules.add(new Single());
+        allRules.add(new Pair());
+        allRules.add(new Triplet());
+        allRules.add(new Quadruplet());
+        allRules.add(new Quintuplet());
+        allRules.add(new Sixset());
+        allRules.add(new Sevenset());
+        allRules.add(new Eightset());
+        allRules.add(new SingleSequence());
+        allRules.add(new MultiplePair());
+        allRules.add(new MultipleTriplet());
+        allRules.add(new MultipleQuadruplet());
+        allRules.add(new MultipleQuintuplet());
+        allRules.add(new MultipleSixset());
+        allRules.add(new MultipleSevenset());
+        allRules.add(new MultipleEightset());
+        allRules.add(new MultipleSequences());
     }
 
     public boolean processRequest(SpieldatenRequest spieldaten, Hand myHand)
@@ -49,6 +93,18 @@ public class Gameplay
     		
     		
     		//Ivos Regeln hier abrufen
+    	    
+    	    // bei der ersten Hand der Runde muss festgestellt werden welche Regel zum Zug kommt.
+    	    // TODO regelFuerSpiel muss null gesetzt werden nachdem eine Runde gespielt wurde, damit für die neue Runde die neue Regel gefunden werden kann.
+    	    if(regelFuerSpiel == null)
+    	    {
+    	        regelFuerSpiel = findeRegel(spieldaten.getMyHand().getHand());
+    	        // falls für diese hand keine regelgefunden werden konnte
+    	        if(regelFuerSpiel == null)
+    	        {
+    	            // TODO meldung, dass keine Regel gefunden wurde
+    	        }
+    	    }
     		
     		if(rules && countEmpty<2){
     		
@@ -70,6 +126,19 @@ public class Gameplay
     	}
 
         return false;
+    }
+    
+    // suche nach einer regel für die gelieferten karten
+    public IRule findeRegel(List<Card> cards)
+    {
+        for (IRule rule : allRules)
+        {
+            if (rule.matchesRule(cards))
+            {
+                return rule;
+            }
+        }
+        return null;
     }
 
     

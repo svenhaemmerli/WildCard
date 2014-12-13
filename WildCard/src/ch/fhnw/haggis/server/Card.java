@@ -86,6 +86,11 @@ public class Card implements Serializable
 	public void setIcon(ImageIcon icon) {
 		this.icon = icon;
 	}
-    
-    
+
+    @Override
+    public String toString()
+    {
+        return "Card [name=" + name + ", value=" + value + ", points=" + points + ", suit=" + suit
+            + ", icon=" + icon + "]";
+    }
 }

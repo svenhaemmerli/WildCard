@@ -16,4 +16,5 @@ public class Eightset extends Sets implements IRule {
 		
 		return super.matchesRule(cards, 8);
 	}
+
 }

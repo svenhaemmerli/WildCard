@@ -18,7 +18,7 @@ public class JokerDeck {
     	ImageIcon dame = new ImageIcon(getClass().getResource("images/Dame.jpg"));
     	dame.setImage(dame.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
-    	ImageIcon koenig = new ImageIcon(getClass().getResource("images/König.jpg"));
+    	ImageIcon koenig = new ImageIcon(getClass().getResource("images/Koenig.jpg"));
     	koenig.setImage(koenig.getImage().getScaledInstance(132, 200,
 				Image.SCALE_DEFAULT));
     	
