@@ -140,33 +140,33 @@ public class Deck implements Serializable
 				Image.SCALE_DEFAULT));
     	
     	//alle Bilder der orangen Karten importieren
-    	ImageIcon iorange2 = new ImageIcon(getClass().getResource("images/orange02.jpg"));
-    	iorange2.setImage(iorange2.getImage().getScaledInstance(132, 200,
-				Image.SCALE_DEFAULT));
-    	ImageIcon iorange3 = new ImageIcon(getClass().getResource("images/orange03.jpg"));
-    	iorange3.setImage(iorange3.getImage().getScaledInstance(132, 200,
-				Image.SCALE_DEFAULT));
-    	ImageIcon iorange4 = new ImageIcon(getClass().getResource("images/orange04.jpg"));
-    	iorange4.setImage(iorange4.getImage().getScaledInstance(132, 200,
-				Image.SCALE_DEFAULT));
-    	ImageIcon iorange5 = new ImageIcon(getClass().getResource("images/orange05.jpg"));
-    	iorange5.setImage(iorange5.getImage().getScaledInstance(132, 200,
-				Image.SCALE_DEFAULT));
-    	ImageIcon iorange6 = new ImageIcon(getClass().getResource("images/orange06.jpg"));
-    	iorange6.setImage(iorange6.getImage().getScaledInstance(132, 200,
-				Image.SCALE_DEFAULT));
-    	ImageIcon iorange7 = new ImageIcon(getClass().getResource("images/orange07.jpg"));
-    	iorange7.setImage(iorange7.getImage().getScaledInstance(132, 200,
-				Image.SCALE_DEFAULT));
-    	ImageIcon iorange8 = new ImageIcon(getClass().getResource("images/orange08.jpg"));
-    	iorange8.setImage(iorange8.getImage().getScaledInstance(132, 200,
-				Image.SCALE_DEFAULT));
-    	ImageIcon iorange9 = new ImageIcon(getClass().getResource("images/orange09.jpg"));
-    	iorange9.setImage(iorange9.getImage().getScaledInstance(132, 200,
-				Image.SCALE_DEFAULT));
-    	ImageIcon iorange10 = new ImageIcon(getClass().getResource("images/orange10.jpg"));
-    	iorange10.setImage(iorange10.getImage().getScaledInstance(132, 200,
-				Image.SCALE_DEFAULT));
+//    	ImageIcon iorange2 = new ImageIcon(getClass().getResource("images/orange02.jpg"));
+//    	iorange2.setImage(iorange2.getImage().getScaledInstance(132, 200,
+//				Image.SCALE_DEFAULT));
+//    	ImageIcon iorange3 = new ImageIcon(getClass().getResource("images/orange03.jpg"));
+//    	iorange3.setImage(iorange3.getImage().getScaledInstance(132, 200,
+//				Image.SCALE_DEFAULT));
+//    	ImageIcon iorange4 = new ImageIcon(getClass().getResource("images/orange04.jpg"));
+//    	iorange4.setImage(iorange4.getImage().getScaledInstance(132, 200,
+//				Image.SCALE_DEFAULT));
+//    	ImageIcon iorange5 = new ImageIcon(getClass().getResource("images/orange05.jpg"));
+//    	iorange5.setImage(iorange5.getImage().getScaledInstance(132, 200,
+//				Image.SCALE_DEFAULT));
+//    	ImageIcon iorange6 = new ImageIcon(getClass().getResource("images/orange06.jpg"));
+//    	iorange6.setImage(iorange6.getImage().getScaledInstance(132, 200,
+//				Image.SCALE_DEFAULT));
+//    	ImageIcon iorange7 = new ImageIcon(getClass().getResource("images/orange07.jpg"));
+//    	iorange7.setImage(iorange7.getImage().getScaledInstance(132, 200,
+//				Image.SCALE_DEFAULT));
+//    	ImageIcon iorange8 = new ImageIcon(getClass().getResource("images/orange08.jpg"));
+//    	iorange8.setImage(iorange8.getImage().getScaledInstance(132, 200,
+//				Image.SCALE_DEFAULT));
+//    	ImageIcon iorange9 = new ImageIcon(getClass().getResource("images/orange09.jpg"));
+//    	iorange9.setImage(iorange9.getImage().getScaledInstance(132, 200,
+//				Image.SCALE_DEFAULT));
+//    	ImageIcon iorange10 = new ImageIcon(getClass().getResource("images/orange10.jpg"));
+//    	iorange10.setImage(iorange10.getImage().getScaledInstance(132, 200,
+//				Image.SCALE_DEFAULT));
     
     	/**
     	 * @author Madeleine
@@ -201,15 +201,15 @@ public class Deck implements Serializable
         deck.add(new Card("green_9", 1, 9, "green", igreen9));
         deck.add(new Card("green_10", 0, 10, "green", igreen10));
 
-        deck.add(new Card("orange_2", 0, 2, "orange", iorange2));
-        deck.add(new Card("orange_3", 1, 3, "orange", iorange3));
-        deck.add(new Card("orange_4", 0, 4, "orange", iorange4));
-        deck.add(new Card("orange_5", 1, 5, "orange", iorange5));
-        deck.add(new Card("orange_6", 0, 6, "orange", iorange6));
-        deck.add(new Card("orange_7", 1, 7, "orange", iorange7));
-        deck.add(new Card("orange_8", 0, 8, "orange", iorange8));
-        deck.add(new Card("orange_9", 1, 9, "orange", iorange9));
-        deck.add(new Card("orange_10", 0, 10, "orange", iorange10));
+//        deck.add(new Card("orange_2", 0, 2, "orange", iorange2));
+//        deck.add(new Card("orange_3", 1, 3, "orange", iorange3));
+//        deck.add(new Card("orange_4", 0, 4, "orange", iorange4));
+//        deck.add(new Card("orange_5", 1, 5, "orange", iorange5));
+//        deck.add(new Card("orange_6", 0, 6, "orange", iorange6));
+//        deck.add(new Card("orange_7", 1, 7, "orange", iorange7));
+//        deck.add(new Card("orange_8", 0, 8, "orange", iorange8));
+//        deck.add(new Card("orange_9", 1, 9, "orange", iorange9));
+//        deck.add(new Card("orange_10", 0, 10, "orange", iorange10));
 
         deck.add(new Card("yellow_2", 0, 2, "yellow", iyel2));
         deck.add(new Card("yellow_3", 1, 3, "yellow", iyel3));
