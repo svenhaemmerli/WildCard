@@ -97,8 +97,8 @@ public class Playtable
     private JLabel hatDame3;
     private JLabel hatKoenig3;
 
-    GridBagConstraints gbcPlayercards = new GridBagConstraints();
-    GridBagConstraints gbcJokerCards = new GridBagConstraints();
+    //GridBagConstraints gbcPlayercards = new GridBagConstraints();
+    //GridBagConstraints gbcJokerCards = new GridBagConstraints();
     GridBagConstraints gbcPlayedCards = new GridBagConstraints();
 
     private ImageIcon icon = new ImageIcon(getClass().getResource("img/hand_otherplayer_s.png"));
@@ -305,7 +305,7 @@ public class Playtable
         GridBagLayout gblPanelPlayDesk = new GridBagLayout();
         panelPlayDesk.setLayout(gblPanelPlayDesk);
 
-        gbcPlayedCards.insets = new Insets(0, 0, 0, 0);// top, left, bottom,
+        //gbcPlayedCards.insets = new Insets(0, 0, 0, 0);// top, left, bottom,
                                                        // right representation
                                                        // of
                                                        // the borders of a
@@ -349,7 +349,7 @@ public class Playtable
         /**
          * Platzhalter f�r JokerButtons
          */
-        gbcJokerCards.insets = new Insets(0, 0, 0, 0);
+        //gbcJokerCards.insets = new Insets(0, 0, 0, 0);
 
         // Platzhalter f�r die Userinformationen - Container f�r InfoPanel und
         // ActionPanel(Buttons)
@@ -421,7 +421,7 @@ public class Playtable
         contentPane.add(lblTitle, BorderLayout.NORTH);
 
         // <----------------------------- Platzhalter f�r die Karten des Spielers ------------------------------------------------------------>
-        gbcPlayercards.insets = new Insets(0, 0, 0, 0);// top, left, bottom,
+        //gbcPlayercards.insets = new Insets(0, 0, 0, 0);// top, left, bottom,
                                                        // right representation
                                                        // of
                                                        // the borders of a
@@ -453,7 +453,8 @@ public class Playtable
         for (int i = 0; i < anzahl; i++)
         {
             karten[i] = new JToggleButton();
-            //karten[i].setMaximumSize(new Dimension(10, 20));
+            karten[i].setBorder(new LineBorder(Color.BLACK, 2));
+            karten[i].setMaximumSize(new Dimension(10, 20));
 
         }
         return karten;
@@ -465,6 +466,7 @@ public class Playtable
         for (int i = 0; i < anzahl; i++)
         {
             karten[i] = new JButton();
+            karten[i].setBorder(new LineBorder(Color.BLACK, 2));
             karten[i].setMaximumSize(new Dimension(10, 20));
 
         }
@@ -576,14 +578,14 @@ public class Playtable
             { // damit der richtige Button angesprochen wird
                 if (e.getStateChange() == ItemEvent.SELECTED)
                 { // was passiert wenn der button selektiert ist
-                    Border borderButtonSelected = new LineBorder(Color.ORANGE, 4);
+                    Border borderButtonSelected = new LineBorder(Color.ORANGE, 2);
                     cards[x].setBorder(borderButtonSelected);
                     // System.out.println("Selected norm. Karte:" + x); zum testen, ob der richtige
                     // Button selektiert wurde
                 }
                 else if (e.getStateChange() == ItemEvent.DESELECTED)
                 { // was passiert, wenn der button deselektiert wird
-                    Border borderButtonDeselected = new LineBorder(Color.GRAY, 1);
+                    Border borderButtonDeselected = new LineBorder(Color.BLACK, 2);
                     cards[x].setBorder(borderButtonDeselected);
                     // System.out.println("Deselected norm. Karte:" + x);
                 }
@@ -596,13 +598,13 @@ public class Playtable
             {
                 if (e.getStateChange() == ItemEvent.SELECTED)
                 {
-                    Border borderButtonSelected = new LineBorder(Color.ORANGE, 4);
+                    Border borderButtonSelected = new LineBorder(Color.ORANGE, 2);
                     jokers[y].setBorder(borderButtonSelected);
                     // System.out.println("Selected Joker Karte:" + y);
                 }
                 else if (e.getStateChange() == ItemEvent.DESELECTED)
                 {
-                    Border borderButtonDeselected = new LineBorder(Color.GRAY, 1);
+                    Border borderButtonDeselected = new LineBorder(Color.BLACK, 2);
                     jokers[y].setBorder(borderButtonDeselected);
                     // System.out.println("Deselected Joker Karte:" + y);
                 }
@@ -671,7 +673,7 @@ public class Playtable
                 cards[countNormal].setIcon(response.getMyHand().hand.get(i).getIcon());
                 cards[countNormal].setName(response.getMyHand().hand.get(i).getName());
                 cards[countNormal].addItemListener(this); // (listener)
-                panelPlayerCard.add(cards[countNormal], gbcPlayercards);
+                panelPlayerCard.add(cards[countNormal]);
                 countNormal++;
             }
             else
@@ -679,7 +681,7 @@ public class Playtable
                 jokers[countJoker].setIcon(response.getMyHand().hand.get(i).getIcon());
                 jokers[countJoker].setName(response.getMyHand().hand.get(i).getName());
                 jokers[countJoker].addItemListener(this); // (listener)
-                panelJokerCards.add(jokers[countJoker], gbcJokerCards);
+                panelJokerCards.add(jokers[countJoker]);
                 countJoker++;
             }
         }
