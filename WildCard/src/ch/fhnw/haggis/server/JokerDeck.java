@@ -13,13 +13,13 @@ public class JokerDeck {
 		//Alle Joker karten importieren
     	
     	ImageIcon bube = new ImageIcon(getClass().getResource("images/Bube.jpg"));
-    	bube.setImage(bube.getImage().getScaledInstance(132, 200,
+    	bube.setImage(bube.getImage().getScaledInstance(64, 100,
 				Image.SCALE_DEFAULT));
     	ImageIcon dame = new ImageIcon(getClass().getResource("images/Dame.jpg"));
-    	dame.setImage(dame.getImage().getScaledInstance(132, 200,
+    	dame.setImage(dame.getImage().getScaledInstance(64, 100,
 				Image.SCALE_DEFAULT));
     	ImageIcon koenig = new ImageIcon(getClass().getResource("images/Koenig.jpg"));
-    	koenig.setImage(koenig.getImage().getScaledInstance(132, 200,
+    	koenig.setImage(koenig.getImage().getScaledInstance(64, 100,
 				Image.SCALE_DEFAULT));
     	
         joker.add(new Card("joker_jack1", 2, 11, "joker", bube));

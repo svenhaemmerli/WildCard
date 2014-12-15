@@ -129,12 +129,12 @@ public class Playtable
                                                                          // cannot
                                                                          // be
                                                                          // seen
-        setSize(1400, 1000);
+        setSize(1400, 900);
         setLocationRelativeTo(null); // place it in the center of the screen
         setResizable(false);
 
         // <----------------------------------------------------------------------- Informationen
-        // für User 2 ------------------------------------------------------------>
+        // fï¿½r User 2 ------------------------------------------------------------>
 
         // setup a new container for the other players cards
         panelCardsWest = new JPanel();
@@ -337,27 +337,27 @@ public class Playtable
         // The panel for the user to display his cards
         panelPlayerCard = new JPanel();
         panelCardsSouth.add(panelPlayerCard, BorderLayout.CENTER);
-        panelPlayerCard.setLayout(new GridLayout(1, 14));
+        //panelPlayerCard.setLayout(new GridLayout(2, 7));
 
         // Die JokerKarten werden in der run-methode erstellt - und anschliessend dann hier
         // platziert
         panelJokerCards = new JPanel();
         panelCardsSouth.add(panelJokerCards, BorderLayout.NORTH);
-        GridBagLayout gblJockerCards = new GridBagLayout();
-        panelJokerCards.setLayout(gblJockerCards);
+//        GridBagLayout gblJockerCards = new GridBagLayout();
+//        panelJokerCards.setLayout(gblJockerCards);
 
         /**
-         * Platzhalter für JokerButtons
+         * Platzhalter fï¿½r JokerButtons
          */
         gbcJokerCards.insets = new Insets(0, 0, 0, 0);
 
-        // Platzhalter für die Userinformationen - Container für InfoPanel und
+        // Platzhalter fï¿½r die Userinformationen - Container fï¿½r InfoPanel und
         // ActionPanel(Buttons)
         panelInfoUser1 = new JPanel();
         panelCardsSouth.add(panelInfoUser1, BorderLayout.EAST);
         panelInfoUser1.setLayout(new BorderLayout());
 
-        // <------------------------------ Buttons für die Aktionen hinzufügen ------------------------------------------------------------>
+        // <------------------------------ Buttons fï¿½r die Aktionen hinzufï¿½gen ------------------------------------------------------------>
         /**
          * @btnLegen the button to place your selected cards
          * @btnPassen if you cannot play, go to the next player
@@ -383,7 +383,7 @@ public class Playtable
         /**
          * Userinformationen auf GUI anzeigen
          */
-        // <----------------------------------- Informationen für User 1 ---------------------------------------------->
+        // <----------------------------------- Informationen fï¿½r User 1 ---------------------------------------------->
 
         panelInfo = new JPanel();
         panelInfoUser1.add(panelInfo, BorderLayout.NORTH);
@@ -420,7 +420,7 @@ public class Playtable
         lblTitle.setPreferredSize(new Dimension(200, 85));
         contentPane.add(lblTitle, BorderLayout.NORTH);
 
-        // <----------------------------- Platzhalter für die Karten des Spielers ------------------------------------------------------------>
+        // <----------------------------- Platzhalter fï¿½r die Karten des Spielers ------------------------------------------------------------>
         gbcPlayercards.insets = new Insets(0, 0, 0, 0);// top, left, bottom,
                                                        // right representation
                                                        // of
@@ -453,7 +453,7 @@ public class Playtable
         for (int i = 0; i < anzahl; i++)
         {
             karten[i] = new JToggleButton();
-            karten[i].setMaximumSize(new Dimension(30, 60));
+            //karten[i].setMaximumSize(new Dimension(10, 20));
 
         }
         return karten;
@@ -465,7 +465,7 @@ public class Playtable
         for (int i = 0; i < anzahl; i++)
         {
             karten[i] = new JButton();
-            karten[i].setMaximumSize(new Dimension(30, 60));
+            karten[i].setMaximumSize(new Dimension(10, 20));
 
         }
         return karten;
@@ -561,15 +561,15 @@ public class Playtable
         }
     }
 
-    // <------------------------------ ItemListener für die Karten ------------------------------------------------------------>
+    // <------------------------------ ItemListener fï¿½r die Karten ------------------------------------------------------------>
 
 
     public void itemStateChanged(ItemEvent e)
     {
-        // hervorheben der Buttons, damit man weiss, welcher Button gedrückt
-        // wurde (JToggleButton) wird von Icon überdeckt, deshalb so gelöst
+        // hervorheben der Buttons, damit man weiss, welcher Button gedrï¿½ckt
+        // wurde (JToggleButton) wird von Icon ï¿½berdeckt, deshalb so gelï¿½st
 
-        // Listener für die normalen Karten
+        // Listener fï¿½r die normalen Karten
         for (int x = 0; x < cards.length; x++)
         {
             if (e.getSource() == cards[x])
@@ -589,7 +589,7 @@ public class Playtable
                 }
             }
         }
-        // Listener für die Joker karten
+        // Listener fï¿½r die Joker karten
         for (int y = 0; y < jokers.length; y++)
         {
             if (e.getSource() == jokers[y])
@@ -660,7 +660,7 @@ public class Playtable
         // Buttons mit Bildern fï¿½llen
         // ------------------------------------------------------------>
 
-        // Listener für button gedrückt
+        // Listener fï¿½r button gedrï¿½ckt
 
         // ToggleButtonListener listener = new ToggleButtonListener();
 
@@ -696,7 +696,7 @@ public class Playtable
         }
 
         // <-----------------------------------------------------------------------
-        // Buttons für Pot
+        // Buttons fï¿½r Pot
         // generieren------------------------------------------------------------>
 
         playedCards = createPlayedCardButtons(playedCards, response.getMyHand().pot.size());
