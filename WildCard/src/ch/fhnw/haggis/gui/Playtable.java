@@ -102,6 +102,11 @@ public class Playtable
     GridBagConstraints gbcPlayedCards = new GridBagConstraints();
 
     private ImageIcon icon = new ImageIcon(getClass().getResource("img/hand_otherplayer_s.png"));
+    
+    Deck selectedDeck = new Deck();
+    JokerDeck selectedJokerDeck = new JokerDeck();
+	ArrayList<Card> selectedCards = new ArrayList<Card>();
+	Hand selectedHand = new Hand(selectedCards);
 
     private ClientCommunication clientCommunication;
     private Thread communicationThread;
@@ -111,8 +116,7 @@ public class Playtable
     public Playtable(String userName, ClientCommunication clientCommunication)
     {
 
-        // TODO message und myHand auf Playtable anzeigen
-
+        
         this.clientCommunication = clientCommunication;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -122,19 +126,12 @@ public class Playtable
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout());
         int w = Toolkit.getDefaultToolkit().getScreenSize().width;
-        int h = Toolkit.getDefaultToolkit().getScreenSize().height - 65; // -65
-                                                                         // otherwise
-                                                                         // the
-                                                                         // taskbar
-                                                                         // cannot
-                                                                         // be
-                                                                         // seen
+        int h = Toolkit.getDefaultToolkit().getScreenSize().height - 65; // -65 otherwise the taskbar cannot be seen
         setSize(1400, 900);
         setLocationRelativeTo(null); // place it in the center of the screen
         setResizable(false);
 
-        // <----------------------------------------------------------------------- Informationen
-        // fï¿½r User 2 ------------------------------------------------------------>
+        // <----------------------------- Informationen für User 2 -------------------------->
 
         // setup a new container for the other players cards
         panelCardsWest = new JPanel();
@@ -150,6 +147,7 @@ public class Playtable
         panelCardsWest.add(lblImgCards2, BorderLayout.CENTER);
         lblImgCards2.setPreferredSize(new Dimension(250, 100));
 
+        //Info über die vorhanenden Joker
         JokerInfo2 = new JPanel();
         panelCardsWest.add(JokerInfo2, BorderLayout.NORTH);
         JokerInfo2.setLayout(new GridBagLayout());
@@ -178,6 +176,7 @@ public class Playtable
         gbcJoker2.gridy = 3;
         JokerInfo2.add(hatKoenig2, gbcJoker2);
 
+        //sonstige Infos zum Player
         panelUserInfo2 = new JPanel();
         panelCardsWest.add(panelUserInfo2, BorderLayout.SOUTH);
         panelUserInfo2.setLayout(new GridLayout(4, 2, 0, 0));
@@ -219,8 +218,7 @@ public class Playtable
 
        
         /*
-        // <----------------------------------------------------------------------- Informationen
-        // fï¿½r User 3 ------------------------------------------------------------>
+        // <------------------ Informationen für User 3 --------------------->
 
         panelCardsEast = new JPanel();
         contentPane.add(panelCardsEast, BorderLayout.EAST);
@@ -295,8 +293,7 @@ public class Playtable
         panelUserInfo3.add(lblIsGeber3);
 
 		*/
-        // <----------------------------------------------------------------------- Spieltisch
-        // ------------------------------------------------------------>
+        // <------------------------ Spieltisch ---------------------------------->
 
         // Spieltisch in der Mitte, mit den gespielten Karten darauf
         panelPlayDesk = new JPanel();
@@ -322,8 +319,7 @@ public class Playtable
         // panelPlayDesk.add(playedCards[i], gbcPlayedCards);
         // }
 
-        // <----------------------------------------------------------------------- Copyright
-        // ------------------------------------------------------------>
+        // <------------------------------ Copyright ------------------------------------------>
 
         panelCardsSouth = new JPanel();
         contentPane.add(panelCardsSouth, BorderLayout.SOUTH);
@@ -347,17 +343,16 @@ public class Playtable
 //        panelJokerCards.setLayout(gblJockerCards);
 
         /**
-         * Platzhalter fï¿½r JokerButtons
+         * Platzhalter für JokerButtons
          */
         //gbcJokerCards.insets = new Insets(0, 0, 0, 0);
 
-        // Platzhalter fï¿½r die Userinformationen - Container fï¿½r InfoPanel und
-        // ActionPanel(Buttons)
+        // Platzhalter für die Userinformationen - Container für InfoPanel und ActionPanel(Buttons)
         panelInfoUser1 = new JPanel();
         panelCardsSouth.add(panelInfoUser1, BorderLayout.EAST);
         panelInfoUser1.setLayout(new BorderLayout());
 
-        // <------------------------------ Buttons fï¿½r die Aktionen hinzufï¿½gen ------------------------------------------------------------>
+        // <------------------------------ Buttons für die Aktionen hinzufügen ---------------------->
         /**
          * @btnLegen the button to place your selected cards
          * @btnPassen if you cannot play, go to the next player
@@ -383,7 +378,7 @@ public class Playtable
         /**
          * Userinformationen auf GUI anzeigen
          */
-        // <----------------------------------- Informationen fï¿½r User 1 ---------------------------------------------->
+        // <----------------------------------- Informationen für User 1 ---------------------------------------------->
 
         panelInfo = new JPanel();
         panelInfoUser1.add(panelInfo, BorderLayout.NORTH);
@@ -420,7 +415,7 @@ public class Playtable
         lblTitle.setPreferredSize(new Dimension(200, 85));
         contentPane.add(lblTitle, BorderLayout.NORTH);
 
-        // <----------------------------- Platzhalter fï¿½r die Karten des Spielers ------------------------------------------------------------>
+        // <----------------------------- Platzhalter fï¿½r die Karten des Spielers ---------------------------->
         //gbcPlayercards.insets = new Insets(0, 0, 0, 0);// top, left, bottom,
                                                        // right representation
                                                        // of
@@ -435,18 +430,15 @@ public class Playtable
         
         setVisible(true);
 
-        // ------------------------------------------------------------------logical
-        // part-------------------------------------------//
+        // --------------------------logical part-------------------------------------------
 
         communicationThread = new Thread(this);
         communicationThread.start();
     }
 
-    // <-------------------------------------Methoden zum Karten erstellen ------------------------------------------------------------>
+    // <-------------------------------------Methoden zum Karten erstellen ------------------------>
 
-    // Method generates a JButton-Array it needs an array to fill and an int
-    // with the number of
-    // buttons
+    // Method generates a JButton-Array it needs an array to fill and an int with the number of buttons
     private JToggleButton[] createToggleCardButtons(JToggleButton[] karten, int anzahl)
     {
         karten = new JToggleButton[anzahl];
@@ -473,8 +465,7 @@ public class Playtable
         return karten;
     }
 
-    // <----------------------------------------------------------------------- Action Listeners
-    // ------------------------------------------------------------>
+    // <-------------------------- Action Listeners -------------------------------------->
 
     // Methode zum legen der Karten
     public void actionPerformed(ActionEvent ae)
@@ -488,44 +479,49 @@ public class Playtable
             int jokKart = jokers.length;
 
             Deck guiDeck = new Deck();
+            JokerDeck guiJoker = new JokerDeck();
             ArrayList<Card> hand = new ArrayList<Card>();
-            Hand myHand = new Hand(hand);
+            Hand myHand = new Hand(selectedCards);
 
+            
             request.setStep("play");
             request.setMessage("play");
 
+            /*
             for (int z = 0; z < norKart; z++)
             {
                 if (cards[z].isSelected())
                 {
 
-                    System.out.println(cards[z].getText());
+                    System.out.println(cards[z].getName());
 
                     // read Arraylist and fill to hand
                     Card c = new Card();
                     c = guiDeck.findByName(cards[z].getName());
-
                     hand.add(c);
                 }
             }
             // myHand.setHand(hand);
             // request.setMyHand(myHand);
 
+             
             for (int z = 0; z < jokKart; z++)
             {
                 if (jokers[z].isSelected())
                 {
-                    System.out.println(jokers[z].getText());
+                    System.out.println(jokers[z].getName());
 
-                    JokerDeck guiJoker = new JokerDeck();
                     Card c = new Card();
                     c = guiJoker.findByName(jokers[z].getName());
                     hand.add(c);
 
                 }
             }
+	*/
 
-            myHand.setHand(hand);
+
+            myHand.setHand(selectedCards);
+            //myHand.setHand(hand);
             request.setMyHand(myHand);
 
             try
@@ -563,35 +559,43 @@ public class Playtable
         }
     }
 
-    // <------------------------------ ItemListener fï¿½r die Karten ------------------------------------------------------------>
+    // <------------------------------ ItemListener für die Karten ------------------->
 
 
     public void itemStateChanged(ItemEvent e)
     {
-        // hervorheben der Buttons, damit man weiss, welcher Button gedrï¿½ckt
-        // wurde (JToggleButton) wird von Icon ï¿½berdeckt, deshalb so gelï¿½st
+        // hervorheben der Buttons, damit man weiss, welcher Button gedrückt
+        // wurde (JToggleButton) wird von Icon überdeckt, deshalb so gelöst
 
-        // Listener fï¿½r die normalen Karten
+    	
+    	
+        // Listener für die normalen Karten
         for (int x = 0; x < cards.length; x++)
         {
             if (e.getSource() == cards[x])
             { // damit der richtige Button angesprochen wird
-                if (e.getStateChange() == ItemEvent.SELECTED)
-                { // was passiert wenn der button selektiert ist
+                if (e.getStateChange() == ItemEvent.SELECTED) // was passiert wenn der button selektiert ist
+                { 
                     Border borderButtonSelected = new LineBorder(Color.ORANGE, 2);
                     cards[x].setBorder(borderButtonSelected);
-                    // System.out.println("Selected norm. Karte:" + x); zum testen, ob der richtige
+                    Card card = new Card();
+                    card = selectedDeck.findByName(cards[x].getName());
+                    selectedCards.add(card);
+                    System.out.println("Selected norm. Karte:" + cards[x].getName()); //zum testen, ob der richtige
                     // Button selektiert wurde
                 }
                 else if (e.getStateChange() == ItemEvent.DESELECTED)
                 { // was passiert, wenn der button deselektiert wird
                     Border borderButtonDeselected = new LineBorder(Color.BLACK, 2);
                     cards[x].setBorder(borderButtonDeselected);
-                    // System.out.println("Deselected norm. Karte:" + x);
+                    Card card = new Card();
+                    card = selectedDeck.findByName(cards[x].getName());
+                    selectedCards.remove(card);
+                    System.out.println("Deselected norm. Karte:" + cards[x].getName());
                 }
             }
         }
-        // Listener fï¿½r die Joker karten
+        // Listener für die Joker karten
         for (int y = 0; y < jokers.length; y++)
         {
             if (e.getSource() == jokers[y])
@@ -600,13 +604,19 @@ public class Playtable
                 {
                     Border borderButtonSelected = new LineBorder(Color.ORANGE, 2);
                     jokers[y].setBorder(borderButtonSelected);
-                    // System.out.println("Selected Joker Karte:" + y);
+                    Card card = new Card();
+                    card = selectedJokerDeck.findByName(jokers[y].getName());
+                    selectedCards.add(card);
+                    System.out.println("Selected Joker Karte:" + cards[y].getName());
                 }
                 else if (e.getStateChange() == ItemEvent.DESELECTED)
                 {
                     Border borderButtonDeselected = new LineBorder(Color.BLACK, 2);
                     jokers[y].setBorder(borderButtonDeselected);
-                    // System.out.println("Deselected Joker Karte:" + y);
+                    Card card = new Card();
+                    card = selectedJokerDeck.findByName(jokers[y].getName());
+                    selectedCards.remove(card);
+                    System.out.println("Deselected Joker Karte:" + cards[y].getName());
                 }
             }
         }
@@ -615,7 +625,7 @@ public class Playtable
     
     public void createButtons(SpieldatenResponse response)
     {
-        // Inhalte der Panels lÃ¶schen
+        // Inhalte der Panels löschen
         panelPlayerCard.removeAll();
         panelJokerCards.removeAll();
         panelPlayDesk.removeAll();
@@ -658,11 +668,9 @@ public class Playtable
         int countNormal = 0;
         int countJoker = 0;
 
-        // <-----------------------------------------------------------------------
-        // Buttons mit Bildern fï¿½llen
-        // ------------------------------------------------------------>
+        // <--------------------------- Buttons mit Bildern füllen --------------------------------------->
 
-        // Listener fï¿½r button gedrï¿½ckt
+        // Listener für button gedrückt
 
         // ToggleButtonListener listener = new ToggleButtonListener();
 
@@ -697,10 +705,8 @@ public class Playtable
                 + response.getMyHand().hand.get(m).getName());
         }
 
-        // <-----------------------------------------------------------------------
-        // Buttons fï¿½r Pot
-        // generieren------------------------------------------------------------>
-
+        // <------------------------------------ Buttons für Pot generieren ----------------------------->
+        
         playedCards = createPlayedCardButtons(playedCards, response.getMyHand().pot.size());
 
         // Bilder laden und den Text des buttons setzen
@@ -711,15 +717,14 @@ public class Playtable
             panelPlayDesk.add(playedCards[i], gbcPlayedCards);
         }
         
-        // Inhalte neu zeichnen um OberflÃ¤che upzudaten
+        // Inhalte neu zeichnen um Oberfläche upzudaten
         contentPane.revalidate(); 
         contentPane.repaint();
     }
 
     // }
 
-    // <----------------------------------------------------------------------- Run Methode zum
-    // Bearbeiten der Serverantworten ------------------------------------------------------------>
+    // <----------------------------------- Run Methode zum Bearbeiten der Serverantworten ----------------------------->
 
     /**
      * Wartet auf Antworten vom Server (Endlosschlaufe). Mit diesen Antworten kann dann die Logik im
@@ -745,7 +750,7 @@ public class Playtable
                 {
                     JOptionPane.showMessageDialog(null, response.getMessage());
                     
-                    // Buttons fÃ¼r Karten erstellen
+                    // Buttons für Karten erstellen
                     createButtons(response);
                 }
                 
