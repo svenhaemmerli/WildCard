@@ -129,12 +129,12 @@ public class Playtable
                                                                          // cannot
                                                                          // be
                                                                          // seen
-        setSize(w, h);
+        setSize(1400, 1000);
         setLocationRelativeTo(null); // place it in the center of the screen
         setResizable(false);
 
         // <----------------------------------------------------------------------- Informationen
-        // fï¿½r User 2 ------------------------------------------------------------>
+        // für User 2 ------------------------------------------------------------>
 
         // setup a new container for the other players cards
         panelCardsWest = new JPanel();
@@ -217,6 +217,8 @@ public class Playtable
         lblIsgeber2.setHorizontalAlignment(SwingConstants.RIGHT);
         panelUserInfo2.add(lblIsgeber2);
 
+       
+        /*
         // <----------------------------------------------------------------------- Informationen
         // fï¿½r User 3 ------------------------------------------------------------>
 
@@ -292,6 +294,7 @@ public class Playtable
         lblIsGeber3.setHorizontalAlignment(SwingConstants.RIGHT);
         panelUserInfo3.add(lblIsGeber3);
 
+		*/
         // <----------------------------------------------------------------------- Spieltisch
         // ------------------------------------------------------------>
 
@@ -326,10 +329,7 @@ public class Playtable
         contentPane.add(panelCardsSouth, BorderLayout.SOUTH);
         panelCardsSouth.setLayout(new BorderLayout());
 
-        lblCopyright = new JLabel("\u00a9 WILDCARD - 19.12.2014"); // \u00a9 is
-                                                                   // the code
-                                                                   // for
-                                                                   // copyright
+        lblCopyright = new JLabel("\u00a9 WILDCARD - 19.12.2014"); // \u00a9 is the code for copyright
         panelCardsSouth.add(lblCopyright, BorderLayout.SOUTH);
         lblCopyright.setFont(new Font("Arial", Font.BOLD, 13));
         lblCopyright.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -347,18 +347,17 @@ public class Playtable
         panelJokerCards.setLayout(gblJockerCards);
 
         /**
-         * Platzhalter fï¿½r JokerButtons
+         * Platzhalter für JokerButtons
          */
         gbcJokerCards.insets = new Insets(0, 0, 0, 0);
 
-        // Platzhalter fï¿½r die Userinformationen - Container fï¿½r InfoPanel und
+        // Platzhalter für die Userinformationen - Container für InfoPanel und
         // ActionPanel(Buttons)
         panelInfoUser1 = new JPanel();
         panelCardsSouth.add(panelInfoUser1, BorderLayout.EAST);
         panelInfoUser1.setLayout(new BorderLayout());
 
-        // <----------------------------------------------------------------------- Buttons fï¿½r die
-        // Aktionen hinzufï¿½gen ------------------------------------------------------------>
+        // <------------------------------ Buttons für die Aktionen hinzufügen ------------------------------------------------------------>
         /**
          * @btnLegen the button to place your selected cards
          * @btnPassen if you cannot play, go to the next player
@@ -384,8 +383,7 @@ public class Playtable
         /**
          * Userinformationen auf GUI anzeigen
          */
-        // <----------------------------------------------------------------------- Informationen
-        // fï¿½r User 1 ------------------------------------------------------------>
+        // <----------------------------------- Informationen für User 1 ---------------------------------------------->
 
         panelInfo = new JPanel();
         panelInfoUser1.add(panelInfo, BorderLayout.NORTH);
@@ -414,8 +412,7 @@ public class Playtable
         lblIsGeber1.setHorizontalAlignment(SwingConstants.RIGHT);
         panelInfo.add(lblIsGeber1);
 
-        // <----------------------------------------------------------------------- Spieltisch
-        // beschrieb ------------------------------------------------------------>
+        // <------------------------------- Spieltisch beschrieb ------------------------------------------------------------>
 
         lblTitle = new JLabel("Haggis - Team WildCard");
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -423,8 +420,7 @@ public class Playtable
         lblTitle.setPreferredSize(new Dimension(200, 85));
         contentPane.add(lblTitle, BorderLayout.NORTH);
 
-        // <----------------------------------------------------------------------- Platzhalter fï¿½r
-        // die Karten des Spielers ------------------------------------------------------------>
+        // <----------------------------- Platzhalter für die Karten des Spielers ------------------------------------------------------------>
         gbcPlayercards.insets = new Insets(0, 0, 0, 0);// top, left, bottom,
                                                        // right representation
                                                        // of
@@ -435,7 +431,8 @@ public class Playtable
                                                        // container must leave
                                                        // at
                                                        // each of its edges
-
+        
+        
         setVisible(true);
 
         // ------------------------------------------------------------------logical
@@ -445,8 +442,7 @@ public class Playtable
         communicationThread.start();
     }
 
-    // <-----------------------------------------------------------------------Methoden zum Karten
-    // erstellen ------------------------------------------------------------>
+    // <-------------------------------------Methoden zum Karten erstellen ------------------------------------------------------------>
 
     // Method generates a JButton-Array it needs an array to fill and an int
     // with the number of
@@ -457,7 +453,7 @@ public class Playtable
         for (int i = 0; i < anzahl; i++)
         {
             karten[i] = new JToggleButton();
-            karten[i].setPreferredSize(new Dimension(100, 200));
+            karten[i].setMaximumSize(new Dimension(30, 60));
 
         }
         return karten;
@@ -469,7 +465,7 @@ public class Playtable
         for (int i = 0; i < anzahl; i++)
         {
             karten[i] = new JButton();
-            karten[i].setPreferredSize(new Dimension(100, 200));
+            karten[i].setMaximumSize(new Dimension(30, 60));
 
         }
         return karten;
@@ -505,7 +501,7 @@ public class Playtable
 
                     // read Arraylist and fill to hand
                     Card c = new Card();
-                    c = guiDeck.findByName(cards[z].getText());
+                    c = guiDeck.findByName(cards[z].getName());
 
                     hand.add(c);
                 }
@@ -521,7 +517,7 @@ public class Playtable
 
                     JokerDeck guiJoker = new JokerDeck();
                     Card c = new Card();
-                    c = guiJoker.findByName(jokers[z].getText());
+                    c = guiJoker.findByName(jokers[z].getName());
                     hand.add(c);
 
                 }
@@ -565,21 +561,15 @@ public class Playtable
         }
     }
 
-    // Element Klasse - damit ich auf Instanzvariablen der oberen Klasse zugreifen kann - falls
-    // nï¿½tig.
-    // Hat mir mit cards.lengt leider nicht richtig geklappt
+    // <------------------------------ ItemListener für die Karten ------------------------------------------------------------>
 
-    // <----------------------------------------------------------------------- ItemListener fï¿½r die
-    // Karten ------------------------------------------------------------>
-
-    // public class ToggleButtonListener implements ItemListener {
 
     public void itemStateChanged(ItemEvent e)
     {
-        // hervorheben der Buttons, damit man weiss, welcher Button gedrï¿½ckt
-        // wurde (JToggleButton) wird von Icon ï¿½berdeckt, deshalb so gelï¿½st
+        // hervorheben der Buttons, damit man weiss, welcher Button gedrückt
+        // wurde (JToggleButton) wird von Icon überdeckt, deshalb so gelöst
 
-        // Listener fï¿½r die normalen Karten
+        // Listener für die normalen Karten
         for (int x = 0; x < cards.length; x++)
         {
             if (e.getSource() == cards[x])
@@ -599,7 +589,7 @@ public class Playtable
                 }
             }
         }
-        // Listener fï¿½r die Joker karten
+        // Listener für die Joker karten
         for (int y = 0; y < jokers.length; y++)
         {
             if (e.getSource() == jokers[y])
@@ -670,7 +660,7 @@ public class Playtable
         // Buttons mit Bildern fï¿½llen
         // ------------------------------------------------------------>
 
-        // Listener fï¿½r button gedrï¿½ckt
+        // Listener für button gedrückt
 
         // ToggleButtonListener listener = new ToggleButtonListener();
 
@@ -679,7 +669,7 @@ public class Playtable
             if (response.getMyHand().hand.get(i).getPoints() < 11)
             {
                 cards[countNormal].setIcon(response.getMyHand().hand.get(i).getIcon());
-                cards[countNormal].setText(response.getMyHand().hand.get(i).getName());
+                cards[countNormal].setName(response.getMyHand().hand.get(i).getName());
                 cards[countNormal].addItemListener(this); // (listener)
                 panelPlayerCard.add(cards[countNormal], gbcPlayercards);
                 countNormal++;
@@ -687,7 +677,7 @@ public class Playtable
             else
             {
                 jokers[countJoker].setIcon(response.getMyHand().hand.get(i).getIcon());
-                jokers[countJoker].setText(response.getMyHand().hand.get(i).getName());
+                jokers[countJoker].setName(response.getMyHand().hand.get(i).getName());
                 jokers[countJoker].addItemListener(this); // (listener)
                 panelJokerCards.add(jokers[countJoker], gbcJokerCards);
                 countJoker++;
@@ -706,7 +696,7 @@ public class Playtable
         }
 
         // <-----------------------------------------------------------------------
-        // Buttons fï¿½r Pot
+        // Buttons für Pot
         // generieren------------------------------------------------------------>
 
         playedCards = createPlayedCardButtons(playedCards, response.getMyHand().pot.size());
@@ -715,7 +705,7 @@ public class Playtable
         for (int i = 0; i < response.getMyHand().getPot().size(); i++)
         {
             playedCards[i].setIcon(response.getMyHand().getPot().get(i).getIcon());
-            playedCards[i].setText(response.getMyHand().getPot().get(i).getName());
+            playedCards[i].setName(response.getMyHand().getPot().get(i).getName());
             panelPlayDesk.add(playedCards[i], gbcPlayedCards);
         }
         
