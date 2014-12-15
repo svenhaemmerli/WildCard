@@ -6,9 +6,9 @@ import java.net.Socket;
 import java.util.Collections;
 
 
-public class Server
-{
-    private Player[] players;
+public class Server {
+	
+   	private Player[] players;
     private int aktiverSpieler;
 
     public ServerGui serverGui;
@@ -38,9 +38,9 @@ public class Server
 
     public Server()
     {
-        players = new Player[numberOfPlayers];
+        players = new Player[numberOfPlayers];      
 
-        // der erste aktive spieler ist der letzte der sich anmeldet.
+        // first active player is the last one registred
         aktiverSpieler = numberOfPlayers - 1;
 
         serverGui = new ServerGui();
@@ -77,7 +77,7 @@ public class Server
         allPlayersConnected = true;
     }
 
-    // Überprüft, ob der userId der aktive spieler ist.
+    // check ob user == active Player
     public boolean checkIfUsersTurn(int userId)
     {
         if (aktiverSpieler == userId)
@@ -100,20 +100,25 @@ public class Server
         {
             return false;
         }
+        
+        if (aktiverSpieler==numberOfPlayers-1){
+        	gameplay.setCountPass(0);
+        	
+        }
 
         boolean ok = gameplay.processRequest(request);
 
-        if (ok)
-        {
+        if (ok)  {
+        	
             // notify every player that there was a move
             for (int i = 0; i < players.length; i++)
-            {
+             {
                 System.out.println("notify " + i + " that there was a move");
                 players[i].playerMoved(aktiverSpieler, gameplay.getPot());
             }
             // find the next player
             aktiverSpieler = (aktiverSpieler + 1) % numberOfPlayers;
-
+            
             return true;
         }
         else
@@ -143,4 +148,13 @@ public class Server
     {
         return allPlayersConnected;
     }
+    
+    public int getNumberOfPlayers() {
+		return numberOfPlayers;
+	}
+
+	public void setNumberOfPlayers(int numberOfPlayers) {
+		this.numberOfPlayers = numberOfPlayers;
+	}
+    
 }

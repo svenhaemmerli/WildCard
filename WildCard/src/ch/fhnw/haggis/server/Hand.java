@@ -15,6 +15,9 @@ public class Hand
     public ArrayList<Card> win = new ArrayList<Card>(); // won cards
 
     public ArrayList<Card> pot = new ArrayList<Card>(); // pod cards
+    
+    public ArrayList<Card> potActual = new ArrayList<Card>(); // podActual contains only recently played cards
+    
 
     public Hand(Deck d, JokerDeck a)
     {
@@ -165,9 +168,9 @@ public class Hand
         this.win = win;
     }
 
-    public ArrayList<Card> getPot()
-    {
+    public ArrayList<Card> getPot() {
         return pot;
-    }
+   }
 
+   
 }

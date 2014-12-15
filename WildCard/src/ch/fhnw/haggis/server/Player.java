@@ -58,12 +58,11 @@ public class Player
         this.userId = userId;
     }
 
-    // -------------------------------------------getter & setter
-    // end--------------------------------------------------------//
+    // -------------------------------------------getter & setter end--------------------------------------------------------//
     /**
      * Method to notify this Player that an opponent moved.
      */
-    public void playerMoved(int playerWithLastMove, ArrayList<Card> currentPot)
+    public void playerMoved(int playerWithLastMove, ArrayList<Card> potActual)
     {
         try
         {
@@ -71,7 +70,7 @@ public class Player
             if (userId != playerWithLastMove)
             {
 
-                myHand.pot = currentPot; // set the current pot to the hand
+                myHand.pot = potActual; // set the current pot to the hand
 
                 // alles was an die inaktiven Spieler geschickt werden muss
                 SpieldatenResponse response = new SpieldatenResponse();
@@ -142,13 +141,14 @@ public class Player
                         
                         myHand.pot = server.gameplay.getPot();
                         myHand.removePlayedCardsFromHand(server.gameplay.getPot());// entferne alle gespielten aus der hand
+                       
                         
                         // sends response
                         response.setStep("validMove");
                         response.setMessage("valid move");
                         response.setMyHand(myHand);
                         response.setScore(score);
-                        // response.setPot(myHand.getPot());
+                        //response.setPot(myHand.getPot());
 
                         serverCommunication.sendToClient(response);
                         server.logToServer("message wurde an client geschickt");

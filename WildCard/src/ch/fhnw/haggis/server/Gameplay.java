@@ -3,6 +3,8 @@ package ch.fhnw.haggis.server;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.corba.se.spi.activation.Server;
+
 import ch.fhnw.haggis.server.rules.Eightset;
 import ch.fhnw.haggis.server.rules.IRule;
 import ch.fhnw.haggis.server.rules.MultipleEightset;
@@ -23,10 +25,9 @@ import ch.fhnw.haggis.server.rules.Sixset;
 import ch.fhnw.haggis.server.rules.Triplet;
 
 
-public class Gameplay
-{
-
-    public boolean rules;
+public class Gameplay {
+	
+	public boolean rules;
     public int countEmpty;
 
     private List<IRule> allRules = new ArrayList<IRule>();
@@ -36,8 +37,13 @@ public class Gameplay
     
     // pot für ganzes spiel
     private ArrayList<Card> pot = new ArrayList<Card>();
+    public ArrayList<Card> potActual = new ArrayList<Card>(); // podActual contains only recently played cards
     
     private int lowestRank;
+    private int countPass =0;
+    
+    
+    
 
     // private List<Integer> connectedClients = new ArrayList<Integer>();
 
@@ -51,7 +57,7 @@ public class Gameplay
     public void initializeGame()
     {
         serverGui.writeLog("Initializing game...");
-
+       
         // alle Regeln für das Spiel
         allRules.add(new Single());
         allRules.add(new Pair());
@@ -73,22 +79,23 @@ public class Gameplay
     }
     
     // nach einer Spielrunde muss zurückgesetzt werden.
+    //hier muesste die Hand ins win transferiert werden 
     public void resetAfterRunde()
     {
-        regelFuerSpiel = null; // Spielregel zurücksetzen
+        regelFuerSpiel = null; //reset rules
         lowestRank = 0;
-        pot.clear(); // pot löschen
+        pot.clear(); // delete pot
+        countPass=0;
     }
 
-    public boolean processRequest(SpieldatenRequest spieldaten)
-    {
+    public boolean processRequest(SpieldatenRequest spieldaten) {
+    	
         Hand myHand = spieldaten.getMyHand();
 
         // client is playing
-        if (spieldaten.getStep().equals("play"))
-        {
-            // Ivos Regeln hier abrufen
-
+        if (spieldaten.getStep().equals("play")) {
+        	
+        	countPass=0;
             // bei der ersten Hand der Runde muss festgestellt werden welche Regel zum Zug kommt.
             // TODO regelFuerSpiel muss null gesetzt werden nachdem eine Runde gespielt wurde, damit
             // für
@@ -114,10 +121,13 @@ public class Gameplay
             {
                 // TODO zusätzliche Prüfungen, ob aktuelle hand höher ist als hand aus letzer spielrunde.
                 regelFuerSpiel.getLowestRank();
+                potActual.clear();
                 
                 
                 // gespielte karten in pot setzen
                 pot.addAll(myHand.getHand());
+                potActual.addAll(myHand.getHand());
+                
                
                 // TODO distribute new cards
 //                if (myHand.hand.isEmpty())
@@ -159,8 +169,14 @@ public class Gameplay
 //                return true;
 //            }
         }
-        else if(spieldaten.getStep().equals("pass"))
-        {
+        else if(spieldaten.getStep().equals("pass")) {
+        	
+        	countPass ++;
+        	
+        	if (countPass==2){
+        		
+        		resetAfterRunde();
+        	}
             return true;
         }
         
@@ -182,10 +198,22 @@ public class Gameplay
         return null;
     }
     
+    public int checkCountPass(){
+    	return countPass;
+    }
+    
+    public void setCountPass(int countPass){
+    	
+    	this.countPass=countPass;
+    	
+    }
+    
     public ArrayList<Card> getPot()
     {
         return pot;
     }
+    
+    
 
     // public static void main(String[] args)
     // {
