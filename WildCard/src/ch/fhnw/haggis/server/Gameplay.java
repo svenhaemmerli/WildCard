@@ -80,12 +80,20 @@ public class Gameplay {
     
     // nach einer Spielrunde muss zurückgesetzt werden.
     //hier muesste die Hand ins win transferiert werden 
-    public void resetAfterRunde()
-    {
+    public int resetAfterRunde(Hand h){
+        int score =0;
         regelFuerSpiel = null; //reset rules
         lowestRank = 0;
+        for (int i =0; i<pot.size();i++){
+        
+        h.hand.add(pot.get(i));
+        h.hand.get(i).getValue();
+        score = score + h.hand.get(i).getValue();
+       
+        }
         pot.clear(); // delete pot
         countPass=0;
+        return score;
     }
 
     public boolean processRequest(SpieldatenRequest spieldaten) {
@@ -174,8 +182,8 @@ public class Gameplay {
         	countPass ++;
         	
         	if (countPass==2){
-        		
-        		resetAfterRunde();
+        				
+        		resetAfterRunde(myHand);
         	}
             return true;
         }

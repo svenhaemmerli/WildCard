@@ -86,17 +86,17 @@ public class Hand
     // hand.remove(hand.get(0));
     // }
     // }
-    public void addCardsWon(ArrayList<Card> pot)
-    { // Add cards to the won, remove from pot
-        Iterator<Card> b = pot.iterator();
-        int count = 0;
-        while (b.hasNext())
-        {
-            win.add(b.next());
-            pot.remove(b.next());
-            count++;
-        }
-    }
+//    public void addCardsWon(ArrayList<Card> pot)
+//    { // Add cards to the won, remove from pot
+//        Iterator<Card> b = pot.iterator();
+//        int count = 0;
+//        while (b.hasNext())
+//        {
+//            win.add(b.next());
+//            pot.remove(b.next());
+//            count++;
+//        }
+//    }
 
     public int countCards(ArrayList<Card> deck)
     { // count remaining cards in deck

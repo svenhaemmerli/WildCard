@@ -4,6 +4,7 @@ import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Collections;
+import java.util.Iterator;
 
 
 public class Server {
@@ -126,12 +127,16 @@ public class Server {
 
     }
 
-    public boolean gameOver()
-    {
-        return false;
+    public boolean gameOver()  {
+    	if (score>250){
+        return true;
     }
-
-    /**
+    else {
+    	return false;
+    	}
+    }
+    
+       /**
      * Write a message to the GUI of the server.
      */
     public void logToServer(String message)
