@@ -475,12 +475,7 @@ public class Playtable
 
         if (ae.getActionCommand().equals("play"))
         {
-            int norKart = cards.length;
-            int jokKart = jokers.length;
 
-            Deck guiDeck = new Deck();
-            JokerDeck guiJoker = new JokerDeck();
-            ArrayList<Card> hand = new ArrayList<Card>();
             Hand myHand = new Hand(selectedCards);
 
             
@@ -519,14 +514,19 @@ public class Playtable
             }
 	*/
 
+            for(int i = 0; i < selectedCards.size(); i++){
+            	System.out.println(selectedCards.get(i).getName());
+            }
 
             myHand.setHand(selectedCards);
             //myHand.setHand(hand);
             request.setMyHand(myHand);
+            
 
             try
             {
                 clientCommunication.sendToServer(request);
+                selectedCards.clear();
             }
             catch (IOException e)
             {
