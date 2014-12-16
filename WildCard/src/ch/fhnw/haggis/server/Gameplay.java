@@ -81,8 +81,6 @@ public class Gameplay {
     	int score = 0;
     	
         regelFuerSpiel = null; //reset rules
-        UserData.trickPunkte = 0;
-        UserData.trick.clear();
         lowestRank = 0;
         lowestRankLastTurn = 1;
         
@@ -90,8 +88,7 @@ public class Gameplay {
         {
         	UserData.trick.add(pot.get(i));
         	score = score + pot.get(i).getValue();
-        	System.out.println(pot.get(i).getValue());
-        	
+        	System.out.println(pot.get(i).getValue());       	
         }
         
         pot.clear(); // delete pot

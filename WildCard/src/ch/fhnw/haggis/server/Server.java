@@ -120,9 +120,11 @@ public class Server {
             }
             // find the next player
             aktiverSpieler = (aktiverSpieler + 1) % numberOfPlayers;
-            players[aktiverSpieler].setScore(UserData.trickPunkte);
+            players[aktiverSpieler].setScore(UserData.trickPunkte + players[aktiverSpieler].getScore());
             System.out.println("Spieler 0 Score: " + players[0].getScore());
             System.out.println("Spieler 1 Score: " + players[1].getScore());
+            UserData.trickPunkte = 0;
+            UserData.trick.clear();
             
             return true;
         }
