@@ -54,6 +54,11 @@ public abstract class Sets
                 return false;
             }
         }
+        
+        if(anzahlJoker == 1)
+        {
+        	lowestRank = cards.get(0).getPoints();
+        }
 
         return true;
 
