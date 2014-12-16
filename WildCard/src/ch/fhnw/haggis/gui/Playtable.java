@@ -514,10 +514,6 @@ public class Playtable
             }
 	*/
 
-            for(int i = 0; i < selectedCards.size(); i++){
-            	System.out.println(selectedCards.get(i).getName());
-            }
-
             myHand.setHand(selectedCards);
             //myHand.setHand(hand);
             request.setMyHand(myHand);
