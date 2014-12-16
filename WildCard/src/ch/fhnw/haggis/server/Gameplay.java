@@ -3,8 +3,6 @@ package ch.fhnw.haggis.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.corba.se.spi.activation.Server;
-
 import ch.fhnw.haggis.server.rules.Eightset;
 import ch.fhnw.haggis.server.rules.IRule;
 import ch.fhnw.haggis.server.rules.MultipleEightset;
@@ -39,6 +37,7 @@ public class Gameplay {
     private ArrayList<Card> pot = new ArrayList<Card>();
     public ArrayList<Card> potActual = new ArrayList<Card>(); // podActual contains only recently played cards
     
+    private int lowestRankLastTurn;
     private int lowestRank;
     private int countPass =0;
     
@@ -84,6 +83,7 @@ public class Gameplay {
         int score =0;
         regelFuerSpiel = null; //reset rules
         lowestRank = 0;
+        lowestRankLastTurn = 1;
         for (int i =0; i<pot.size();i++){
         
         h.hand.add(pot.get(i));
@@ -131,11 +131,19 @@ public class Gameplay {
                 regelFuerSpiel.getLowestRank();
                 potActual.clear();
                 
+                if(lowestRankLastTurn < regelFuerSpiel.getLowestRank())
+                {
+                	// gespielte karten in pot setzen
+                    pot.addAll(myHand.getHand());
+                    potActual.addAll(myHand.getHand());
+                    lowestRankLastTurn = regelFuerSpiel.getLowestRank();
+                	return true;               	
+                }
                 
-                // gespielte karten in pot setzen
-                pot.addAll(myHand.getHand());
-                potActual.addAll(myHand.getHand());
-                
+                else
+                {
+                	return false;
+                }
                
                 // TODO distribute new cards
 //                if (myHand.hand.isEmpty())
@@ -148,8 +156,7 @@ public class Gameplay {
 //                {
 //                    myHand.distributeNewCards(myHand.hand);
 //                }
-                
-                return true;
+
             }
             else
             {
