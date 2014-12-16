@@ -102,10 +102,10 @@ public class Server {
             return false;
         }
         
-        if (aktiverSpieler==numberOfPlayers-1){
-        	gameplay.setCountPass(0);
-        	
-        }
+//        if (aktiverSpieler==numberOfPlayers-1){
+//        	gameplay.setCountPass(0);
+//        	
+//        }
 
         boolean ok = gameplay.processRequest(request);
 
@@ -116,9 +116,13 @@ public class Server {
              {
                 System.out.println("notify " + i + " that there was a move");
                 players[i].playerMoved(aktiverSpieler, gameplay.getPot());
+
             }
             // find the next player
             aktiverSpieler = (aktiverSpieler + 1) % numberOfPlayers;
+            players[aktiverSpieler].setScore(UserData.trickPunkte);
+            System.out.println("Spieler 0 Score: " + players[0].getScore());
+            System.out.println("Spieler 1 Score: " + players[1].getScore());
             
             return true;
         }

@@ -1,6 +1,7 @@
 package ch.fhnw.haggis.server;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class UserData implements Serializable{
 	
@@ -8,6 +9,8 @@ public class UserData implements Serializable{
 	private int score;
 	private int amtCards;
 	private int giver; //int because of the id of the player
+	public static ArrayList <Card> trick = new ArrayList <Card>();
+	public static int trickPunkte;
 	
 	public UserData (){
 		

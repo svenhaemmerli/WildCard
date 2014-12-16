@@ -39,10 +39,7 @@ public class Gameplay {
     
     private int lowestRankLastTurn;
     private int lowestRank;
-    private int countPass =0;
-    
-    
-    
+ 
 
     // private List<Integer> connectedClients = new ArrayList<Integer>();
 
@@ -79,20 +76,25 @@ public class Gameplay {
     
     // nach einer Spielrunde muss zurückgesetzt werden.
     //hier muesste die Hand ins win transferiert werden 
-    public int resetAfterRunde(Hand h){
-        int score =0;
+    public int resetAfterPass(Hand h){
+    	
+    	int score = 0;
+    	
         regelFuerSpiel = null; //reset rules
+        UserData.trickPunkte = 0;
+        UserData.trick.clear();
         lowestRank = 0;
         lowestRankLastTurn = 1;
-        for (int i =0; i<pot.size();i++){
         
-        h.hand.add(pot.get(i));
-        h.hand.get(i).getValue();
-        score = score + h.hand.get(i).getValue();
-       
+        for (int i =0; i<pot.size();i++)
+        {
+        	UserData.trick.add(pot.get(i));
+        	score = score + pot.get(i).getValue();
+        	System.out.println(pot.get(i).getValue());
+        	
         }
+        
         pot.clear(); // delete pot
-        countPass=0;
         return score;
     }
 
@@ -103,7 +105,6 @@ public class Gameplay {
         // client is playing
         if (spieldaten.getStep().equals("play")) {
         	
-        	countPass=0;
             // bei der ersten Hand der Runde muss festgestellt werden welche Regel zum Zug kommt.
             // TODO regelFuerSpiel muss null gesetzt werden nachdem eine Runde gespielt wurde, damit
             // für
@@ -184,18 +185,13 @@ public class Gameplay {
 //                return true;
 //            }
         }
-        else if(spieldaten.getStep().equals("pass")) {
-        	
-        	countPass ++;
-        	
-        	if (countPass==2){
-        				
-        		resetAfterRunde(myHand);
-        	}
-            return true;
+        else if(spieldaten.getStep().equals("pass"))
+        {     				
+//        	resetAfterPass(myHand);
+        	UserData.trickPunkte = resetAfterPass(myHand);
+        	return true;
         }
-        
-        
+                
         // it was an invalid move
         return false;
     }
@@ -211,17 +207,7 @@ public class Gameplay {
             }
         }
         return null;
-    }
-    
-    public int checkCountPass(){
-    	return countPass;
-    }
-    
-    public void setCountPass(int countPass){
-    	
-    	this.countPass=countPass;
-    	
-    }
+    }    
     
     public ArrayList<Card> getPot()
     {

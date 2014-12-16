@@ -12,7 +12,7 @@ public class Hand
 
     public ArrayList<Card> hand = new ArrayList<Card>(); // given cards, later istanciated as myHand
 
-    public ArrayList<Card> win = new ArrayList<Card>(); // won cards
+    public static ArrayList<Card> win = new ArrayList<Card>(); // won cards
 
     public ArrayList<Card> pot = new ArrayList<Card>(); // pod cards
     
