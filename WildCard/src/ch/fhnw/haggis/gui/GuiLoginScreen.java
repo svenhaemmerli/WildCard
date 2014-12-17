@@ -129,8 +129,20 @@ public class GuiLoginScreen
     @Override
     public void actionPerformed(ActionEvent ae)
     {
+    	SpieldatenRequest request = new SpieldatenRequest();
+    	UserData clientdata = new UserData();
         String user = username.getText();
+        clientdata.setUsername(user);
+        request.setData(clientdata);
+        request.setStep("connected");
         System.out.println(user);
+        
+        try {
+			clientCommunication.sendToServer(request);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
         dispose();
 
         new Playtable(user, this.clientCommunication);

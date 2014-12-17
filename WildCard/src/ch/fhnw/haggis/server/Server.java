@@ -19,6 +19,7 @@ public class Server {
     public JokerDeck jdeck;
     public Hand myHand;
     public int score;
+    public UserData data = new UserData();
 
     private int numberOfPlayers = 2;
     private boolean allPlayersConnected;
@@ -111,6 +112,21 @@ public class Server {
 
         if (ok)  {
         	
+        	players[(aktiverSpieler + 1) % numberOfPlayers].setScore(UserData.trickPunkte + players[(aktiverSpieler + 1) % numberOfPlayers].getScore());
+            System.out.println("Spieler 0 Score: " + players[0].getScore());
+            System.out.println("Spieler 1 Score: " + players[1].getScore());
+            
+            if(aktiverSpieler == 0){
+            	data.setScore(players[1].getScore());
+            	System.out.println("Player 1: " + data.getScore());
+            	data.setUsername(players[1].getUsername());
+            }
+            if(aktiverSpieler == 1){
+            	data.setScore(players[0].getScore());
+            	System.out.println("Player 2: " + data.getScore());
+            	data.setUsername(players[0].getUsername());
+            }
+        	
             // notify every player that there was a move
             for (int i = 0; i < players.length; i++)
              {
@@ -121,9 +137,7 @@ public class Server {
             }
             // find the next player
             aktiverSpieler = (aktiverSpieler + 1) % numberOfPlayers;
-            players[aktiverSpieler].setScore(UserData.trickPunkte + players[aktiverSpieler].getScore());
-            System.out.println("Spieler 0 Score: " + players[0].getScore());
-            System.out.println("Spieler 1 Score: " + players[1].getScore());
+            
             UserData.trickPunkte = 0;
             UserData.trick.clear();
             
@@ -132,6 +146,16 @@ public class Server {
         else
             return false;
 
+    }
+    
+    public void returnUsername(String username) {
+    	if(!allPlayersConnected){
+        	data.setUsername(username);
+        }
+    	else{
+    	data.setUsername(username);
+    	players[0].inform();
+    	}
     }
 
     public boolean gameOver()  {

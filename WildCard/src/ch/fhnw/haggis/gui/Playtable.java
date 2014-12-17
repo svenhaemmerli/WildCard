@@ -617,6 +617,15 @@ public class Playtable
             }
         }
     }
+    	public void setLabels(SpieldatenResponse response){
+    	
+    	lblScoreUser1.setText("" + response.getScore());
+    	//lblUserName1.setText(response.getData().getUsername());
+    	contentPane.revalidate();
+    	contentPane.repaint();
+    	
+    }
+
     
     
     public void createButtons(SpieldatenResponse response)
@@ -746,10 +755,11 @@ public class Playtable
                 if (response.getStep().equals("yourMove"))
                 {
                     JOptionPane.showMessageDialog(null, response.getMessage());
-                    
                     // Buttons für Karten erstellen
                     createButtons(response);
                 }
+                
+                
                 
                 // we are waiting for other players
                 else if (response.getStep().equals("waitingForOtherPlayers"))
@@ -780,6 +790,9 @@ public class Playtable
                      */
                     System.out.println("Message from server " + response);
                     lblScoreUser1.setText("" + response.getScore());
+                    lblUser2Score.setText("" + response.getData().getScore());
+                    lblUser2Name.setText("" + response.getData().getUsername());
+                    
                     
                     // Buttons fÃ¼r Karten erstellen
                     createButtons(response);

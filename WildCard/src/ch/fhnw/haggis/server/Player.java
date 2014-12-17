@@ -15,6 +15,7 @@ public class Player
     private Hand myHand;
     private int score;
     private int userId;
+    private String username;
 
     // Constructor Player
     public Player(Socket socket, Server server, int userId, Hand myHand, int score)
@@ -58,8 +59,37 @@ public class Player
         this.userId = userId;
     }
 
-    // -------------------------------------------getter & setter end--------------------------------------------------------//
-    /**
+    public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	// -------------------------------------------getter & setter end--------------------------------------------------------//
+    
+	/**
+	 * Methode zur Aktualisierung des ersten Players nachdem sich der zweite Player angemeldet hat
+	 */
+	public void inform(){
+		try {
+		SpieldatenResponse response = new SpieldatenResponse();
+		response.setStep("validMove");
+        response.setMessage("valid move");
+        response.setMyHand(myHand);
+        response.setScore(score);
+        response.setData(server.data);
+        serverCommunication.sendToClient(response);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	/**
      * Method to notify this Player that an opponent moved.
      */
     public void playerMoved(int playerWithLastMove, ArrayList<Card> potActual)
@@ -76,6 +106,7 @@ public class Player
                 response.setStep("yourMove");
                 response.setMessage("Player " + playerWithLastMove + " moved. Your turn.");
                 response.setMyHand(myHand);
+                response.setData(server.data);
                 serverCommunication.sendToClient(response);
                 myHand.getPotActual().clear();
             }
@@ -118,6 +149,21 @@ public class Player
             {
                 // synchronized(this){
                 SpieldatenRequest request = serverCommunication.readFromClient();
+                                
+                if(request.getStep().equals("connected")){
+                	username = request.getData().getUsername();
+                	if(userId == 1){
+                	response.setData(server.data);
+                	response.setStep("validMove");
+                	serverCommunication.sendToClient(response);
+                	}
+                	server.returnUsername(username);
+                	continue;
+                	
+                	//response.setData()
+                	//serverCommunication.sendToClient(response);
+                }
+                
 
                 // falls eine Anfrage von einem client kam, aber der Spieler gar nicht an der Reihe
                 // ist, brechen wir ab.
@@ -148,6 +194,7 @@ public class Player
                         response.setMessage("valid move");
                         response.setMyHand(myHand);
                         response.setScore(score);
+                        response.setData(server.data);
                         //response.setPot(myHand.getPot());
 
                         serverCommunication.sendToClient(response);
@@ -165,6 +212,7 @@ public class Player
                         server.logToServer("invalid move");
                     }
                 }
+                
 
             }
             serverCommunication.close();
