@@ -172,5 +172,13 @@ public class Hand
         return pot;
    }
 
+	public ArrayList<Card> getPotActual() {
+		return potActual;
+	}
+
+	public void setPotActual(ArrayList<Card> potActual) {
+		this.potActual = potActual;
+	}
+    
    
 }

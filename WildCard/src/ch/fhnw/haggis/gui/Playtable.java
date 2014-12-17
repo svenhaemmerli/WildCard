@@ -703,13 +703,14 @@ public class Playtable
 
         // <------------------------------------ Buttons für Pot generieren ----------------------------->
         
-        playedCards = createPlayedCardButtons(playedCards, response.getMyHand().pot.size());
+        playedCards = createPlayedCardButtons(playedCards, response.getMyHand().getPotActual().size());
+        		//pot.size());
 
         // Bilder laden und den Text des buttons setzen
-        for (int i = 0; i < response.getMyHand().getPot().size(); i++)
+        for (int i = 0; i < response.getMyHand().getPotActual().size(); i++)
         {
-            playedCards[i].setIcon(response.getMyHand().getPot().get(i).getIcon());
-            playedCards[i].setName(response.getMyHand().getPot().get(i).getName());
+            playedCards[i].setIcon(response.getMyHand().getPotActual().get(i).getIcon());
+            playedCards[i].setName(response.getMyHand().getPotActual().get(i).getName());
             panelPlayDesk.add(playedCards[i], gbcPlayedCards);
         }
         

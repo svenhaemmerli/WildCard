@@ -66,18 +66,18 @@ public class Player
     {
         try
         {
+        	
             server.logToServer("playerMoved " + playerWithLastMove + ", userId=" + userId);
             if (userId != playerWithLastMove)
             {
-
-                myHand.pot = potActual; // set the current pot to the hand
-
+            	myHand.setPotActual(potActual); //set the current pot to the hand
                 // alles was an die inaktiven Spieler geschickt werden muss
                 SpieldatenResponse response = new SpieldatenResponse();
                 response.setStep("yourMove");
                 response.setMessage("Player " + playerWithLastMove + " moved. Your turn.");
                 response.setMyHand(myHand);
                 serverCommunication.sendToClient(response);
+                myHand.getPotActual().clear();
             }
         }
         catch (IOException e)
@@ -141,8 +141,8 @@ public class Player
                         
                         myHand.pot = server.gameplay.getPot();
                         myHand.removePlayedCardsFromHand(server.gameplay.getPot());// entferne alle gespielten aus der hand
-                       
                         
+                        myHand.setPotActual(request.getMyHand().getHand());
                         // sends response
                         response.setStep("validMove");
                         response.setMessage("valid move");
@@ -152,6 +152,9 @@ public class Player
 
                         serverCommunication.sendToClient(response);
                         server.logToServer("message wurde an client geschickt");
+                        server.logToServer(myHand.getPotActual().get(0).getName());
+                        server.logToServer("pot actual in player");
+                        myHand.getPotActual().clear();
                     }
                     // falls nicht ok und nicht pass
                     else

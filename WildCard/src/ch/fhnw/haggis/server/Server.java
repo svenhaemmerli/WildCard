@@ -115,7 +115,8 @@ public class Server {
             for (int i = 0; i < players.length; i++)
              {
                 System.out.println("notify " + i + " that there was a move");
-                players[i].playerMoved(aktiverSpieler, gameplay.getPot());
+                players[i].playerMoved(aktiverSpieler, gameplay.potActual);
+                //System.out.println(gameplay.potActual.get(0).getName());
 
             }
             // find the next player
