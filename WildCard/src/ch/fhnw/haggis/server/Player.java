@@ -67,19 +67,10 @@ public class Player
 		this.username = username;
 	}
 	
-    public ServerCommunication getServerCommunication() {
-		return serverCommunication;
-	}
-
-	public void setServerCommunication(ServerCommunication serverCommunication) {
-		this.serverCommunication = serverCommunication;
-	}
-
 	// -------------------------------------------getter & setter end--------------------------------------------------------//
     
-	/**
-	 * Methode zur Aktualisierung des ersten Players nachdem sich der zweite Player angemeldet hat
-	 */
+	
+	//Methode zur Aktualisierung des ersten Players nachdem sich der zweite Player angemeldet hat
 	public void inform(){
 		try {
 		SpieldatenResponse response = new SpieldatenResponse();
@@ -88,6 +79,35 @@ public class Player
         response.setMyHand(myHand);
         response.setScore(score);
         response.setData(server.data);
+        serverCommunication.sendToClient(response);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+	}
+	//Methode zur Aktualisierung des inaktiven Players nachdem eine Runde beendet wurde
+	
+	public void inform2(){
+		try {
+		SpieldatenResponse response = new SpieldatenResponse();
+		response.setStep("yourMove");
+        response.setMessage("your move");
+        response.setMyHand(myHand);
+        response.setScore(score);
+        response.setData(server.data);
+        serverCommunication.sendToClient(response);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+	}
+	//Methode zur Bekanntgabe Looser
+	public void inform3(){
+		try {
+		SpieldatenResponse response = new SpieldatenResponse();
+		response.setStep("gameOver");
+        response.setMessage(username+"game over - You looser!");
+        response.setScore(score);
         serverCommunication.sendToClient(response);
 		} catch (IOException e) {
 			
@@ -153,7 +173,7 @@ public class Player
             }
 
             // Play game
-            while (!server.gameOver())
+            while (!server.gameOver(score, userId))
             {
                 // synchronized(this){
                 SpieldatenRequest request = serverCommunication.readFromClient();
@@ -223,7 +243,13 @@ public class Player
                 
 
             }
+            SpieldatenResponse response2 = new SpieldatenResponse();
+    		response2.setStep("gameOver");
+            response2.setMessage(username+ "game over - Your the winner you looser!");
+            serverCommunication.sendToClient(response2);
             serverCommunication.close();
+            System.out.println("Beendet");
+            
         }
         catch (IOException e)
         {

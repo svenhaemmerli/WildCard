@@ -808,6 +808,10 @@ public class Playtable
                 {
                     JOptionPane.showMessageDialog(null, "Your Move was invalid, try again."); // Dialogbox
                 }
+                else if (response.getStep().equals("gameOver")){
+                	JOptionPane.showMessageDialog(null,  response.getMessage());
+                	dispose();
+                }
 
                 // response.getMyCards();
             }

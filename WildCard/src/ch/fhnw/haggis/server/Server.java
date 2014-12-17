@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 import java.util.Collections;
 import java.util.Iterator;
 
@@ -183,17 +184,9 @@ public class Server {
 					Hand newHand = new Hand(deck,jdeck);
 					players[i].setMyHand(newHand);
 				}
-
-				SpieldatenResponse response = new SpieldatenResponse();
-				response.setMyHand(players[((aktiverSpieler + 1) % numberOfPlayers)].getMyHand());
-				response.setStep("yourMove");
-
-				try {
-					players[((aktiverSpieler + 1) % numberOfPlayers)].getServerCommunication().sendToClient(response);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
+				players[((aktiverSpieler + 1) % numberOfPlayers)].inform2();
+				
 			}
 
 
@@ -222,9 +215,9 @@ public class Server {
 		}
 	}
 
-	public boolean gameOver()  {
+	public boolean gameOver(int testscore, int testUserId)  {
 		//when maxscore 250 is reached
-		if (score >=100){
+		/*if (players[aktiverSpieler].getScore() >=10){
 			players[aktiverSpieler].getMyHand().pot = gameplay.getPot();
 			UserData.trickPunkte = gameplay.resetAfterPass(players[aktiverSpieler].getMyHand());
 			int neuerScore=0;
@@ -240,7 +233,14 @@ public class Server {
 		}
 	
 		else 
-			return false;
+			return false;*/
+		if (testscore >=10){
+			players[((testUserId + 1) % numberOfPlayers)].inform3();
+			System.out.println("Game Over");
+			return true;
+		}
+		return false;
+			
 		}
 		
 	
