@@ -86,9 +86,9 @@ public class Gameplay {
         
         for (int i =0; i<pot.size();i++)
         {
-        	UserData.trick.add(pot.get(i));
         	score = score + pot.get(i).getValue();
-        	System.out.println(pot.get(i).getValue());       	
+        	System.out.println(pot.get(i).getValue());
+        	System.out.println("Score = " +score);
         }
         
         pot.clear(); // delete pot

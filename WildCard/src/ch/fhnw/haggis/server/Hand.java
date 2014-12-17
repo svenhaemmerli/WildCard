@@ -114,6 +114,7 @@ public class Hand
 
         JokerDeck jdeck2 = new JokerDeck();
         Deck deck2 = new Deck();
+        Collections.shuffle(deck2.getDeck());
 
         while (deck2.getDeck().isEmpty() != true && this.hand.size() < 14)
         {

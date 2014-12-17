@@ -66,6 +66,14 @@ public class Player
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+    public ServerCommunication getServerCommunication() {
+		return serverCommunication;
+	}
+
+	public void setServerCommunication(ServerCommunication serverCommunication) {
+		this.serverCommunication = serverCommunication;
+	}
 
 	// -------------------------------------------getter & setter end--------------------------------------------------------//
     
