@@ -18,7 +18,7 @@ public class MultipleSequences
     @Override
     public String description()
     {
-        return numberOfSets + " Sequence(s)";
+        return "Sequences";
     }
 
     @Override

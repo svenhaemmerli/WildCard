@@ -114,11 +114,12 @@ public class Gameplay {
                 
                 serverGui.writeLog("Regel fuer Spielrunde bestimmt: " + regelFuerSpiel.description());
                 System.out.println("Regel fuer Spielrunde bestimmt: " + regelFuerSpiel.description());
-
+                         
+                
                 // falls fuer diese hand keine regelgefunden werden konnte
                 if (regelFuerSpiel == null)
                 {
-                    // TODO meldung, dass keine Regel gefunden wurde
+                    // meldung, dass keine Regel gefunden wurde
                     System.out.println("Keine Regel gefunden!");
                     serverGui.writeLog("Keine Regel gefunden!");
                     return false;
@@ -127,17 +128,23 @@ public class Gameplay {
             
             if(regelFuerSpiel.matchesRule(myHand.getHand()))
             {
-                // TODO zusaetzliche Pruefungen, ob aktuelle gespielt hand hoeher ist als hand aus letzer spielrunde.
+                // zusaetzliche Pruefungen, ob aktuelle gespielt hand hoeher ist als hand aus letzer spielrunde.
                 regelFuerSpiel.getLowestRank();
                 potActual.clear();
                 
-                if(lowestRankLastTurn < regelFuerSpiel.getLowestRank() && sequenceLengthLastTurn == regelFuerSpiel.getSequenceLength())
+                if(lowestRankLastTurn < regelFuerSpiel.getLowestRank())
                 {
+                	if(sequenceLengthLastTurn != regelFuerSpiel.getSequenceLength() && (regelFuerSpiel.description().equals("1 Sequence") || regelFuerSpiel.description().equals("Sequences"))){
+                    	return false;
+                    }
+                	else
+                	{
                 	// gespielte karten in pot setzen
                     pot.addAll(myHand.getHand());
                     potActual.addAll(myHand.getHand());
                     lowestRankLastTurn = regelFuerSpiel.getLowestRank();
-                	return true;               	
+                	return true;     
+                	}
                 }
                 
                 else
