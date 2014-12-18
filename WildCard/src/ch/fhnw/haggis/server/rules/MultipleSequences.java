@@ -4,6 +4,11 @@ import java.util.List;
 
 import ch.fhnw.haggis.server.Card;
 
+/**
+ * 
+ * @author Ivo Hausammann
+ *
+ */
 
 public class MultipleSequences
     extends SingleSequence
@@ -20,13 +25,13 @@ public class MultipleSequences
     public boolean matchesRule(List<Card> cards)
     {
         // strassen aufteilen
-        // strassen müssen daher wie folgt daherkommen:
+        // strassen muessen daher wie folgt daherkommen:
         // r7,r8,r9,y7,y8,y9...
         int previousPoints = 0;
         int anzahlStrassen = 1;
         for (Card card : cards)
         {
-            // wenn vorhergehendes element grösser als aktuelles -> neuer beginn einer strasse
+            // wenn vorhergehendes element groesser als aktuelles -> neuer beginn einer strasse
             if (previousPoints > card.getPoints())
             {
                 anzahlStrassen++;

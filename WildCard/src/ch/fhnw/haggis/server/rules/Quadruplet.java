@@ -4,6 +4,12 @@ import java.util.List;
 
 import ch.fhnw.haggis.server.Card;
 
+/**
+ * 
+ * @author Ivo Hausammann
+ *
+ */
+
 public class Quadruplet extends Sets implements IRule {
 
 	@Override

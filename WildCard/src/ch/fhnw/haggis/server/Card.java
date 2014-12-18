@@ -8,7 +8,7 @@ public class Card implements Serializable
 {
 	
     /**
-	 * 
+	 * @author Madeleine Schär
 	 */
 	private static final long serialVersionUID = 8118435653047467973L;
 	private String name;

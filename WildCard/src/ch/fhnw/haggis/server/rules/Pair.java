@@ -4,6 +4,12 @@ import java.util.List;
 import ch.fhnw.haggis.server.Card;
 import ch.fhnw.haggis.server.rules.IRule;
 
+/**
+ * 
+ * @author Ivo Hausammann
+ *
+ */
+
 public class Pair extends Sets implements IRule {
 
 	@Override

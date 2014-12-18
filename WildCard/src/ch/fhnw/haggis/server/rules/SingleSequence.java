@@ -1,9 +1,14 @@
 package ch.fhnw.haggis.server.rules;
 
 import java.util.List;
-
 import ch.fhnw.haggis.server.Card;
 
+
+/**
+ * 
+ * @author Ivo Hausammann
+ *
+ */
 
 public class SingleSequence
     implements IRule
@@ -50,7 +55,7 @@ public class SingleSequence
                     suit = card.getSuit();
                 }
 
-                // falls rank in schlaufe grösser oder gleich ist, wird abgebrochen
+                // falls rank in schlaufe groesser oder gleich ist, wird abgebrochen
                 if (rank >= card.getPoints())
                 {
                     return false;
@@ -62,24 +67,24 @@ public class SingleSequence
             // joker ist platzhalter fuer andere karte
             else
             {
-                // joker an position >= 10 müssen auch in folge sein
+                // joker an position >= 10 muessen auch in folge sein
                 if (rank >= 10)
                 {
-                    // joker wird nicht für eine beliebige tiefere karte eingesetzt.
+                    // joker wird nicht fuer eine beliebige tiefere karte eingesetzt.
                     if (rank >= card.getPoints())
                     {
                         return false;
                     }
                 }
-                // wir zählen rank um 1 hoch um forcieren zu können, dass die nächste karte
-                // eines höher ist als dieser Joker
+                // wir zaehlen rank um 1 hoch um forcieren zu koennen, dass die naechste karte
+                // eines hoeher ist als dieser Joker
                 rank++;
             }
 
             sequenceLength++;
         }
 
-        // tiefster rank von dieser runde festhalten für nächsten spielzug
+        // tiefster rank von dieser runde festhalten fuer naechsten spielzug
         lowestRank = rank - sequenceLength + 1;
 
         return true;

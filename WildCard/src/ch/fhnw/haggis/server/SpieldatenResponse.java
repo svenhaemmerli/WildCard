@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 
 /**
+ * @author Madeleine Schär
  * Klasse um Spieldaten vom Server zum Client zu schicken.
  */
 public class SpieldatenResponse

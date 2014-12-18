@@ -5,12 +5,20 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
+/**
+ * 
+ * @author Madeleine Schär
+ *
+ */
 public class JokerDeck {
 	private ArrayList<Card> joker = new ArrayList<Card>();
 
 	public JokerDeck()
     {
 		//Alle Joker karten importieren
+		/**
+		 * @author Sven Hämmerli - Bilder der jeweiligen Karte zuweisen
+		 */
     	
     	ImageIcon bube = new ImageIcon(getClass().getResource("images/Bube.jpg"));
     	bube.setImage(bube.getImage().getScaledInstance(64, 100,
@@ -22,6 +30,9 @@ public class JokerDeck {
     	koenig.setImage(koenig.getImage().getScaledInstance(64, 100,
 				Image.SCALE_DEFAULT));
     	
+    	/**
+    	 * @author Madeleine Schär
+    	 */
         joker.add(new Card("joker_jack1", 2, 11, "joker", bube));
         joker.add(new Card("joker_queen1", 3, 12, "joker", dame));
         joker.add(new Card("joker_king1", 5, 13, "joker", koenig));

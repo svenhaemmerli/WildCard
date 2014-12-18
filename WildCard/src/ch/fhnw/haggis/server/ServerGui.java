@@ -9,12 +9,13 @@ import javax.swing.JTextArea;
 
 
 /**
+ * @author Sven Hämmerli
  * The server GUI.
  */
 public class ServerGui
     extends JFrame
 {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L; //identifier for a serializable class
 
     private JTextArea textArea;
 

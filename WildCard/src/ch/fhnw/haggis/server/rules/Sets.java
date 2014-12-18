@@ -5,6 +5,11 @@ import java.util.List;
 
 import ch.fhnw.haggis.server.Card;
 
+/**
+ * 
+ * @author Ivo Hausammann
+ *
+ */
 
 // abstract class to not be able to instanciate
 public abstract class Sets

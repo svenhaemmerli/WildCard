@@ -5,6 +5,11 @@ import java.util.List;
 
 import ch.fhnw.haggis.server.Card;
 
+/**
+ * 
+ * @author Ivo Hausammann
+ *
+ */
 
 // abstract class to not be able to instanciate
 public abstract class MultipleSets
@@ -52,7 +57,7 @@ public abstract class MultipleSets
         for (Card card : cards)
         {
             String farbe = card.getSuit();
-            // nur farben hinzufügen, die noch nicht in der liste sind, auch keine joker
+            // nur farben hinzufuegen, die noch nicht in der liste sind, auch keine joker
             if (!farben.contains(farbe) && !farbe.equals("joker"))
             {
                 farben.add(card.getSuit());

@@ -22,7 +22,11 @@ import ch.fhnw.haggis.server.rules.SingleSequence;
 import ch.fhnw.haggis.server.rules.Sixset;
 import ch.fhnw.haggis.server.rules.Triplet;
 
-
+/**
+ * 
+ * @author Ivo Hausammann
+ *
+ */
 public class Gameplay {
 	
 	public boolean rules;
@@ -33,15 +37,13 @@ public class Gameplay {
 
     private ServerGui serverGui;
     
-    // pot für ganzes spiel
+    // pot f�r ganzes spiel
     private ArrayList<Card> pot = new ArrayList<Card>();
-    public ArrayList<Card> potActual = new ArrayList<Card>(); // podActual contains only recently played cards
+    public ArrayList<Card> potActual = new ArrayList<Card>(); // potActual enth�lt nur k�rzlich gespielte Karten
     
     private int lowestRankLastTurn;
     private int lowestRank;
  
-
-    // private List<Integer> connectedClients = new ArrayList<Integer>();
 
     public Gameplay(ServerGui serverGui)
     {
@@ -54,7 +56,7 @@ public class Gameplay {
     {
         serverGui.writeLog("Initializing game...");
        
-        // alle Regeln für das Spiel
+        // alle Regeln f�r das Spiel
         allRules.add(new Single());
         allRules.add(new Pair());
         allRules.add(new Triplet());
@@ -74,13 +76,12 @@ public class Gameplay {
         allRules.add(new MultipleSequences());
     }
     
-    // nach einer Spielrunde muss zurückgesetzt werden.
-    //hier muesste die Hand ins win transferiert werden 
+    // nach einer Spielrunde muss zur�ckgesetzt werden.
     public int resetAfterPass(Hand h){
     	
     	int score = 0;
     	
-        regelFuerSpiel = null; //reset rules
+        regelFuerSpiel = null; //regeln zuruecksetzen
         lowestRank = 0;
         lowestRankLastTurn = 1;
         
@@ -104,16 +105,15 @@ public class Gameplay {
         	
             // bei der ersten Hand der Runde muss festgestellt werden welche Regel zum Zug kommt.
             // TODO regelFuerSpiel muss null gesetzt werden nachdem eine Runde gespielt wurde, damit
-            // für
-            // die neue Runde die neue Regel gefunden werden kann.
+            // fuer die neue Runde die neue Regel gefunden werden kann.
             if (regelFuerSpiel == null)
             {
                 regelFuerSpiel = findeRegel(spieldaten.getMyHand().getHand());
                 
-                serverGui.writeLog("Regel für Spielrunde bestimmt: " + regelFuerSpiel.description());
-                System.out.println("Regel für Spielrunde bestimmt: " + regelFuerSpiel.description());
+                serverGui.writeLog("Regel fuer Spielrunde bestimmt: " + regelFuerSpiel.description());
+                System.out.println("Regel fuer Spielrunde bestimmt: " + regelFuerSpiel.description());
 
-                // falls für diese hand keine regelgefunden werden konnte
+                // falls fuer diese hand keine regelgefunden werden konnte
                 if (regelFuerSpiel == null)
                 {
                     // TODO meldung, dass keine Regel gefunden wurde
@@ -125,7 +125,7 @@ public class Gameplay {
             
             if(regelFuerSpiel.matchesRule(myHand.getHand()))
             {
-                // TODO zusätzliche Prüfungen, ob aktuelle hand höher ist als hand aus letzer spielrunde.
+                // TODO zusaetzliche Pruefungen, ob aktuelle gespielt hand hoeher ist als hand aus letzer spielrunde.
                 regelFuerSpiel.getLowestRank();
                 potActual.clear();
                 
@@ -143,48 +143,15 @@ public class Gameplay {
                 	return false;
                 }
                
-                // TODO distribute new cards
-//                if (myHand.hand.isEmpty())
-//                {
-//                    // Player.this.setThreadSuspended(true);
-//                    System.out.println("Hand leer");
-//
-//                }
-//                else if (countEmpty == 2)
-//                {
-//                    myHand.distributeNewCards(myHand.hand);
-//                }
-
             }
             else
             {
                 return false;
             }
             
-            
-//            if (rules && countEmpty < 2)
-//            {
-//
-//                spieldaten.getMyHand().processCardsPlayed(myHand);
-//
-//                if (myHand.hand.isEmpty())
-//                {
-//                    // Player.this.setThreadSuspended(true);
-//                    System.out.println("Hand leer");
-//
-//                }
-//                else if (rules && countEmpty == 2)
-//                {
-//
-//                    myHand.distributeNewCards(myHand.hand);
-//                }
-//
-//                return true;
-//            }
         }
         else if(spieldaten.getStep().equals("pass"))
         {     				
-//        	resetAfterPass(myHand);
         	UserData.trickPunkte = resetAfterPass(myHand);
         	return true;
         }
@@ -193,7 +160,7 @@ public class Gameplay {
         return false;
     }
 
-    // suche nach einer regel für die gelieferten karten (nur nötig bei der ersten hand einer spielrunde)
+    // suche nach einer regel fuer die gelieferten karten (nur noetig bei der ersten hand einer spielrunde)
     public IRule findeRegel(List<Card> cards)
     {
         for (IRule rule : allRules)
@@ -210,41 +177,4 @@ public class Gameplay {
     {
         return pot;
     }
-
-
-    
-    
-
-    // public static void main(String[] args)
-    // {
-    //
-    // Deck d = new Deck(); // Deck und Hands werden instanziert
-    // Hand h1 = new Hand();
-    // Hand h2 = new Hand();
-    // Hand h3 = new Hand();
-    //
-    // Gameplay g = new Gameplay(); // Gameplay wird instanziert
-    //
-    // String s = g.shuffleCards(d); //
-    // System.out.println(s);
-    //
-    // JokerDeck a = new JokerDeck();
-    //
-    // // Karten in Hand f�llen, Methode aufrufen
-    // h1 = g.distributeCard(d, h1);
-    // h2 = g.distributeCard(d, h2);
-    // h3 = g.distributeCard(d, h3);
-    //
-    // // Joker in Hand f�llen, Methode aufrufen
-    // h1 = g.distributeJoker(a, h1);
-    // h2 = g.distributeJoker(a, h2);
-    // h3 = g.distributeJoker(a, h3);
-    //
-    // Iterator<Card> c = d.getDeck().iterator(); // Restkarten im Deck
-    // while (c.hasNext())
-    // {
-    // System.out.println("Listenelement: " + c.next().getName());
-    // }
-    // }
-
 }

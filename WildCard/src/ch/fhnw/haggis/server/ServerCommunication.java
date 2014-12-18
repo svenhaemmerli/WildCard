@@ -7,6 +7,7 @@ import java.net.Socket;
 
 
 /**
+ * @author Madeleine Schär
  * Communication for the Server.
  */
 public class ServerCommunication

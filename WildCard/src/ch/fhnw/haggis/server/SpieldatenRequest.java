@@ -3,6 +3,7 @@ package ch.fhnw.haggis.server;
 import java.io.Serializable;
 
 /**
+ * @author Madeleine Schär
  * Klasse um Spieldaten vom Client zum Server zu schicken.
  */
 public class SpieldatenRequest

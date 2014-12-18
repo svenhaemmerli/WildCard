@@ -10,14 +10,14 @@ import javax.swing.ImageIcon;
 public class Deck implements Serializable
 {
     /**
-	 * 
+	 * @author Madeleine Schär
 	 */
 	private static final long serialVersionUID = 1704089689189312874L;
 	private ArrayList<Card> deck = new ArrayList<Card>();
 
     public Deck()
     {
-    	/** @author Sven
+    	/** @author Sven Hämmerli
     	 * Bilder als Image importieren
     	 */
     	
@@ -139,7 +139,7 @@ public class Deck implements Serializable
     	igreen10.setImage(igreen10.getImage().getScaledInstance(64, 100,
 				Image.SCALE_DEFAULT));
     	
-    	//alle Bilder der orangen Karten importieren
+    	//alle Bilder der orangen Karten entfernt, da nur 2 Spieler das Spiel spielen können
 //    	ImageIcon iorange2 = new ImageIcon(getClass().getResource("images/orange02.jpg"));
 //    	iorange2.setImage(iorange2.getImage().getScaledInstance(132, 200,
 //				Image.SCALE_DEFAULT));
@@ -169,7 +169,7 @@ public class Deck implements Serializable
 //				Image.SCALE_DEFAULT));
     
     	/**
-    	 * @author Madeleine
+    	 * @author Madeleine Schär
     	 */
         deck.add(new Card("red_2", 0, 2, "red", ired2));
         deck.add(new Card("red_3", 1, 3, "red", ired3));

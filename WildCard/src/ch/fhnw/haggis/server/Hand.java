@@ -3,7 +3,11 @@ package ch.fhnw.haggis.server;
 import java.io.Serializable;
 import java.util.*;
 
-
+/**
+ * 
+ * @author Madeleine Schär
+ *
+ */
 public class Hand
     implements Serializable
 {
@@ -11,8 +15,6 @@ public class Hand
     private static final long serialVersionUID = 4660817019770190530L;
 
     public ArrayList<Card> hand = new ArrayList<Card>(); // given cards, later istanciated as myHand
-
-    public static ArrayList<Card> win = new ArrayList<Card>(); // won cards
 
     public ArrayList<Card> pot = new ArrayList<Card>(); // pod cards
     
@@ -28,14 +30,6 @@ public class Hand
             d.getDeck().remove(d.getDeck().get(0));
 
         }
-
-        // Iterator<Card> b = this.hand.iterator(); // Hand Ausgabe
-        // while (b.hasNext())
-        // {
-        // System.out.println("Listenelement: " + b.next().getName());
-        // }
-        //
-        // System.out.println("Ende hand ohne Joker");
 
         while (a.getJoker().isEmpty() != true && this.hand.size() < 17)
         {
@@ -78,26 +72,6 @@ public class Hand
         }
     }
 
-    // public void processCardsPlayed(){ //Add cards to pot, remove form myHand
-    //
-    // while (hand.isEmpty()==false)
-    // {
-    // pot.add(hand.get(0));
-    // hand.remove(hand.get(0));
-    // }
-    // }
-//    public void addCardsWon(ArrayList<Card> pot)
-//    { // Add cards to the won, remove from pot
-//        Iterator<Card> b = pot.iterator();
-//        int count = 0;
-//        while (b.hasNext())
-//        {
-//            win.add(b.next());
-//            pot.remove(b.next());
-//            count++;
-//        }
-//    }
-
     public int countCards(ArrayList<Card> deck)
     { // count remaining cards in deck
         Iterator c = hand.iterator();
@@ -123,14 +97,6 @@ public class Hand
 
         }
 
-        // Iterator<Card> b = this.hand.iterator(); // Hand Ausgabe
-        // while (b.hasNext())
-        // {
-        // System.out.println("Listenelement: " + b.next().getName());
-        // }
-        //
-        // System.out.println("Ende hand ohne Joker");
-
         while (jdeck2.getJoker().isEmpty() != true && this.hand.size() < 17)
         {
             this.hand.add(jdeck2.getJoker().get(0));
@@ -146,8 +112,7 @@ public class Hand
         System.out.println("Ende hand mit Joker");
     }
 
-    // -------------------------------------------getter & setter
-    // -------------------------------------------------------------------------//
+    // -----------------getter & setter ---------------------//
 
     public void setHand(ArrayList<Card> hand)
     {
@@ -157,16 +122,6 @@ public class Hand
     public ArrayList<Card> getHand()
     {
         return hand;
-    }
-
-    public ArrayList<Card> getWin()
-    {
-        return win;
-    }
-
-    public void setWin(ArrayList<Card> win)
-    {
-        this.win = win;
     }
 
     public ArrayList<Card> getPot() {
@@ -180,6 +135,4 @@ public class Hand
 	public void setPotActual(ArrayList<Card> potActual) {
 		this.potActual = potActual;
 	}
-    
-   
 }

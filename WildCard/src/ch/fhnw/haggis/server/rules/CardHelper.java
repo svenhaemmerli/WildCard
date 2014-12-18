@@ -2,6 +2,12 @@ package ch.fhnw.haggis.server.rules;
 
 import ch.fhnw.haggis.server.Card;
 
+/**
+ * 
+ * @author Ivo Hausammann
+ *
+ */
+
 public class CardHelper {
 
 	/**

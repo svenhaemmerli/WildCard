@@ -10,6 +10,7 @@ import ch.fhnw.haggis.server.SpieldatenResponse;
 
 
 /**
+ * @author Madeleine Schär
  * Communication for the Client.
  */
 public class ClientCommunication
