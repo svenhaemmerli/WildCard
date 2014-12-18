@@ -35,7 +35,10 @@ import ch.fhnw.haggis.server.JokerDeck;
 import ch.fhnw.haggis.server.SpieldatenRequest;
 import ch.fhnw.haggis.server.SpieldatenResponse;
 
-
+/**
+ * @author Sven Hämmerli
+ *
+ */
 @SuppressWarnings("serial")
 public class Playtable
     extends JFrame
@@ -58,9 +61,6 @@ public class Playtable
     private JButton btnPassen;
     private JPanel panelPlayerCard;
     private JPanel panelJokerCards;
-    private JToggleButton btnJack;
-    private JToggleButton btnQueen;
-    private JToggleButton btnKing;
     private JPanel panelUserInfo2;
     private JLabel lblUser2;
     private JLabel lblScoreUser2Static;
@@ -73,8 +73,6 @@ public class Playtable
     private JLabel lblUser3Name;
     private JLabel lblAmtCardsUser3;
     private JLabel lblUser3Score;
-    private JLabel lblIsgeber2;
-    private JLabel lblIsGeber3;
     private JPanel panelInfoUser1;
     private JPanel panelInfo;
     private JLabel lblUsername;
@@ -97,8 +95,6 @@ public class Playtable
     private JLabel hatDame3;
     private JLabel hatKoenig3;
 
-    //GridBagConstraints gbcPlayercards = new GridBagConstraints();
-    //GridBagConstraints gbcJokerCards = new GridBagConstraints();
     GridBagConstraints gbcPlayedCards = new GridBagConstraints();
 
     private ImageIcon icon = new ImageIcon(getClass().getResource("img/hand_otherplayer_s.png"));
@@ -111,12 +107,9 @@ public class Playtable
     private ClientCommunication clientCommunication;
     private Thread communicationThread;
 
-    // public Playtable(String userName, ClientCommunication clientCommunication,
-    // String message, Hand myHand) {
     public Playtable(String userName, ClientCommunication clientCommunication)
     {
-
-        
+    	//übergebene clientCommunication auch hier weiterhin verwenden
         this.clientCommunication = clientCommunication;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -125,29 +118,27 @@ public class Playtable
         contentPane = new JPanel();
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout());
-        int w = Toolkit.getDefaultToolkit().getScreenSize().width;
-        int h = Toolkit.getDefaultToolkit().getScreenSize().height - 65; // -65 otherwise the taskbar cannot be seen
-        setSize(1400, 900);
+        setSize(1200, 800);
         setLocationRelativeTo(null); // place it in the center of the screen
         setResizable(false);
 
         // <----------------------------- Informationen für User 2 -------------------------->
 
-        // setup a new container for the other players cards
+        // Container für die Infos der 2 Spielers + KartenIcon erstellen
         panelCardsWest = new JPanel();
         contentPane.add(panelCardsWest, BorderLayout.WEST);
         panelCardsWest.setLayout(new BorderLayout());
-
-        // put the image of the otherplayers cards onto the label
+        
         /**
-         * @params Image icon is loaded previously and now put onto the JLabel
+         * @params Image icon wird vorher geladen und nun aufs Label geschrieben
          */
 
         lblImgCards2 = new JLabel(icon);
         panelCardsWest.add(lblImgCards2, BorderLayout.CENTER);
-        lblImgCards2.setPreferredSize(new Dimension(250, 100));
+        lblImgCards2.setPreferredSize(new Dimension(250, 100)); //Grösse des Bildes bestimmen
 
         //Info über die vorhanenden Joker
+        //GridBagConstraints und GridBagLayout damit man die Labels jeweils schön untereinander ausgeben kann
         JokerInfo2 = new JPanel();
         panelCardsWest.add(JokerInfo2, BorderLayout.NORTH);
         JokerInfo2.setLayout(new GridBagLayout());
@@ -194,7 +185,6 @@ public class Playtable
         lblCardsPlayer2 = new JLabel("Anzahl Karten:");
         panelUserInfo2.add(lblCardsPlayer2);
         // horizontal and vertical alignment
-        lblCardsPlayer2.setVerticalAlignment(SwingConstants.BOTTOM);
         lblCardsPlayer2.setHorizontalAlignment(SwingConstants.RIGHT);
         // set the font to arial, size 13
 
@@ -212,12 +202,9 @@ public class Playtable
         lblUser2Score.setFont(new Font("Arial", Font.PLAIN, 13));
         panelUserInfo2.add(lblUser2Score);
 
-        lblIsgeber2 = new JLabel("isGeber()");
-        lblIsgeber2.setHorizontalAlignment(SwingConstants.RIGHT);
-        panelUserInfo2.add(lblIsgeber2);
-
        
         /*
+         * Sofern ein 3ter Spieler implementiert werden würde, könnte man dies bereits so verwenden
         // <------------------ Informationen für User 3 --------------------->
 
         panelCardsEast = new JPanel();
@@ -287,11 +274,6 @@ public class Playtable
         lblUser3Score.setHorizontalAlignment(SwingConstants.CENTER);
         lblUser3Score.setFont(new Font("Arial", Font.PLAIN, 13));
         panelUserInfo3.add(lblUser3Score);
-
-        lblIsGeber3 = new JLabel("isGeber()");
-        lblIsGeber3.setHorizontalAlignment(SwingConstants.RIGHT);
-        panelUserInfo3.add(lblIsGeber3);
-
 		*/
         // <------------------------ Spieltisch ---------------------------------->
 
@@ -302,24 +284,7 @@ public class Playtable
         GridBagLayout gblPanelPlayDesk = new GridBagLayout();
         panelPlayDesk.setLayout(gblPanelPlayDesk);
 
-        //gbcPlayedCards.insets = new Insets(0, 0, 0, 0);// top, left, bottom,
-                                                       // right representation
-                                                       // of
-                                                       // the borders of a
-                                                       // container. It
-                                                       // specifies
-                                                       // the space that a
-                                                       // container must leave
-                                                       // at
-                                                       // each of its edges
-
-        // playedCards = createPlayedCardButtons(playedCards, 8);
-        // for (int i = 0; i < playedCards.length; i++) {
-        // // playedCards[i].setPreferredSize(new Dimension(100,200));
-        // panelPlayDesk.add(playedCards[i], gbcPlayedCards);
-        // }
-
-        // <------------------------------ Copyright ------------------------------------------>
+        // <------------------------------ Copyrightinfos ------------------------------------------>
 
         panelCardsSouth = new JPanel();
         contentPane.add(panelCardsSouth, BorderLayout.SOUTH);
@@ -333,19 +298,10 @@ public class Playtable
         // The panel for the user to display his cards
         panelPlayerCard = new JPanel();
         panelCardsSouth.add(panelPlayerCard, BorderLayout.CENTER);
-        //panelPlayerCard.setLayout(new GridLayout(2, 7));
 
-        // Die JokerKarten werden in der run-methode erstellt - und anschliessend dann hier
-        // platziert
+        // Die JokerKarten werden in der run-methode erstellt - und anschliessend dann auf dem PanelJokerCards platziert
         panelJokerCards = new JPanel();
         panelCardsSouth.add(panelJokerCards, BorderLayout.NORTH);
-//        GridBagLayout gblJockerCards = new GridBagLayout();
-//        panelJokerCards.setLayout(gblJockerCards);
-
-        /**
-         * Platzhalter für JokerButtons
-         */
-        //gbcJokerCards.insets = new Insets(0, 0, 0, 0);
 
         // Platzhalter für die Userinformationen - Container für InfoPanel und ActionPanel(Buttons)
         panelInfoUser1 = new JPanel();
@@ -354,10 +310,9 @@ public class Playtable
 
         // <------------------------------ Buttons für die Aktionen hinzufügen ---------------------->
         /**
-         * @btnLegen the button to place your selected cards
-         * @btnPassen if you cannot play, go to the next player
+         * @btnLegen play wird verwendet um die ausgewählten Karten an den Server zu senden
+         * @btnPassen wenn ein Spielr passt wird auch das zum Server übermittelt
          */
-
         panelAction = new JPanel();
         panelInfoUser1.add(panelAction, BorderLayout.SOUTH);
 
@@ -376,13 +331,13 @@ public class Playtable
         panelAction.add(btnPassen);
 
         /**
-         * Userinformationen auf GUI anzeigen
+         * Userinformationen zum aktuellen Spieler auf GUI anzeigen
          */
         // <----------------------------------- Informationen für User 1 ---------------------------------------------->
 
         panelInfo = new JPanel();
         panelInfoUser1.add(panelInfo, BorderLayout.NORTH);
-        panelInfo.setLayout(new GridLayout(4, 2, 0, 0));
+        panelInfo.setLayout(new GridLayout(3, 2, 0, 0));
 
         lblUsername = new JLabel("Username:");
         lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -403,10 +358,6 @@ public class Playtable
         lblScoreUser1.setFont(new Font("Arial", Font.PLAIN, 13));
         panelInfo.add(lblScoreUser1);
 
-        lblIsGeber1 = new JLabel("isGeber()");
-        lblIsGeber1.setHorizontalAlignment(SwingConstants.RIGHT);
-        panelInfo.add(lblIsGeber1);
-
         // <------------------------------- Spieltisch beschrieb ------------------------------------------------------------>
 
         lblTitle = new JLabel("Haggis - Team WildCard");
@@ -415,19 +366,6 @@ public class Playtable
         lblTitle.setPreferredSize(new Dimension(200, 85));
         contentPane.add(lblTitle, BorderLayout.NORTH);
 
-        // <----------------------------- Platzhalter fï¿½r die Karten des Spielers ---------------------------->
-        //gbcPlayercards.insets = new Insets(0, 0, 0, 0);// top, left, bottom,
-                                                       // right representation
-                                                       // of
-                                                       // the borders of a
-                                                       // container. It
-                                                       // specifies
-                                                       // the space that a
-                                                       // container must leave
-                                                       // at
-                                                       // each of its edges
-        
-        
         setVisible(true);
 
         // --------------------------logical part-------------------------------------------
@@ -438,7 +376,12 @@ public class Playtable
 
     // <-------------------------------------Methoden zum Karten erstellen ------------------------>
 
-    // Method generates a JButton-Array it needs an array to fill and an int with the number of buttons
+    /**
+     * 
+     * @param karten ist ein JToggleButton array das übermittelt wird und dann mit der übergebenen Anzahl an Karten befüllt wird
+     * @param anzahl, ist die Anzahl der Karten (Buttons), die erstellt werden sollen
+     * @return befülltes Kartenarray
+     */
     private JToggleButton[] createToggleCardButtons(JToggleButton[] karten, int anzahl)
     {
         karten = new JToggleButton[anzahl];
@@ -452,6 +395,9 @@ public class Playtable
         return karten;
     }
 
+    /**
+     * Diese Methode dient dazu, die Karten für den Spieltisch(pot) zu generieren, nicht die des Users selbst
+     */
     private JButton[] createPlayedCardButtons(JButton[] karten, int anzahl)
     {
         karten = new JButton[anzahl];
@@ -470,65 +416,29 @@ public class Playtable
     // Methode zum legen der Karten
     public void actionPerformed(ActionEvent ae)
     {
-
+    	//Request objekt erzeugen, damit die Daten dann übermittelt werden können an den Server
         SpieldatenRequest request = new SpieldatenRequest();
 
         if (ae.getActionCommand().equals("play"))
         {
-
             Hand myHand = new Hand(selectedCards);
-
             
             request.setStep("play");
             request.setMessage("play");
-
-            /*
-            for (int z = 0; z < norKart; z++)
-            {
-                if (cards[z].isSelected())
-                {
-
-                    System.out.println(cards[z].getName());
-
-                    // read Arraylist and fill to hand
-                    Card c = new Card();
-                    c = guiDeck.findByName(cards[z].getName());
-                    hand.add(c);
-                }
-            }
-            // myHand.setHand(hand);
-            // request.setMyHand(myHand);
-
-             
-            for (int z = 0; z < jokKart; z++)
-            {
-                if (jokers[z].isSelected())
-                {
-                    System.out.println(jokers[z].getName());
-
-                    Card c = new Card();
-                    c = guiJoker.findByName(jokers[z].getName());
-                    hand.add(c);
-
-                }
-            }
-	*/
-
-            myHand.setHand(selectedCards);
-            //myHand.setHand(hand);
+            myHand.setHand(selectedCards); //selectedCards = ArrayList, die gefüllt wird, sobald ein Button gecklickt wird
             request.setMyHand(myHand);
             
-
+            //Verbindung zum Server
             try
             {
                 clientCommunication.sendToServer(request);
-                selectedCards.clear();
+                selectedCards.clear(); //zurücksetzen, ansonsten werden zuviele Karten übermittelt
             }
             catch (IOException e)
             {
                 e.printStackTrace();
             }
-            System.out.println("legen");
+            System.out.println("legen"); //Kontrolle welcher Button geklickt wurde
 
         }
 
@@ -537,7 +447,7 @@ public class Playtable
 
             request.setStep("pass");
             request.setMessage("pass");
-            request.setMyHand(null);
+            request.setMyHand(null); //der Server braucht eine Hand, diese ist null, da er keine Karten bei der Hand des Users abziehen muss
 
             try
             {
@@ -557,21 +467,17 @@ public class Playtable
 
     // <------------------------------ ItemListener für die Karten ------------------->
 
+    // hervorheben der Buttons, damit man weiss, welcher Button gedrückt
+    // wurde (JToggleButton) wird von Icon überdeckt, deshalb so gelöst
 
     public void itemStateChanged(ItemEvent e)
     {
-        // hervorheben der Buttons, damit man weiss, welcher Button gedrückt
-        // wurde (JToggleButton) wird von Icon überdeckt, deshalb so gelöst
-
-    	
-    	
-        // Listener für die normalen Karten
+	
+        // Listener für die normalen Karten [die länge von cards[] wird bestimmt, sobald die Karten vom Server befüllt werden]
         for (int x = 0; x < cards.length; x++)
         {
-            if (e.getSource() == cards[x])
-            { // damit der richtige Button angesprochen wird
-                if (e.getStateChange() == ItemEvent.SELECTED) // was passiert wenn der button selektiert ist
-                { 
+            if (e.getSource() == cards[x]){ //da das Array nicht sortiert wird, kann man auf die Kartenpostion zugreifen
+                if (e.getStateChange() == ItemEvent.SELECTED){ 		// was passiert wenn der button selektiert ist
                     Border borderButtonSelected = new LineBorder(Color.ORANGE, 2);
                     cards[x].setBorder(borderButtonSelected);
                     Card card = new Card();
@@ -580,8 +486,7 @@ public class Playtable
                     System.out.println("Selected norm. Karte:" + cards[x].getName()); //zum testen, ob der richtige
                     // Button selektiert wurde
                 }
-                else if (e.getStateChange() == ItemEvent.DESELECTED)
-                { // was passiert, wenn der button deselektiert wird
+                else if (e.getStateChange() == ItemEvent.DESELECTED){ // was passiert, wenn der button deselektiert wird
                     Border borderButtonDeselected = new LineBorder(Color.BLACK, 2);
                     cards[x].setBorder(borderButtonDeselected);
                     Card card = new Card();
@@ -592,12 +497,9 @@ public class Playtable
             }
         }
         // Listener für die Joker karten
-        for (int y = 0; y < jokers.length; y++)
-        {
-            if (e.getSource() == jokers[y])
-            {
-                if (e.getStateChange() == ItemEvent.SELECTED)
-                {
+        for (int y = 0; y < jokers.length; y++){
+            if (e.getSource() == jokers[y]){
+                if (e.getStateChange() == ItemEvent.SELECTED){
                     Border borderButtonSelected = new LineBorder(Color.ORANGE, 2);
                     jokers[y].setBorder(borderButtonSelected);
                     Card card = new Card();
@@ -605,8 +507,7 @@ public class Playtable
                     selectedCards.add(card);
                     System.out.println("Selected Joker Karte:" + cards[y].getName());
                 }
-                else if (e.getStateChange() == ItemEvent.DESELECTED)
-                {
+                else if (e.getStateChange() == ItemEvent.DESELECTED) {
                     Border borderButtonDeselected = new LineBorder(Color.BLACK, 2);
                     jokers[y].setBorder(borderButtonDeselected);
                     Card card = new Card();
@@ -617,16 +518,10 @@ public class Playtable
             }
         }
     }
-    	public void setLabels(SpieldatenResponse response){
-    	
-    	lblScoreUser1.setText("" + response.getScore());
-    	//lblUserName1.setText(response.getData().getUsername());
-    	contentPane.revalidate();
-    	contentPane.repaint();
-    	
-    }
-
-    
+    /**
+     * @McreateButtons - Methode zum erstellen der effektiven Buttons
+     * @param response - antwort des Servers
+     */
     
     public void createButtons(SpieldatenResponse response)
     {
@@ -635,13 +530,11 @@ public class Playtable
         panelJokerCards.removeAll();
         panelPlayDesk.removeAll();
         
-        // <-----------------------------------------------------------------------
-        // Kartenbuttons erstellen
-        // ------------------------------------------------------------>
+        // <----------------------------- Kartenbuttons erstellen ------------------------------------->
 
         /**
-         * @params anzahlNormalCards, anzahlJokerCards zuerst zï¿½hlen, wie viele Buttons
-         *         jeweils erstellt werden mï¿½ssen
+         * @params anzahlNormalCards, anzahlJokerCards zuerst zählen, wie viele Buttons
+         *         jeweils erstellt werden müssen
          */
         int anzahlNormalCards = 0;
         int anzahlJokerCards = 0;
@@ -664,25 +557,19 @@ public class Playtable
         cards = createToggleCardButtons(cards, anzahlNormalCards);
         jokers = createToggleCardButtons(jokers, anzahlJokerCards);
 
+        // <--------------------------- Buttons mit Bildern füllen --------------------------------------->
+
         /**
          * @params countNormal, countJoker werden gebraucht, um das Bild das geladen
-         *         wird, an die richtige stelle zu schreiben (falls der Kï¿½nig auf Stelle
-         *         15 gefunden wird (i = 15) kï¿½nnte der button sonst nicht zugewiesen
+         *         wird, an die richtige stelle zu schreiben (falls der Koenig auf Stelle
+         *         15 gefunden wird (i = 15) könnte der button sonst nicht zugewiesen
          *         werden
          */
         int countNormal = 0;
         int countJoker = 0;
 
-        // <--------------------------- Buttons mit Bildern füllen --------------------------------------->
-
-        // Listener für button gedrückt
-
-        // ToggleButtonListener listener = new ToggleButtonListener();
-
-        for (int i = 0; i < response.getMyHand().hand.size(); i++)
-        {
-            if (response.getMyHand().hand.get(i).getPoints() < 11)
-            {
+        for (int i = 0; i < response.getMyHand().hand.size(); i++){
+            if (response.getMyHand().hand.get(i).getPoints() < 11){
                 cards[countNormal].setIcon(response.getMyHand().hand.get(i).getIcon());
                 cards[countNormal].setName(response.getMyHand().hand.get(i).getName());
                 cards[countNormal].addItemListener(this); // (listener)
@@ -703,9 +590,7 @@ public class Playtable
          * Alle karten in der Konsole ausgeben - zur Kontrolle ob alles richtig gemacht
          * wurde
          **/
-
-        for (int m = 0; m <= response.getMyHand().hand.size() - 1; m++)
-        {
+        for (int m = 0; m <= response.getMyHand().hand.size() - 1; m++){
             System.out.println("Karte von Hand: "
                 + response.getMyHand().hand.get(m).getName());
         }
@@ -713,7 +598,6 @@ public class Playtable
         // <------------------------------------ Buttons für Pot generieren ----------------------------->
         
         playedCards = createPlayedCardButtons(playedCards, response.getMyHand().getPotActual().size());
-        		//pot.size());
 
         // Bilder laden und den Text des buttons setzen
         for (int i = 0; i < response.getMyHand().getPotActual().size(); i++)
@@ -727,8 +611,6 @@ public class Playtable
         contentPane.revalidate(); 
         contentPane.repaint();
     }
-
-    // }
 
     // <----------------------------------- Run Methode zum Bearbeiten der Serverantworten ----------------------------->
 
@@ -754,19 +636,17 @@ public class Playtable
                 // your move (spieler der als erster spielen kann)
                 if (response.getStep().equals("yourMove"))
                 {
-                    JOptionPane.showMessageDialog(null, response.getMessage());
+                    JOptionPane.showMessageDialog(null, response.getMessage()); //JOptionPane zum ausgeben von Messages
                     // Buttons für Karten erstellen
                     createButtons(response);
                 }
-                
-                
                 
                 // we are waiting for other players
                 else if (response.getStep().equals("waitingForOtherPlayers"))
                 {
                     JOptionPane.showMessageDialog(null, response.getMessage());
                     
-                    // Buttons fÃ¼r Karten erstellen
+                    // Buttons für Karten erstellen
                     createButtons(response);
                 }
                 
@@ -786,15 +666,18 @@ public class Playtable
                 {
 
                     /**
-                     * Message in Konsole Schreiben, Score beim aktiven user setzen
+                     * Message in Konsole Schreiben, Score beim aktiven user setzen + amtCards
                      */
                     System.out.println("Message from server " + response);
                     lblScoreUser1.setText("" + response.getScore());
                     lblUser2Score.setText("" + response.getData().getScore());
                     lblUser2Name.setText("" + response.getData().getUsername());
+                    hatBube2.setText("" + response.getData().getJack());
+                    hatDame2.setText("" + response.getData().getQueen());
+                    hatKoenig2.setText("" + response.getData().getKing());
+                    lblAmtCardsUser2.setText("" + response.getData().getAmtCards());
                     
-                    
-                    // Buttons fÃ¼r Karten erstellen
+                    // Buttons für Karten erstellen
                     createButtons(response);
                 }
 
@@ -813,7 +696,6 @@ public class Playtable
                 	dispose();
                 }
 
-                // response.getMyCards();
             }
             catch (IOException e)
             {
@@ -828,5 +710,3 @@ public class Playtable
         }
     }
 }
-
-// }

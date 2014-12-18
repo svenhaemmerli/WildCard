@@ -9,6 +9,11 @@ import java.net.Socket;
 import java.util.Collections;
 import java.util.Iterator;
 
+/**
+ * 
+ * @author Madeleine Schär (Klasse), Ivo Hausammann & Sven Hämmerli (Informationen an andere Clients)
+ *
+ */
 
 public class Server {
 
@@ -105,30 +110,82 @@ public class Server {
 		{
 			return false;
 		}
-		
-		//        if (aktiverSpieler==numberOfPlayers-1){
-		//        	gameplay.setCountPass(0);
-		//        	
-		//        }
 
 		boolean ok = gameplay.processRequest(request);
 
 		if (ok)  {
 
+			/**
+			 * @author Sven Hämmerli, Ivo Hausammann
+			 * @params UserData wird als Informationen des Gegenspielers betrachtet
+			 */
+			//Berechnung des Scores, vorherige runde wird mit aktiver runde zusammengezaehlt
 			players[(aktiverSpieler + 1) % numberOfPlayers].setScore(UserData.trickPunkte + players[(aktiverSpieler + 1) % numberOfPlayers].getScore());
 			System.out.println("Spieler 0 Score: " + players[0].getScore());
 			System.out.println("Spieler 1 Score: " + players[1].getScore());
 
+			//wenn Player 1 an der Reihe ist
 			if(aktiverSpieler == 0){
+				//Werte der JokerKarten auf - setzen
+				data.setJack("-");
+				data.setQueen("-");
+				data.setKing("-");
+				//Score setzen
 				data.setScore(players[1].getScore());
 				System.out.println("Player 1: " + data.getScore());
+				//Daten des 2 Players setzen
 				data.setUsername(players[1].getUsername());
+				//Groesse der Hand abfragen
+				for(int i = 0; i < players[1].getMyHand().getHand().size(); i++){
+					//Pruefen ob der Wert der Karte einem Joker entspricht
+					if(players[1].getMyHand().getHand().get(i).getPoints() == 11){
+            			String s = new String(players[1].getMyHand().getHand().get(i).getName());
+            			data.setJack(s);
+					}
+					else if (players[1].getMyHand().getHand().get(i).getPoints() == 12){
+        				String s = new String(players[1].getMyHand().getHand().get(i).getName());
+        				data.setQueen(s);
+        		}
+					else if (players[1].getMyHand().getHand().get(i).getPoints() == 13){
+        				String s = new String(players[1].getMyHand().getHand().get(i).getName());
+        				data.setKing(s);
+					}
+				}
+				//Groesse der Hand abfragen und auf die UserData schreiben
+				data.setAmtCards(players[1].getMyHand().getHand().size());
 			}
+			//Falls spieler2 an der Reihe ist
 			if(aktiverSpieler == 1){
+				data.setJack("-");
+				data.setQueen("-");
+				data.setKing("-");
 				data.setScore(players[0].getScore());
 				System.out.println("Player 2: " + data.getScore());
 				data.setUsername(players[0].getUsername());
+				for(int i = 0; i < players[0].getMyHand().getHand().size(); i++){
+					if(players[0].getMyHand().getHand().get(i).getPoints() == 11){
+            			String s = new String(players[0].getMyHand().getHand().get(i).getName());
+            			data.setJack(s);
+					}
+					else if (players[0].getMyHand().getHand().get(i).getPoints() == 12){
+        				String s = new String(players[0].getMyHand().getHand().get(i).getName());
+        				data.setQueen(s);
+        		}
+					else if (players[0].getMyHand().getHand().get(i).getPoints() == 13){
+        				String s = new String(players[0].getMyHand().getHand().get(i).getName());
+        				data.setKing(s);
+					}
+				}
+				data.setAmtCards(players[0].getMyHand().getHand().size());
 			}
+			
+			/**
+			 * Ende Methode Ivo Hausammann & Sven Hämmerli
+			 */
+			
+			/**
+			 * @author Madeleine Schär
+			 */
 
 			// notify every player that there was a move
 			for (int i = 0; i < players.length; i++)
@@ -188,17 +245,13 @@ public class Server {
 				players[((aktiverSpieler + 1) % numberOfPlayers)].inform2();
 				
 			}
-
-
 				// find the next player
 				aktiverSpieler = (aktiverSpieler + 1) % numberOfPlayers;
 
 				UserData.trickPunkte = 0;
 
 
-				return true;
-			
-			
+				return true;			
 		}
 		else
 			return false;
@@ -215,36 +268,15 @@ public class Server {
 		}
 	}
 
-	public boolean gameOver(int testscore, int testUserId)  {
-		//when maxscore 250 is reached
-		/*if (players[aktiverSpieler].getScore() >=10){
-			players[aktiverSpieler].getMyHand().pot = gameplay.getPot();
-			UserData.trickPunkte = gameplay.resetAfterPass(players[aktiverSpieler].getMyHand());
-			int neuerScore=0;
-			neuerScore= players[aktiverSpieler].getScore()+UserData.trickPunkte;
-
-			players[aktiverSpieler].setScore(players[aktiverSpieler].getScore()+UserData.trickPunkte);
-			//senden an GUI
-			SpieldatenResponse response = new SpieldatenResponse();
-			response.setMyHand(players[((aktiverSpieler + 1) % numberOfPlayers)].getMyHand());
-			response.setStep("gameOver");
-			System.out.println("Game Over");
-			return true;
-		}
-	
-		else 
-			return false;*/
-		if (testscore >=10){
-			players[((testUserId + 1) % numberOfPlayers)].inform3();
+	public boolean gameOver(int Endscore, int UserId)  {
+		if (Endscore >=250){
+			players[((UserId + 1) % numberOfPlayers)].inform3();
 			System.out.println("Game Over");
 			return true;
 		}
 		return false;
 			
 		}
-		
-	
-
 
 	/**
 	 * Write a message to the GUI of the server.

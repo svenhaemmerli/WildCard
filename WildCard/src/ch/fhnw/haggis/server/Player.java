@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author Madeleine Sch�r (Klasse)
+ *
+ */
 
 public class Player
     extends Thread
@@ -27,8 +32,7 @@ public class Player
         this.score = score;
     }
 
-    // -----------------------------getter & setter
-    // ----------------------------------------------------------------------------//
+    // -------------getter & setter -------------------------------//
     public Hand getMyHand()
     {
         return myHand;
@@ -67,7 +71,7 @@ public class Player
 		this.username = username;
 	}
 	
-	// -------------------------------------------getter & setter end--------------------------------------------------------//
+	// -----------------------getter & setter end--------------------------//
     
 	
 	//Methode zur Aktualisierung des ersten Players nachdem sich der zweite Player angemeldet hat
@@ -106,7 +110,7 @@ public class Player
 		try {
 		SpieldatenResponse response = new SpieldatenResponse();
 		response.setStep("gameOver");
-        response.setMessage(username+"game over - You looser!");
+        response.setMessage(username+" game over - you have lost!");
         response.setScore(score);
         serverCommunication.sendToClient(response);
 		} catch (IOException e) {
@@ -114,8 +118,6 @@ public class Player
 			e.printStackTrace();
 		}
 	}
-	
-	
 	
 	/**
      * Method to notify this Player that an opponent moved.
@@ -187,11 +189,8 @@ public class Player
                 	}
                 	server.returnUsername(username);
                 	continue;
-                	
-                	//response.setData()
-                	//serverCommunication.sendToClient(response);
+
                 }
-                
 
                 // falls eine Anfrage von einem client kam, aber der Spieler gar nicht an der Reihe
                 // ist, brechen wir ab.
@@ -204,10 +203,10 @@ public class Player
                     continue;// skip rest of loop
                 }
 
-                // spieler wählt karten
+                // spieler waehlt karten
                 boolean ok = server.handleMove(request, userId);
 
-                // falls gepasst wurde, senden wir nicht noch eine zusätzliche message
+                // falls gepasst wurde, senden wir nicht noch eine zusaetzliche message
                 if (!request.getStep().equals("pass"))
                 {
                     if (ok)
@@ -223,7 +222,6 @@ public class Player
                         response.setMyHand(myHand);
                         response.setScore(score);
                         response.setData(server.data);
-                        //response.setPot(myHand.getPot());
 
                         serverCommunication.sendToClient(response);
                         server.logToServer("message wurde an client geschickt");
@@ -241,11 +239,10 @@ public class Player
                     }
                 }
                 
-
             }
             SpieldatenResponse response2 = new SpieldatenResponse();
     		response2.setStep("gameOver");
-            response2.setMessage(username+ "game over - Your the winner you looser!");
+            response2.setMessage(username+ " game over - You're the winner!");
             serverCommunication.sendToClient(response2);
             serverCommunication.close();
             System.out.println("Beendet");
