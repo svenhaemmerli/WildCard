@@ -134,7 +134,7 @@ public class Player
                 // alles was an die inaktiven Spieler geschickt werden muss
                 SpieldatenResponse response = new SpieldatenResponse();
                 response.setStep("yourMove");
-                response.setMessage("Player " + playerWithLastMove + " moved. Your turn.");
+                response.setMessage("Your opponent has moved. Your turn.");
                 response.setMyHand(myHand);
                 response.setData(server.data);
                 serverCommunication.sendToClient(response);
