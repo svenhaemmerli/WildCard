@@ -110,7 +110,7 @@ public class Player
 		try {
 		SpieldatenResponse response = new SpieldatenResponse();
 		response.setStep("gameOver");
-        response.setMessage(username+" game over - you have lost!");
+        response.setMessage(username+": The game is over, you have lost!");
         response.setScore(score);
         serverCommunication.sendToClient(response);
 		} catch (IOException e) {
@@ -242,7 +242,7 @@ public class Player
             }
             SpieldatenResponse response2 = new SpieldatenResponse();
     		response2.setStep("gameOver");
-            response2.setMessage(username+ " game over - You're the winner!");
+            response2.setMessage(username+ ": The game is over - you have won!");
             serverCommunication.sendToClient(response2);
             serverCommunication.close();
             System.out.println("Beendet");
