@@ -37,11 +37,12 @@ public class Gameplay {
 
     private ServerGui serverGui;
     
-    // pot für ganzes spiel
+    // pot fï¿½r ganzes spiel
     private ArrayList<Card> pot = new ArrayList<Card>();
-    public ArrayList<Card> potActual = new ArrayList<Card>(); // potActual enthält nur kürzlich gespielte Karten
+    public ArrayList<Card> potActual = new ArrayList<Card>(); // potActual enthï¿½lt nur kï¿½rzlich gespielte Karten
     
     private int lowestRankLastTurn;
+    public int sequenceLengthLastTurn;
     private int lowestRank;
  
 
@@ -56,7 +57,7 @@ public class Gameplay {
     {
         serverGui.writeLog("Initializing game...");
        
-        // alle Regeln für das Spiel
+        // alle Regeln fï¿½r das Spiel
         allRules.add(new Single());
         allRules.add(new Pair());
         allRules.add(new Triplet());
@@ -76,7 +77,7 @@ public class Gameplay {
         allRules.add(new MultipleSequences());
     }
     
-    // nach einer Spielrunde muss zurückgesetzt werden.
+    // nach einer Spielrunde muss zurï¿½ckgesetzt werden.
     public int resetAfterPass(Hand h){
     	
     	int score = 0;
@@ -84,6 +85,7 @@ public class Gameplay {
         regelFuerSpiel = null; //regeln zuruecksetzen
         lowestRank = 0;
         lowestRankLastTurn = 1;
+        sequenceLengthLastTurn = 0;
         
         for (int i =0; i<pot.size();i++)
         {
@@ -129,7 +131,7 @@ public class Gameplay {
                 regelFuerSpiel.getLowestRank();
                 potActual.clear();
                 
-                if(lowestRankLastTurn < regelFuerSpiel.getLowestRank())
+                if(lowestRankLastTurn < regelFuerSpiel.getLowestRank() && sequenceLengthLastTurn == regelFuerSpiel.getSequenceLength())
                 {
                 	// gespielte karten in pot setzen
                     pot.addAll(myHand.getHand());

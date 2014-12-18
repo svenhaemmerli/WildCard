@@ -22,4 +22,9 @@ public class Single extends Sets implements IRule {
 		
 		return super.matchesRule(cards, 1);
 	}
+
+	@Override
+	public int getSequenceLength() {
+		return 0;
+	}
 }

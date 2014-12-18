@@ -26,4 +26,9 @@ public class MultiplePair
         int numberOfCardsInSet = 2; // one pair has 2 cards
         return super.matchesRule(cards, numberOfCardsInSet);
     }
+
+	@Override
+	public int getSequenceLength() {
+		return 0;
+	}
 }

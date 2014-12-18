@@ -13,7 +13,7 @@ import ch.fhnw.haggis.server.Card;
 public class SingleSequence
     implements IRule
 {
-    private int sequenceLength = 0;
+    public int sequenceLength = 0;
     private int lowestRank = 0;
 
     @Override
@@ -94,8 +94,7 @@ public class SingleSequence
     {
         return sequenceLength;
     }
-
-    @Override
+	@Override
     public int getLowestRank()
     {
         return lowestRank;

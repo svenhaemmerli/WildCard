@@ -22,4 +22,9 @@ public class Quadruplet extends Sets implements IRule {
 		
 		return super.matchesRule(cards, 4);
 	}
+
+	@Override
+	public int getSequenceLength() {
+		return 0;
+	}
 }

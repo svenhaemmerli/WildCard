@@ -22,4 +22,9 @@ public class Pair extends Sets implements IRule {
 		
 		return super.matchesRule(cards, 2);
 	}
+
+	@Override
+	public int getSequenceLength() {
+		return 0;
+	}
 }

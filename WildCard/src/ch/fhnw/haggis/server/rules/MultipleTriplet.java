@@ -26,4 +26,9 @@ public class MultipleTriplet
         int numberOfCardsInSet = 3; // one triplet has 3 cards
         return super.matchesRule(cards, numberOfCardsInSet);
     }
+
+	@Override
+	public int getSequenceLength() {
+		return 0;
+	}
 }

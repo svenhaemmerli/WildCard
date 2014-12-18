@@ -26,4 +26,9 @@ public class MultipleQuintuplet
         int numberOfCardsInSet = 5; // one quintuplet has 5 cards
         return super.matchesRule(cards, numberOfCardsInSet);
     }
+
+	@Override
+	public int getSequenceLength() {
+		return 0;
+	}
 }

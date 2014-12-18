@@ -26,4 +26,9 @@ public class MultipleQuadruplet
         int numberOfCardsInSet = 4; // one quadruplet has 4 cards
         return super.matchesRule(cards, numberOfCardsInSet);
     }
+
+	@Override
+	public int getSequenceLength() {
+		return 0;
+	}
 }

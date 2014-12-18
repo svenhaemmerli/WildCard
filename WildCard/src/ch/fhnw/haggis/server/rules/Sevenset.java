@@ -22,4 +22,9 @@ public class Sevenset extends Sets implements IRule {
 		
 		return super.matchesRule(cards, 7);
 	}
+
+	@Override
+	public int getSequenceLength() {
+		return 0;
+	}
 }

@@ -34,5 +34,13 @@ public interface IRule
      * @return the lowest rank of the matching rule.
      */
     public int getLowestRank();
+    /**
+     * Get the lowest rank for the current match.
+     * 
+     * @return the lowest rank of the matching rule.
+     */
+    public int getSequenceLength();
+    
+    
 
 }

@@ -22,4 +22,9 @@ public class Quintuplet extends Sets implements IRule {
 		
 		return super.matchesRule(cards, 5);
 	}
+
+	@Override
+	public int getSequenceLength() {
+		return 0;
+	}
 }

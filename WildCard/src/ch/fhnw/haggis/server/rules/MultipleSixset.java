@@ -26,4 +26,9 @@ public class MultipleSixset
         int numberOfCardsInSet = 6; // one sixset has 6 cards
         return super.matchesRule(cards, numberOfCardsInSet);
     }
+
+	@Override
+	public int getSequenceLength() {
+		return 0;
+	}
 }

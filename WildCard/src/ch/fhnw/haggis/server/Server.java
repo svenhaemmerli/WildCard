@@ -11,7 +11,7 @@ import java.util.Iterator;
 
 /**
  * 
- * @author Madeleine Schär (Klasse), Ivo Hausammann & Sven Hämmerli (Informationen an andere Clients)
+ * @author Madeleine Schï¿½r (Klasse), Ivo Hausammann & Sven Hï¿½mmerli (Informationen an andere Clients)
  *
  */
 
@@ -110,13 +110,22 @@ public class Server {
 		{
 			return false;
 		}
-
+		
+		/**
+		 * @author Ivo Hausammann
+		 */
+		// bevor gameplay aufgerufen wird, setzen wir der Variabel sequenceLengthLastTurn einmalig einen Wert fest.
+		if (gameplay.getPot().size() == 0){
+			gameplay.sequenceLengthLastTurn = request.getMyHand().getHand().size();
+		}
+		// Ende part Ivo Hausammann
+		
 		boolean ok = gameplay.processRequest(request);
 
 		if (ok)  {
 
 			/**
-			 * @author Sven Hämmerli, Ivo Hausammann
+			 * @author Sven Hï¿½mmerli, Ivo Hausammann
 			 * @params UserData wird als Informationen des Gegenspielers betrachtet
 			 */
 			//Berechnung des Scores, vorherige runde wird mit aktiver runde zusammengezaehlt
@@ -180,11 +189,11 @@ public class Server {
 			}
 			
 			/**
-			 * Ende Methode Ivo Hausammann & Sven Hämmerli
+			 * Ende Methode Ivo Hausammann & Sven Hï¿½mmerli
 			 */
 			
 			/**
-			 * @author Madeleine Schär
+			 * @author Madeleine Schï¿½r
 			 */
 
 			// notify every player that there was a move
@@ -217,7 +226,7 @@ public class Server {
 				}
 				pointsHandOther = (players[((aktiverSpieler + 1) % numberOfPlayers)].getMyHand().getHand().size())*5;
 				System.out.println("Points other hand=" + pointsHandOther);
-				System.out.println("Häggis ="+haeggis);
+				System.out.println("Hï¿½ggis ="+haeggis);
 				System.out.println("Haggis Size ="+deck.getDeck().size());
 				players[aktiverSpieler].setScore(players[aktiverSpieler].getScore()+haeggis+pointsHandOther+UserData.trickPunkte);
 				System.out.println("Neuer Score" + players[aktiverSpieler].getScore());

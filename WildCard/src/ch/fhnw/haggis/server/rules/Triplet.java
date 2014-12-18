@@ -21,4 +21,9 @@ public class Triplet extends Sets implements IRule {
 		
 		return super.matchesRule(cards, 3);
 	}
+
+	@Override
+	public int getSequenceLength() {
+		return 0;
+	}
 }
